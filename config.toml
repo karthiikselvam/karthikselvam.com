@@ -1,0 +1,83 @@
+baseURL = 'https://karthikselvam.com/'
+languageCode = 'en-us'
+title = 'Karthik Selvam'
+theme = 'lines'
+ignoreErrors = ["error-missing-instagram-accesstoken"]
+disableKinds = ["section", "categories"]
+disqusShortname = ""
+pygmentsCodeFences = false
+pygmentsUseClasses = false
+paginate = 999
+minify = true
+
+
+[taxonomies]
+  tag = "tags"
+
+[privacy]
+  [privacy.disqus]
+    disable = true
+  [privacy.googleAnalytics]
+    disable = true
+  [privacy.instagram]
+    disable = true
+  [privacy.twitter]
+    disable = true
+  [privacy.vimeo]
+    disable = true
+  [privacy.youtube]
+    disable = true
+
+[Author]
+  name = ""
+
+[params]
+  description = ""
+  author = ""
+  copyright = ""
+  logo = ""
+
+[frontmatter]
+  date  = [":filename", ":default"]
+  author = ""
+  github = ""
+  facebook = ""
+  og_image = ""
+  sitename = ""
+  twitter = ""
+
+[permalinks]
+  posts = "posts/:year/:month/:day/:filename"
+  pages = "/:slug"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML"]
+
+
+[outputFormats.RSS]
+  mediatype = "application/rss"
+  baseName = "atom"
+
+[outputFormats.JSON]
+  mediatype = "application/json"
+  baseName = "feed"
+
+[sitemap]
+  changefreq = "monthly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+[menu]
+  [[menu.main]]
+    identifier = "index"
+    name       = "Blog"
+    url        = "/"
+    weight     = -111
+
+  [[menu.main]]
+    identifier = "about"
+    name       = "@Karthik"
+    url        = "/about/"
+    weight     = -20
+
