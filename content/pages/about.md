@@ -9,7 +9,7 @@ title: About
 
 Hi, I'm Karthik, a passionate software engineer, investor, and fitness enthusiast. I have always been fascinated by the world of technology and how it continues to transform our daily lives. As a software engineer, I thrive on the challenge of designing scalable systems that can handle massive amounts of data and users. I love working with cutting-edge technologies like cloud computing and distributed systems.
 
-Apart from software engineering, I'm also an avid investor. I believe that investing is not just about making money, it's about building a secure financial future for myself and my loved ones. I'm always eager to share my knowledge and insights with others who share my passion for investing.
+Apart from software engineering, I'm also an avid investor. I believe that investing is not just about making money, it's about building a secure financial future. I'm always eager to share my knowledge and insights with others who share my passion for investing.
 
 I prioritize staying active and fit outside of work. Physical activity, whether it's hitting the gym or going for a run or cycling, is an essential part of my daily routine. Not only does it help clear my mind, but it also keeps my body in shape. Fitness has become an integral part of my life, and I believe that a healthy body leads to a healthy mind and a more fulfilling life.
 
