@@ -15,4 +15,6 @@ I prioritize staying active and fit outside of work. Physical activity, whether 
 
 Through my blog, I hope to share my insights and experiences on software engineering, investing, and fitness, and provide valuable information that can help others on their own journey. Join me as we explore the exciting world of technology, finance, and health, and discover the endless possibilities that lie ahead!
 
+A quote I live by,
+
 >“Those times when you get up early and you work hard; those times when you stay up late and you work hard; those times when you don’t feel like working, you’re too tired, you don’t want to push yourself, but you do it anyway; that is actually the dream. That’s the dream. It’s not the destination, it’s the journey.” ― **Kobe Bryant**
