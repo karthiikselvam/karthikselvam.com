@@ -1,59 +1,266 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2023, Ronalds Vilcins</copyright><lastBuildDate>Thu, 23 Mar 2023 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Capacity Estimation on the fly</title><link>https://karthikselvam.com/posts/2023/03/23/2023-03-23/</link><description>&lt;p>Capacity estimation is a crucial component of system design interviews, and it can be quite challenging if one is not adequately prepared. However, with the right approach, it is possible to accurately estimate the storage, bandwidth, and memory/cache requirements needed for a particular system. This article provides a comprehensive framework for capacity estimation, which will enable you to confidently tackle capacity-related questions during system design interviews.&lt;/p>
-&lt;p>Typically following estimates are required :&lt;/p>
-&lt;ol>
-&lt;li>Storage&lt;/li>
-&lt;li>Bandwidth&lt;/li>
-&lt;li>Memory/Cache&lt;/li>
-&lt;/ol>
-&lt;hr>
-&lt;p>Assumptions:&lt;/p>
-&lt;p>&lt;strong>1. Storage Estimates&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>Single character requires 2 bytes, while long and double require 8 bytes of space.&lt;/li>
-&lt;li>An average photo takes up 200 KB of space, while a high-quality photo takes up 2 MB of space.&lt;/li>
-&lt;li>For videos, we assume 50 MB of space per minute of video.&lt;/li>
-&lt;/ul>
-&lt;p>Examples:&lt;/p>
-&lt;ul>
-&lt;li>Social media: tweet can be assumed 140 char then 140*2 bytes = 280 bytes tweet.&lt;/li>
-&lt;li>Tiny URL: Average URL length &amp;lt;100 char. Longer URLs needing tiny URL will generally be more than 150 char, lets say 200 char. then each URL assume as 200*2 = 400 bytes&lt;/li>
-&lt;li>Database id or price etc field can be double or long so 8 bytes per field.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>2. Traffic estimates&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>For social media applications like Facebook, Instagram, Twitter we can assume 1 billion total users, with 500 million daily active users.&lt;/li>
-&lt;li>A chat application like WhatsApp, and Facebook Messenger, has 500 million total users, with 100 million daily active users.&lt;/li>
-&lt;li>For video streaming applications like YouTube, Netflix, and Hulu, we can assume 1 billion total users, with 800 million daily active users.&lt;/li>
-&lt;li>For cloud or file storage applications like Google Drive, Dropbox, and Microsoft OneDrive, we can assume 1 billion total users, with 500 million daily active users.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>3. Time Assumptions&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>A year has 365 days, so 5 years have 1825 days, which we round up to 2000 days.&lt;/li>
-&lt;li>A day has 24 hours, which is 86400 seconds, which we round up to 100,000 seconds.&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;p>&lt;strong>Capacity Estimation for Social Media application&lt;/strong>&lt;/p>
-&lt;p>Assuming each post or tweet has 140 characters, and each character requires 2 bytes, each tweet or post has a size of approximately 300 bytes. Let’s assume 1 billion total users and 500 million daily active users, we can assume that 10 million users post photos daily, with an average size of 200 KB. Using these assumptions, we can calculate the following:&lt;/p>
-&lt;p>&lt;strong>Storage&lt;/strong>:
-Text data storage: 300 bytes x 500,000,000 = 150,000,000,000 = 150 GB of tweet/post data per day
-Photo storage: 200 KB x 10,000,000 = 2,000 GB = 2 TB per day.&lt;/p>
-&lt;p>Total storage for 5 years: 150 GB x 2000 days = 300,000 GB = 300 TB for tweet/post data, and 2 TB x 2000 days = 4,000 TB for photos.&lt;/p>
-&lt;p>&lt;strong>Bandwidth&lt;/strong>:
-Text data bandwidth: 150 GB per day / 100,000 seconds = 1.5 MB per second
-Photo bandwidth: 2 TB per day / 100,000 seconds = 200 MB per second&lt;/p>
-&lt;p>&lt;strong>Memory/Cache&lt;/strong>:
-Assuming we want to cache 20 posts/tweets per user, 300 bytes * 500,000,000 daily users * 20 = 150 GB * 20 = 3000 GB = 3 TB of cache. If one machine/server can keep 150 GB of cache, we need 20 machines/servers for caching.&lt;/p>
-&lt;hr>
-&lt;p>&lt;strong>Capacity Estimation for TinyURL&lt;/strong>&lt;/p>
-&lt;p>Assuming the average length of a URL is 100 characters, and each character requires 2 bytes, each URL has a size of approximately 200 bytes. Let’s assume 1 billion total users, 100 million daily active users. So 100 million urls are generated per day. Using these assumptions, we can calculate the following:&lt;/p>
-&lt;p>&lt;strong>Storage&lt;/strong>:
-URL data storage: 200 bytes x 100,000,000 = 20,000,000,000 = 20 GB per day&lt;/p>
-&lt;p>Total storage for 5 years: 20 GB per day x 2000 days = 40,000 GB = 40 TB&lt;/p>
-&lt;p>&lt;strong>Bandwidth&lt;/strong>:
-URL bandwidth: 20 GB per day / 100,000 seconds = 0.2 MB per second.&lt;/p>
-&lt;p>&lt;strong>Memory/Cache&lt;/strong>:
-Assuming we want to cache 20 urls per user, 200 bytes * 100,000,000 daily users * 20 = 20 GB * 20 = 400 GB of cache. If one machine/server can keep 150 GB of cache, we need 3 machines/servers for caching.&lt;/p>
-&lt;p>The framework outlined above provides a clear approach to tackle capacity estimation problems during interviews.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/03/23/2023-03-23/</guid><pubDate>Thu, 23 Mar 2023 00:00:00 +0000</pubDate></item><item><title>Understanding SOLID Principles</title><link>https://karthikselvam.com/posts/2023/01/24/solid_principles/</link><description>&lt;p>SOLID is an acronym of the following:&lt;/p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2023, Ronalds Vilcins</copyright><lastBuildDate>Wed, 25 Jan 2023 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Understanding OOP concepts</title><link>https://karthikselvam.com/posts/2023/01/25/oops_concepts/</link><description>&lt;p>&lt;strong>1. What is an Object?&lt;/strong>&lt;/p>
+&lt;p>An object is an entity in the real world that possesses state (fields) and behaviors (methods). It represents an instance of a class, occupies space in memory, and can communicate with other objects&lt;/p>
+&lt;p>&lt;strong>2. What is a Class?&lt;/strong>&lt;/p>
+&lt;p>A class is a programming construct that serves as a template or blueprint for creating objects. Unlike objects, classes do not consume memory. Instead, they define the properties and behaviors of objects that can be instantiated multiple times.&lt;/p>
+&lt;p>&lt;strong>3. What is a Abstraction?&lt;/strong>&lt;/p>
+&lt;p>Abstraction is the concept of exposing to the user only the relevant information while hiding the unnecessary details. This enables the user to focus on what the application does, rather than how it does it.&lt;/p>
+&lt;p>Let&amp;rsquo;s consider a real-life example: a man driving a car. The man knows what each pedal does and what the steering wheel does, but he doesn&amp;rsquo;t know how these things are done internally by the car. He doesn&amp;rsquo;t know about the inner mechanisms that empower these things. This is what abstraction is. In Java, abstraction can be achieved via abstract classes and interfaces.&lt;/p>
+&lt;pre>&lt;code class="language-java">public interface Car {
+public void speedUp();
+public void slowDown();
+public void turnRight();
+public void turnLeft();
+public String getCarType();
+}
+&lt;/code>&lt;/pre>
+&lt;p>Next, each type of car should implement the Car interface and override these methods to provide the implementation of these actions. This implementation is hidden from the user (the man driving the car). For example, the ElectricCar class appears as follows:&lt;/p>
+&lt;pre>&lt;code class="language-java">public class ElectricCar implements Car {
+private final String carType;
+public ElectricCar(String carType) {
+this.carType = carType;
+}
+@Override
+public void speedUp() {
+System.out.println(&amp;quot;Speed up the electric car&amp;quot;);
+}
+@Override
+public void slowDown() {
+System.out.println(&amp;quot;Slow down the electric car&amp;quot;);
+}
+@Override
+public void turnRight() {
+System.out.println(&amp;quot;Turn right the electric car&amp;quot;);
+}
+@Override
+public void turnLeft() {
+System.out.println(&amp;quot;Turn left the electric car&amp;quot;);
+}
+@Override
+public String getCarType() {
+return this.carType;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>The user of this class has access to these public methods without being aware of the implementation:&lt;/p>
+&lt;pre>&lt;code>public class Main {
+public static void main(String[] args) {
+Car electricCar = new ElectricCar(&amp;quot;BMW&amp;quot;);
+System.out.println(&amp;quot;Driving the electric car: &amp;quot; + electricCar.getCarType() + &amp;quot;\n&amp;quot;);
+electricCar.speedUp();
+electricCar.turnLeft();
+electricCar.slowDown();
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>The output is listed as follows:&lt;/p>
+&lt;pre>&lt;code>Driving the electric car: BMW
+Speed up the electric car
+Turn left the electric car
+Slow down the electric car
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>4. What is a Encapsulation?&lt;/strong>&lt;/p>
+&lt;p>Encapsulation is a technique whereby the state of an object is hidden from the outside world, and a set of public methods are exposed for accessing this state. Encapsulation is achieved when each object keeps its state private inside a class. It is known as a data-hiding mechanism, and has several important advantages associated with it, such as enabling loosely coupled, reusable, secure, and easy-to-test code.&lt;/p>
+&lt;p>In Java, encapsulation is implemented through the use of access modifiers such as public, private, and protected.&lt;/p>
+&lt;pre>&lt;code class="language-java">public class Person {
+private String name;
+private int age;
+// Getter method for name
+public String getName() {
+return name;
+}
+// Setter method for name
+public void setName(String name) {
+this.name = name;
+}
+// Getter method for age
+public int getAge() {
+return age;
+}
+// Setter method for age
+public void setAge(int age) {
+this.age = age;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>In this example, we have a Person class that encapsulates the state (name and age) of a person object. The state is hidden from the outside world through the use of private access modifiers on the name and age variables. However, public getter and setter methods (getName(), setName(), getAge(), setAge()) are provided for accessing and modifying the state of the object. This allows us to maintain control over the state of the object, ensuring that it remains valid and consistent at all times, while also providing a well-defined interface for other parts of the program to interact with the object.&lt;/p>
+&lt;p>&lt;strong>5. What is a Inheritance ?&lt;/strong>&lt;/p>
+&lt;p>Inheritance is a fundamental concept in object-oriented programming, which allows one class (the child or subclass) to inherit properties and methods from another class (the parent or superclass). This helps to promote code reuse, reduce duplication, and make the code more modular and easier to maintain.&lt;/p>
+&lt;p>In Java, inheritance is achieved through the use of the &lt;strong>extends&lt;/strong> keyword. The child class inherits all the visible properties and methods of the parent class, which can be overridden or extended as needed.&lt;/p>
+&lt;p>Here&amp;rsquo;s an example of inheritance in Java:&lt;/p>
+&lt;pre>&lt;code class="language-java">public class Animal {
+private String name;
+private int age;
+public Animal(String name, int age) {
+this.name = name;
+this.age = age;
+}
+public void eat() {
+System.out.println(name + &amp;quot; is eating.&amp;quot;);
+}
+public void sleep() {
+System.out.println(name + &amp;quot; is sleeping.&amp;quot;);
+}
+}
+public class Cat extends Animal {
+public Cat(String name, int age) {
+super(name, age);
+}
+public void meow() {
+System.out.println(&amp;quot;Meow!&amp;quot;);
+}
+@Override
+public void sleep() {
+System.out.println(getName() + &amp;quot; is curling up and sleeping.&amp;quot;);
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>In this example, we have an Animal class that defines common properties and methods for all animals, such as name and age, and eat() and sleep() methods. The Cat class extends the Animal class, inheriting all its properties and methods, and also adds a new meow() method.&lt;/p>
+&lt;p>We can now create a Cat object and call its methods like this:&lt;/p>
+&lt;pre>&lt;code>Cat cat = new Cat(&amp;quot;Kitty&amp;quot;, 2);
+cat.eat(); // Output: Kitty is eating.
+cat.sleep(); // Output: Kitty is curling up and sleeping.
+cat.meow(); // Output: Meow!
+&lt;/code>&lt;/pre>
+&lt;p>In this example, the Cat class has overridden the sleep() method inherited from the Animal class, to provide a more specific implementation for cats. This demonstrates the flexibility and extensibility of inheritance, which allows us to modify the behavior of a class to better fit our needs.&lt;/p>
+&lt;p>&lt;strong>6. What is a Polymorphism ?&lt;/strong>&lt;/p>
+&lt;p>Polymorphism is a concept in object-oriented programming that enables an object to exhibit different behaviors in certain scenarios. This can be achieved through method overloading, which is a form of compile-time polymorphism, or through method overriding, which is a form of runtime polymorphism and is applicable in the case of an IS-A relationship.&lt;/p>
+&lt;p>Polymorphism via method overloading(compile time)&lt;/p>
+&lt;pre>&lt;code class="language-java">public class Calculator {
+public int add(int a, int b) {
+return a + b;
+}
+public double add(double a, double b) {
+return a + b;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>Polymorphism via method overriding(runtime)&lt;/p>
+&lt;pre>&lt;code class="language-java">public class Animal {
+public void makeSound() {
+System.out.println(&amp;quot;Animal makes a sound&amp;quot;);
+}
+}
+public class Dog extends Animal {
+@Override
+public void makeSound() {
+System.out.println(&amp;quot;Dog barks&amp;quot;);
+}
+}
+public class Cat extends Animal {
+@Override
+public void makeSound() {
+System.out.println(&amp;quot;Cat meows&amp;quot;);
+}
+}
+public class Main {
+public static void main(String[] args) {
+Animal animal1 = new Dog();
+Animal animal2 = new Cat();
+animal1.makeSound(); // Output: Dog barks
+animal2.makeSound(); // Output: Cat meows
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>In the example above, we have an Animal class and two subclasses, Dog and Cat, that extend it. The makeSound method is overridden in each subclass to produce a different sound. In the Main class, we create an instance of Dog and Cat but assign them to variables of type Animal. When the makeSound method is called on each of these objects, the appropriate overridden version of the method is executed, producing &amp;ldquo;Dog barks&amp;rdquo; and &amp;ldquo;Cat meows&amp;rdquo; as output, respectively. This is an example of polymorphism as the same method is called on objects of different types, but the behavior is different depending on the actual type of the object at runtime.&lt;/p>
+&lt;p>&lt;strong>7. What is a Association ?&lt;/strong>&lt;/p>
+&lt;p>Association is a concept in object-oriented programming that describes the relationship between two classes that are independent of each other. An association does not have an owner, and it can take different forms, including one-to-one, one-to-many, many-to-one, and many-to-many, depending on the cardinality and multiplicity of the relationship between the two classes.&lt;/p>
+&lt;p>Here is an example of association in Java using a one-to-many relationship:&lt;/p>
+&lt;pre>&lt;code class="language-java">public class Library {
+private List&amp;lt;Book&amp;gt; books;
+public Library() {
+books = new ArrayList&amp;lt;&amp;gt;();
+}
+public void addBook(Book book) {
+books.add(book);
+}
+}
+public class Book {
+private String title;
+private String author;
+public Book(String title, String author) {
+this.title = title;
+this.author = author;
+}
+// getters and setters
+}
+&lt;/code>&lt;/pre>
+&lt;p>In this example, the Library class has an association with the Book class. The Library class has a list of Book objects, and it provides a method addBook() to add a book to the list. This is an example of a one-to-many association because a Library can have many Book objects in its list.&lt;/p>
+&lt;p>The Book class, on the other hand, has no knowledge of the Library class. It simply defines the properties of a book such as its title and author. This is an example of unidirectional association.&lt;/p>
+&lt;p>&lt;strong>8. What is a Aggregation ?&lt;/strong>&lt;/p>
+&lt;p>Aggregation is one of the core concepts of OOP. Mainly, aggregation is a special case of unidirectional association. While an association defines the relationship between two classes independent of one another, aggregation represents a HAS-A relationship between these two classes. In other words, two aggregated objects have their own life cycle, but one of the objects is the owner of the HAS-A relationship. Having their own life cycle means that ending one object will not affect the other object. For example, a TennisPlayer has a Racket. This is a unidirectional association since a Racket cannot have a TennisPlayer. Even if the TennisPlayer dies, the Racket is not affected.&lt;/p>
+&lt;p>For example, a TennisPlayer has a Racket. This is a unidirectional association since a Racket cannot have a TennisPlayer. Even if the TennisPlayer dies, the Racket is not affected.&lt;/p>
+&lt;pre>&lt;code class="language-java">public class Racket {
+private String type;
+private int size;
+private int weight;
+public Racket(String type, int size, int weight) {
+this.type = type;
+this.size = size;
+this.weight = weight;
+}
+// getters and setters omitted for brevity
+}
+&lt;/code>&lt;/pre>
+&lt;p>A TennisPlayer HAS-A Racket. Therefore, the TennisPlayer class must be capable of receiving a Racket as follows:&lt;/p>
+&lt;pre>&lt;code class="language-java">public class TennisPlayer {
+private String name;
+private Racket racket;
+public TennisPlayer(String name, Racket racket) {
+this.name = name;
+this.racket = racket
+}
+// getters and setters omitted for brevity
+}
+&lt;/code>&lt;/pre>
+&lt;p>Next, we create a Racket and a TennisPlayer that uses this Racket:&lt;/p>
+&lt;pre>&lt;code class="language-java">public static void main(String[] args) {
+Racket racket = new Racket(&amp;quot;Babolat Pure Aero&amp;quot;, 100, 300);
+TennisPlayer player = new TennisPlayer(&amp;quot;Rafael Nadal&amp;quot;, racket);
+System.out.println(&amp;quot;Player &amp;quot; + player.getName() + &amp;quot; plays with &amp;quot; + player.getRacket().getType());
+}
+&lt;/code>&lt;/pre>
+&lt;p>The output is as follows:&lt;/p>
+&lt;pre>&lt;code>Player Rafael Nadal plays with Babolat Pure Aero
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>9. What is a Composition ?&lt;/strong>&lt;/p>
+&lt;p>Composition is one of the core concepts of OOP. Primarily, composition is a more restrictive case of aggregation. While aggregation represents a HAS-A relationship between two objects having their own life cycle, composition represents a HAS-A relationship that contains an object that cannot exist on its own. In order to highlight this coupling, the HAS-A relationship can be named PART-OF as well. For example, a Car has an Engine. In other words, the engine is PART-OF the car. If the car is destroyed, then the engine is destroyed as well. Composition is said to be better than inheritance because it sustains code reuse and the visibility control of objects.&lt;/p>
+&lt;pre>&lt;code class="language-java">public class Engine {
+private String type;
+private int horsepower;
+public Engine(String type, int horsepower) {
+this.type = type;
+this.horsepower = horsepower;
+}
+// getters and setters omitted for brevity
+}
+&lt;/code>&lt;/pre>
+&lt;p>Next, we have the Car class. Check out the constructor of this class. Since Engine is part of Car, we create it with the Car.&lt;/p>
+&lt;pre>&lt;code class="language-java">public class Car {
+private final String name;
+private final Engine engine;
+public Car(String name) {
+this.name = name;
+Engine engine = new Engine(&amp;quot;petrol&amp;quot;, 300);
+this.engine=engine;
+}
+public int getHorsepower() {
+return engine.getHorsepower();
+}
+public String getName() {
+return name;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>we can test composition from the main() method as follows:&lt;/p>
+&lt;pre>&lt;code class="language-java">public static void main(String[] args) {
+Car car = new Car(&amp;quot;MyCar&amp;quot;);
+System.out.println(&amp;quot;Horsepower: &amp;quot; + car.getHorsepower());
+}
+&lt;/code>&lt;/pre>
+&lt;p>output is as follows:&lt;/p>
+&lt;pre>&lt;code class="language-java">Horsepower: 300
+&lt;/code>&lt;/pre>
+&lt;p>That&amp;rsquo;s it for OOPS.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/25/oops_concepts/</guid><pubDate>Wed, 25 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Understanding SOLID Principles</title><link>https://karthikselvam.com/posts/2023/01/24/solid_principles/</link><description>&lt;p>SOLID is an acronym of the following:&lt;/p>
 &lt;ol>
 &lt;li>S: Single Responsibility Principle&lt;/li>
 &lt;li>O: Open Closed Principle&lt;/li>
@@ -344,7 +551,62 @@ System.out.println(&amp;quot;Connecting to &amp;quot; + jdbcUrl.get());
 }
 }
 &lt;/code>&lt;/pre>
-&lt;p>That&amp;rsquo;s it, now you have solid understanding of SOLID principles.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/24/solid_principles/</guid><pubDate>Tue, 24 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Handling Transactions in Microservices</title><link>https://karthikselvam.com/posts/2023/01/23/2023-01-23/</link><description>&lt;p>Handling transactions involving more than one microservice can be challenging since each microservice typically has its own data store and transaction management. However, there are several best practices that can help to ensure consistency and reliability across microservices:&lt;/p>
+&lt;p>That&amp;rsquo;s it, now you have solid understanding of SOLID principles.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/24/solid_principles/</guid><pubDate>Tue, 24 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Capacity Estimation on the fly</title><link>https://karthikselvam.com/posts/2023/01/23/capacity_estimation/</link><description>&lt;p>Capacity estimation is a crucial component of system design interviews, and it can be quite challenging if one is not adequately prepared. However, with the right approach, it is possible to accurately estimate the storage, bandwidth, and memory/cache requirements needed for a particular system. This article provides a comprehensive framework for capacity estimation, which will enable you to confidently tackle capacity-related questions during system design interviews.&lt;/p>
+&lt;p>Typically following estimates are required :&lt;/p>
+&lt;ol>
+&lt;li>Storage&lt;/li>
+&lt;li>Bandwidth&lt;/li>
+&lt;li>Memory/Cache&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;p>Assumptions:&lt;/p>
+&lt;p>&lt;strong>1. Storage Estimates&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Single character requires 2 bytes, while long and double require 8 bytes of space.&lt;/li>
+&lt;li>An average photo takes up 200 KB of space, while a high-quality photo takes up 2 MB of space.&lt;/li>
+&lt;li>For videos, we assume 50 MB of space per minute of video.&lt;/li>
+&lt;/ul>
+&lt;p>Examples:&lt;/p>
+&lt;ul>
+&lt;li>Social media: tweet can be assumed 140 char then 140*2 bytes = 280 bytes tweet.&lt;/li>
+&lt;li>Tiny URL: Average URL length &amp;lt;100 char. Longer URLs needing tiny URL will generally be more than 150 char, lets say 200 char. then each URL assume as 200*2 = 400 bytes&lt;/li>
+&lt;li>Database id or price etc field can be double or long so 8 bytes per field.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>2. Traffic estimates&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>For social media applications like Facebook, Instagram, Twitter we can assume 1 billion total users, with 500 million daily active users.&lt;/li>
+&lt;li>A chat application like WhatsApp, and Facebook Messenger, has 500 million total users, with 100 million daily active users.&lt;/li>
+&lt;li>For video streaming applications like YouTube, Netflix, and Hulu, we can assume 1 billion total users, with 800 million daily active users.&lt;/li>
+&lt;li>For cloud or file storage applications like Google Drive, Dropbox, and Microsoft OneDrive, we can assume 1 billion total users, with 500 million daily active users.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>3. Time Assumptions&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>A year has 365 days, so 5 years have 1825 days, which we round up to 2000 days.&lt;/li>
+&lt;li>A day has 24 hours, which is 86400 seconds, which we round up to 100,000 seconds.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>&lt;strong>Capacity Estimation for Social Media application&lt;/strong>&lt;/p>
+&lt;p>Assuming each post or tweet has 140 characters, and each character requires 2 bytes, each tweet or post has a size of approximately 300 bytes. Let’s assume 1 billion total users and 500 million daily active users, we can assume that 10 million users post photos daily, with an average size of 200 KB. Using these assumptions, we can calculate the following:&lt;/p>
+&lt;p>&lt;strong>Storage&lt;/strong>:
+Text data storage: 300 bytes x 500,000,000 = 150,000,000,000 = 150 GB of tweet/post data per day
+Photo storage: 200 KB x 10,000,000 = 2,000 GB = 2 TB per day.&lt;/p>
+&lt;p>Total storage for 5 years: 150 GB x 2000 days = 300,000 GB = 300 TB for tweet/post data, and 2 TB x 2000 days = 4,000 TB for photos.&lt;/p>
+&lt;p>&lt;strong>Bandwidth&lt;/strong>:
+Text data bandwidth: 150 GB per day / 100,000 seconds = 1.5 MB per second
+Photo bandwidth: 2 TB per day / 100,000 seconds = 200 MB per second&lt;/p>
+&lt;p>&lt;strong>Memory/Cache&lt;/strong>:
+Assuming we want to cache 20 posts/tweets per user, 300 bytes * 500,000,000 daily users * 20 = 150 GB * 20 = 3000 GB = 3 TB of cache. If one machine/server can keep 150 GB of cache, we need 20 machines/servers for caching.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>Capacity Estimation for TinyURL&lt;/strong>&lt;/p>
+&lt;p>Assuming the average length of a URL is 100 characters, and each character requires 2 bytes, each URL has a size of approximately 200 bytes. Let’s assume 1 billion total users, 100 million daily active users. So 100 million urls are generated per day. Using these assumptions, we can calculate the following:&lt;/p>
+&lt;p>&lt;strong>Storage&lt;/strong>:
+URL data storage: 200 bytes x 100,000,000 = 20,000,000,000 = 20 GB per day&lt;/p>
+&lt;p>Total storage for 5 years: 20 GB per day x 2000 days = 40,000 GB = 40 TB&lt;/p>
+&lt;p>&lt;strong>Bandwidth&lt;/strong>:
+URL bandwidth: 20 GB per day / 100,000 seconds = 0.2 MB per second.&lt;/p>
+&lt;p>&lt;strong>Memory/Cache&lt;/strong>:
+Assuming we want to cache 20 urls per user, 200 bytes * 100,000,000 daily users * 20 = 20 GB * 20 = 400 GB of cache. If one machine/server can keep 150 GB of cache, we need 3 machines/servers for caching.&lt;/p>
+&lt;p>The framework outlined above provides a clear approach to tackle capacity estimation problems during interviews.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/capacity_estimation/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Handling Transactions in Microservices</title><link>https://karthikselvam.com/posts/2023/01/23/transactions/</link><description>&lt;p>Handling transactions involving more than one microservice can be challenging since each microservice typically has its own data store and transaction management. However, there are several best practices that can help to ensure consistency and reliability across microservices:&lt;/p>
 &lt;ol>
 &lt;li>
 &lt;p>&lt;strong>The Saga pattern&lt;/strong>: This involves breaking the transaction into multiple smaller transactions, each of which is handled by a separate microservice. If a transaction fails, the other services can be rolled back, ensuring that the system remains consistent. Let&amp;rsquo;s say you have a system where a user can place an order that involves multiple microservices. The order might involve checking inventory levels, processing payments, and shipping products. You can use the Saga pattern to handle this transaction by breaking it down into smaller transactions, each handled by a separate microservice. If one of the transactions fails, the other transactions can be rolled back, ensuring that the system remains consistent. For example, the payment service fails to process a payment. The shipping service can be notified to cancel the shipment, and the inventory service can be notified to restock the item. This ensures that the system remains consistent even though one of the transactions failed.&lt;/p>
@@ -361,4 +623,4 @@ System.out.println(&amp;quot;Connecting to &amp;quot; + jdbcUrl.get());
 &lt;li>
 &lt;p>&lt;strong>Idempotency&lt;/strong>: Idempotency is the property of a system where performing the same operation multiple times has the same result as performing it once. By designing microservices to be idempotent, you can reduce the risk of failures and ensure consistency across the system.For example, Let&amp;rsquo;s say you have a system where a user can update their profile information. To ensure idempotency, you can design the microservice to only update the profile if the request includes a unique identifier, such as a UUID. If the same request is made multiple times, the microservice will recognize the duplicate request and return the same result as the original request. This ensures that the system remains consistent even if the same request is made multiple times.&lt;/p>
 &lt;/li>
-&lt;/ol></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/2023-01-23/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item></channel></rss>
+&lt;/ol></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/transactions/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item></channel></rss>
