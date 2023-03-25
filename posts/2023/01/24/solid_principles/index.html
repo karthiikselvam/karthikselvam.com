@@ -1,0 +1,265 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Ronalds Vilcins - https://karthikselvam.com/"><title>Understanding SOLID Principles | Karthik Selvam</title><meta name=description content="2023"><meta name=twitter:card content="summary"><meta name=twitter:title content="Understanding SOLID Principles"><meta name=twitter:description content="2023"><meta property="og:title" content="Understanding SOLID Principles"><meta property="og:description" content="2023"><meta property="og:type" content="article"><meta property="og:url" content="https://karthikselvam.com/posts/2023/01/24/solid_principles/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-01-24T00:00:00+00:00"><meta property="article:modified_time" content="2023-01-24T00:00:00+00:00"><meta itemprop=name content="Understanding SOLID Principles"><meta itemprop=description content="2023"><meta itemprop=datePublished content="2023-01-24T00:00:00+00:00"><meta itemprop=dateModified content="2023-01-24T00:00:00+00:00"><meta itemprop=wordCount content="1854"><meta itemprop=keywords content="fundamentals,"><link rel=canonical href=https://karthikselvam.com/posts/2023/01/24/solid_principles/><link rel=dns-prefetch href=https://www.google-analytics.com><link href=https://www.google-analytics.com rel=preconnect crossorigin><link rel=alternate type=application/atom+xml title="Karthik Selvam" href=https://karthikselvam.com/atom.xml><link rel=alternate type=application/json title="Karthik Selvam" href=https://karthikselvam.com/feed.json><script src=https://kit.fontawesome.com/8d06e0a013.js crossorigin=anonymous></script>
+<link rel="shortcut icon" type=image/png href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="><style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeSpeed}.posts hr{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:none;border-bottom:1px #353535;flex:1 0 1rem}main{max-width:70ch;padding:2ch;margin:auto}a,body{color:#353535}::selection,a:focus,a:hover{background-color:#353535;color:#fff}.meta{margin:0 0 2.5rem}.tags::before{content:"\2022";margin-left:1rem}code,pre{color:#353535;font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;border:1px solid #353535;font-size:small}code{padding:.1rem;border:none}pre{padding:.5rem;overflow-x:auto}pre code{border:none}img{max-width:100%;border:1px solid #353535}hr{background:#353535;height:1px;border:0}ul{list-style-type:square}ul,ol{padding-left:1.2rem}header li,footer li{display:inline;text-transform:uppercase}header a,footer a{text-decoration:none}header ul,footer ul{justify-content:space-between;display:flex}header,section,footer{padding:1rem 0}blockquote{border-left:5px solid #353535;padding-left:1rem}.posts ul,header ul,footer ul{list-style:none}.posts,header ul,footer ul{padding:0}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.7rem}.posts li a,.posts li div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}.hash{opacity:.25;text-decoration:none}table{border-collapse:collapse;text-align:left;width:100%}table tr{background:#fff;border-bottom:1px solid}table th,table td{padding:10px 20px}</style><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"posts","name":"Understanding SOLID Principles","headline":"Understanding SOLID Principles","alternativeHeadline":"","description":"2023","inLanguage":"en-us","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/karthikselvam.com\/posts\/2023\/01\/24\/solid_principles\/"},"author":{"@type":"Person","name":""},"creator":{"@type":"Person","name":""},"accountablePerson":{"@type":"Person","name":""},"copyrightHolder":"Karthik Selvam","copyrightYear":"2023","dateCreated":"2023-01-24T00:00:00.00Z","datePublished":"2023-01-24T00:00:00.00Z","dateModified":"2023-01-24T00:00:00.00Z","publisher":{"@type":"Organization","name":"Karthik Selvam","url":"https://karthikselvam.com/","logo":{"@type":"ImageObject","url":"https:\/\/karthikselvam.com\/","width":"32","height":"32"}},"image":"https://karthikselvam.com/","url":"https:\/\/karthikselvam.com\/posts\/2023\/01\/24\/solid_principles\/","wordCount":"1854","genre":["fundamentals"],"keywords":["fundamentals"]}</script></head><body><main><header><nav><ul><li><a href=/>Blog</a></li><li><a href=/about/>@Karthik</a></li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></header><hr><section><h2 itemprop="name headline">Understanding SOLID Principles</h2><p class=meta><time itemprop=datePublished datetime=2023-01-24>January 24, 2023</time> &bull;
+<a href=/tags/fundamentals>fundamentals</a></p><span itemprop=articleBody><p>SOLID is an acronym of the following:</p><ol><li>S: Single Responsibility Principle</li><li>O: Open Closed Principle</li><li>L: Liskov&rsquo;s Substitution Principle</li><li>I: Interface Segregation Principle</li><li>D: Dependency Inversion Principle</li></ol><hr><p><strong>1. What is Single Responsibility Principle ?</strong></p><p>S stands for One class should have one, and only one, responsibility. S tells us to write a class for only one goal. As long as we write a class for only one goal, we will sustain high maintainability and visibility control across the application modules. In other words, by sustaining high maintainability, this principle has a significant business impact, and by providing visibility control across the application modules, this principle sustains encapsulation.</p><p>For example, the following class computes the area and converts it to inches:</p><pre><code class=language-java>public class RectangleAreaCalculator {
+    private static final double INCH_TERM = 0.0254d;
+    private final int width;
+    private final int height;
+    
+    public RectangleAreaCalculator(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+    
+    public int area() {
+        return width * height;
+    }
+    
+    // this method breaks SRP
+    public double metersToInches(int area) {
+        return area / INCH_TERM;
+    } 
+}
+</code></pre><p>The situation can be remedied by removing the metersToInches() method from RectangleAreaCalculator, as follows:</p><pre><code class=language-java>public class RectangleAreaCalculator {
+    private final int width;
+    private final int height;
+    
+    public RectangleAreaCalculator(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+ 
+    public int area() {
+        return width * height;
+    } 
+}
+</code></pre><p>Now, RectangleAreaCalculator does only one thing (it computes the rectangle area), thereby observing the SRP.</p><p>Next, metersToInches() can be extracted in a separate class.</p><pre><code class=language-java>public class AreaConverter {
+    private static final double INCH_TERM = 0.0254d;
+    private static final double FEET_TERM = 0.3048d;
+    
+    public double metersToInches(int area) {
+        return area / INCH_TERM;
+    }
+    
+    public double metersToFeet(int area) {
+        return area / FEET_TERM;
+    }
+}
+</code></pre><hr><p><strong>2. What is Open Closed Principle ?</strong></p><p>O stands for Software components should be open for extension, but closed for modification. O sustains the fact that our classes should not contain constraints that will require other developers to modify our classes in order to accomplish their job – other developers should only extend our classes to accomplish their job.</p><p>Each shape will implement the Shape interface. Therefore, the code is pretty straightforward:</p><pre><code class=language-java>    public interface Shape { 
+    }
+    
+    public class Rectangle implements Shape {
+        private final int width;
+        rivate final int height;
+        // constructor and getters omitted for brevity
+    }
+    
+    public class Circle implements Shape {
+        private final int radius;
+        // constructor and getter omitted for brevity
+}
+</code></pre><p>At this point, we can easily use the constructors of these classes to create rectangles and circles of different sizes. Once we have several shapes, we want to sum their areas. For this, we can define an AreaCalculator class as follows:</p><pre><code class=language-java>    public class AreaCalculator {
+        private final List&lt;Shape&gt; shapes;
+        public AreaCalculator(List&lt;Shape&gt; shapes) {
+            this.shapes = shapes;
+    }
+ 
+    // adding more shapes requires us to modify this class
+    // this code is not OCP compliant
+    public double sum() {
+        int sum = 0;
+        for (Shape shape : shapes) {
+            if (shape.getClass().equals(Circle.class)) {
+                sum += Math.PI * Math.pow(((Circle) shape).getRadius(), 2);
+            } else 
+            if(shape.getClass().equals(Rectangle.class)) {
+                sum += ((Rectangle) shape).getHeight() * ((Rectangle) shape).getWidth();
+            }
+        }
+        return sum;
+    }
+}
+</code></pre><p>Since each shape has its own formula for area, we require an if-else (or switch) structure to determine the type of shape. Furthermore, if we want to add a new shape (for example, a triangle), we have to modify the AreaCalculator class to add a new if case. This means that the preceding code breaks the OCP.</p><p>The main idea is to extract from AreaCalculator the area formula of each shape in the corresponding Shape class. Hence, the rectangle will compute its area, the circle as well, and so on. To enforce the fact that each shape must calculate its area, we add the area() method to the Shape contract:</p><pre><code class=language-java>public interface Shape { 
+    public double area();
+}
+</code></pre><p>Next, Rectangle and Circle implements Shape as follows:</p><pre><code class=language-java> public class Rectangle implements Shape {
+    private final int width;
+    private final int height;
+
+ public Rectangle(int width, int height) {
+    this.width = width;
+    this.height = height;
+ }
+
+  public double area() {
+    return width * height;
+ }
+}
+
+public class Circle implements Shape {
+    private final int radius;
+    public Circle(int radius) {
+        this.radius = radius;
+    }
+ 
+    @Override
+    public double area() {
+        return Math.PI * Math.pow(radius, 2);
+    }
+}
+</code></pre><p>Now, the AreaCalculator can loop the list of shapes and sum the areas by calling the proper area() method.</p><pre><code class=language-java>public class AreaCalculator {
+    private final List&lt;Shape&gt; shapes;
+    public AreaCalculator(List&lt;Shape&gt; shapes) {
+        this.shapes = shapes;
+    }
+
+     public double sum() {
+        int sum = 0;
+        for (Shape shape : shapes) {
+            sum += shape.area();
+        }
+        return sum;
+    }
+}
+</code></pre><hr><p><strong>3. What is Liskov&rsquo;s Substitution Principle ?</strong></p><p>L stands for Derived types must be completely substitutable for their base types. L sustains the fact that objects of subclasses must behave in the same way as the objects of superclasses, so every subclass (or derived class) should be capable of substituting their superclass without any issues. Most of the time, this is useful for runtime-type identification followed by the cast. For example, consider foo(p), where p is of the type T. Then, foo(q) should work fine if q is of the type S and S is a subtype of T.</p><p>Suppose we have a class hierarchy for different shapes, with a base class Shape and two derived classes Circle and Rectangle. Each class has a method area() to calculate the area of the shape.</p><pre><code class=language-java>public abstract class Shape {
+    public abstract double area();
+}
+
+public class Circle extends Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public double area() {
+        return 3.14 * radius * radius;
+    }
+}
+
+public class Rectangle extends Shape {
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    public double area() {
+        return length * width;
+    }
+}
+</code></pre><p>Now suppose we have a method calculateTotalArea that takes an array of shapes and returns the total area of all the shapes in the array:</p><pre><code>public static double calculateTotalArea(Shape[] shapes) {
+    double totalArea = 0.0;
+    for (Shape shape : shapes) {
+        totalArea += shape.area();
+    }
+    return totalArea;
+}
+</code></pre><p>According to Liskov&rsquo;s Substitution Principle, we should be able to pass an array of Circle or Rectangle objects to this method without any problems, since both classes inherit from the Shape base class and implement the area() method.</p><pre><code>Circle circle = new Circle(5);
+Rectangle rectangle = new Rectangle(3, 4);
+Shape[] shapes = {circle, rectangle};
+double totalArea = calculateTotalArea(shapes); // returns 83.5
+</code></pre><p>This demonstrates that the Circle and Rectangle classes can be used interchangeably with the Shape class, without causing any errors or unexpected behavior in the program.</p><hr><p><strong>4. What is Interface Segregation Principle ?</strong></p><p>I stands for the Interface Segregation Principle (ISP). I stands for Clients should not be forced to implement unnecessary methods that they will not use.</p><p>This principle stands for Clients should not be forced to implement unnecessary methods that they will not use. In other words, we should split an interface into two or more interfaces until clients are not forced to implement methods that they will not use. For example, consider the Connection interface, which has three methods: connect(), socket(), and http().</p><pre><code class=language-java>public interface Connection {
+    public void socket();
+    public void http();
+    public void connect();
+}
+</code></pre><p>WwwPingConnection is a class that pings different websites via HTTP; hence, it requires the http() method, but doesn&rsquo;t need the socket() method. Notice the dummy socket() implementation – since WwwPingConnection implements Connection, it is forced to provide an implementation to the socket() method as well:</p><pre><code class=language-java>public class WwwPingConnection implements Connection {
+    private final String www;
+
+    public WwwPingConnection(String www) {
+        this.www = www;
+    }
+
+    @Override
+    public void http() {
+        System.out.println(&quot;Setup an HTTP connection to &quot; + www);
+    }
+
+    @Override
+    public void connect() {
+    System.out.println(&quot;Connect to &quot; + www);
+    }
+
+    // this method breaks Interface Segregation Principle
+    @Override
+    public void socket() {
+    }
+}
+</code></pre><p>Having an empty implementation or throwing a meaningful exception from methods that are not needed, such as socket(), is a really ugly solution. Check the following code:</p><pre><code>WwwPingConnection www = new WwwPingConnection 'www.yahoo.com');
+www.socket(); // we can call this method!
+www.connect();
+</code></pre><p>What do we expect to obtain from this code? A working code that does nothing, or an exception caused by the connect() method because there is no HTTP endpoint? Or, we can throw an exception from socket() of the type: Socket is not supported!. Then, why is it here?! Hence, it is now time to refactor the code to follow the ISP. In order to comply with the ISP, we need to segregate the Connection interface. Since the connect() method is required by any client, we leave it in this interface.</p><pre><code class=language-java>public interface Connection {
+    public void connect();
+}
+</code></pre><p>The http() and socket() methods are distributed in to separate interfaces that extend the Connection interface as follows:</p><pre><code class=language-java>public interface HttpConnection extends Connection {
+    public void http();
+    }
+public interface SocketConnection extends Connection {
+    public void socket();
+}
+</code></pre><p>This time, the WwwPingConnection class can implement only the HttpConnection interface and use the http() method:</p><pre><code class=language-java>public class WwwPingConnection implements HttpConnection {
+    private final String www;
+    
+    public WwwPingConnection(String www) {
+        this.www = www;
+    }
+
+    @Override
+    public void http() {
+        System.out.println(&quot;Setup an HTTP connection to &quot; + www);
+    }
+ 
+    @Override
+    public void connect() {
+        System.out.println(&quot;Connect to &quot; + www);
+    } 
+}
+</code></pre><hr><p><strong>5. What is Dependency Inversion Principle ?</strong></p><p>D stands for the Dependency Inversion Principle. This principle stands for Depend on abstractions, not on concretions. This means that we should rely on abstract layers to bind concrete modules together instead of having concrete modules that depend on other concrete modules. To accomplish this, all concrete modules should expose abstractions only.</p><p>A database JDBC URL, PostgreSQLJdbcUrl, can be a low-level module, while a class that connects to the database may represent a high-level module, such as ConnectToDatabase#connect().</p><pre><code class=language-java>public class PostgreSQLJdbcUrl {
+    private final String dbName;
+    public PostgreSQLJdbcUrl(String dbName) {
+        this.dbName = dbName;
+    }
+    public String get() {
+        return &quot;jdbc:// ... &quot; + this.dbName;
+    }
+}
+
+public class ConnectToDatabase {
+    public void connect(PostgreSQLJdbcUrl postgresql) {
+        System.out.println(&quot;Connecting to &quot; + postgresql.get());
+    }
+}
+</code></pre><p>If we create another type of JDBC URL (for example, MySQLJdbcUrl), then we cannot use the preceding connect(PostgreSQLJdbcUrl postgreSQL) method. So, we have to drop this dependency on concrete and create a dependency on abstraction.</p><p>The abstraction can be represented by an interface that should be implemented by each type of JDBC URL</p><pre><code>public interface JdbcUrl {
+    public String get();
+}
+
+</code></pre><p>Next, PostgreSQLJdbcUrl implements JdbcUrl to return a JDBC URL specific to PostgreSQL databases:</p><pre><code class=language-java>public class PostgreSQLJdbcUrl implements JdbcUrl {
+    private final String dbName;
+
+    public PostgreSQLJdbcUrl(String dbName) {
+        this.dbName = dbName;
+    }
+
+    @Override
+    public String get() {
+        return &quot;jdbc:// ... &quot; + this.dbName;
+    }
+}
+</code></pre><p>In precisely the same manner, we can write MySQLJdbcUrl, OracleJdbcUrl, and so on. Finally, the ConnectToDatabase#connect() method is dependent on the JdbcUrl abstraction, so it can connect to any JDBC URL that implements this abstraction.</p><pre><code class=language-java>public class ConnectToDatabase {
+    public void connect(JdbcUrl jdbcUrl) {
+        System.out.println(&quot;Connecting to &quot; + jdbcUrl.get());
+ }
+}
+</code></pre><p>That&rsquo;s it, now you have solid understanding of SOLID principles.</p></span></section><hr><footer><nav><ul><li>© 2023 Karthik Selvam</li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></footer></main></body></html>
