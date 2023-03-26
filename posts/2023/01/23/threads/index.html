@@ -1,0 +1,444 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Ronalds Vilcins - https://karthikselvam.com/"><title>Fundamentals of Multithreading | Karthik Selvam</title><meta name=description content="2023"><meta name=twitter:card content="summary"><meta name=twitter:title content="Fundamentals of Multithreading"><meta name=twitter:description content="2023"><meta property="og:title" content="Fundamentals of Multithreading"><meta property="og:description" content="2023"><meta property="og:type" content="article"><meta property="og:url" content="https://karthikselvam.com/posts/2023/01/23/threads/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-01-23T00:00:00+00:00"><meta property="article:modified_time" content="2023-01-23T00:00:00+00:00"><meta itemprop=name content="Fundamentals of Multithreading"><meta itemprop=description content="2023"><meta itemprop=datePublished content="2023-01-23T00:00:00+00:00"><meta itemprop=dateModified content="2023-01-23T00:00:00+00:00"><meta itemprop=wordCount content="3085"><meta itemprop=keywords content="fundamentals,"><link rel=canonical href=https://karthikselvam.com/posts/2023/01/23/threads/><link rel=dns-prefetch href=https://www.google-analytics.com><link href=https://www.google-analytics.com rel=preconnect crossorigin><link rel=alternate type=application/atom+xml title="Karthik Selvam" href=https://karthikselvam.com/atom.xml><link rel=alternate type=application/json title="Karthik Selvam" href=https://karthikselvam.com/feed.json><script src=https://kit.fontawesome.com/8d06e0a013.js crossorigin=anonymous></script>
+<link rel="shortcut icon" type=image/png href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="><style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeSpeed}.posts hr{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:none;border-bottom:1px #353535;flex:1 0 1rem}main{max-width:70ch;padding:2ch;margin:auto}a,body{color:#353535}::selection,a:focus,a:hover{background-color:#353535;color:#fff}.meta{margin:0 0 2.5rem}.tags::before{content:"\2022";margin-left:1rem}code,pre{color:#353535;font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;border:1px solid #353535;font-size:small}code{padding:.1rem;border:none}pre{padding:.5rem;overflow-x:auto}pre code{border:none}img{max-width:100%;border:1px solid #353535}hr{background:#353535;height:1px;border:0}ul{list-style-type:square}ul,ol{padding-left:1.2rem}header li,footer li{display:inline;text-transform:uppercase}header a,footer a{text-decoration:none}header ul,footer ul{justify-content:space-between;display:flex}header,section,footer{padding:1rem 0}blockquote{border-left:5px solid #353535;padding-left:1rem}.posts ul,header ul,footer ul{list-style:none}.posts,header ul,footer ul{padding:0}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.7rem}.posts li a,.posts li div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}.hash{opacity:.25;text-decoration:none}table{border-collapse:collapse;text-align:left;width:100%}table tr{background:#fff;border-bottom:1px solid}table th,table td{padding:10px 20px}</style><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"posts","name":"Fundamentals of Multithreading","headline":"Fundamentals of Multithreading","alternativeHeadline":"","description":"2023","inLanguage":"en-us","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/karthikselvam.com\/posts\/2023\/01\/23\/threads\/"},"author":{"@type":"Person","name":""},"creator":{"@type":"Person","name":""},"accountablePerson":{"@type":"Person","name":""},"copyrightHolder":"Karthik Selvam","copyrightYear":"2023","dateCreated":"2023-01-23T00:00:00.00Z","datePublished":"2023-01-23T00:00:00.00Z","dateModified":"2023-01-23T00:00:00.00Z","publisher":{"@type":"Organization","name":"Karthik Selvam","url":"https://karthikselvam.com/","logo":{"@type":"ImageObject","url":"https:\/\/karthikselvam.com\/","width":"32","height":"32"}},"image":"https://karthikselvam.com/","url":"https:\/\/karthikselvam.com\/posts\/2023\/01\/23\/threads\/","wordCount":"3085","genre":["fundamentals"],"keywords":["fundamentals"]}</script></head><body><main><header><nav><ul><li><a href=/>Blog</a></li><li><a href=/about/>@Karthik</a></li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></header><hr><section><h2 itemprop="name headline">Fundamentals of Multithreading</h2><p class=meta><time itemprop=datePublished datetime=2023-01-23>January 23, 2023</time> &bull;
+<a href=/tags/fundamentals>fundamentals</a></p><span itemprop=articleBody><p><strong>1. Thread creation</strong> : In Java, you can create a thread by either extending the Thread class or implementing the Runnable interface. Here&rsquo;s how you can do it:</p><ul><li>Extending the Thread class:</li></ul><pre><code class=language-java>public class MyThread extends Thread {
+    public void run() {
+        // code to be executed in this thread
+    }
+}
+</code></pre><p>You can create an instance of the MyThread class and start the thread using the start() method:</p><pre><code class=language-java>MyThread myThread = new MyThread();
+myThread.start();
+</code></pre><ul><li>Implementing the Runnable interface:</li></ul><pre><code class=language-java>public class MyRunnable implements Runnable {
+    public void run() {
+        // code to be executed in this thread
+    }
+}
+</code></pre><p>You can create an instance of the MyRunnable class and pass it to a Thread object&rsquo;s constructor:</p><pre><code class=language-java>MyRunnable myRunnable = new MyRunnable();
+Thread thread = new Thread(myRunnable);
+thread.start();
+
+</code></pre><p>In both cases, the run() method contains the code that will be executed when the thread is started. You should not call the run() method directly, but rather use the start() method to start the thread.</p><hr><p><strong>2. Thread Termination</strong> :
+Following are reasons to terminate a thread:</p><ul><li><p>Threads in a computer consume various resources, such as memory, kernel resources, CPU cycles, and cache memory.</p></li><li><p>If a thread finished its work, but the application is still running we want to clean up the thread&rsquo;s resources.</p></li><li><p>If a thread is misbehaving, we want to stop it.</p></li><li><p>The application will not stop as long as at least one thread is still running.</p></li></ul><p>In Java, you can terminate a thread by calling the interrupt() method on the thread object. This method sets a flag on the thread to indicate that it should stop executing. However, it is up to the thread&rsquo;s code to check for the interrupt flag and terminate gracefully.</p><pre><code class=language-java>public class MyThread extends Thread {
+    @Override
+    public void run() {
+        while (!Thread.currentThread().isInterrupted()) {
+            // do some work
+        }
+        System.out.println(&quot;Thread is terminating.&quot;);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MyThread thread = new MyThread();
+        thread.start();
+
+        // Interrupt the thread
+        thread.interrupt();
+    }
+}
+
+</code></pre><p>In this example, the MyThread class extends the Thread class and overrides the run() method to do some work in a loop. Inside the loop, the thread checks if it has been interrupted using the isInterrupted() method.</p><p>In the Main class, we create an instance of MyThread and start it. When the interrupt() method is called, the isInterrupted() method in the MyThread class will return true, causing the thread to exit the loop and terminate gracefully.</p><hr><p><strong>3. Daemon Threads</strong> :
+In Java, a daemon thread is a type of thread that runs in the background and does not prevent the Java Virtual Machine (JVM) from exiting when the program finishes execution.</p><p>Daemon threads are typically used for tasks that need to run continuously in the background, such as garbage collection or other system-level tasks. They are also commonly used in server applications to perform tasks like cleaning up old connections or handling periodic maintenance tasks.</p><p>To create a daemon thread in Java, you can use the setDaemon() method on a Thread object. For example, the following code creates a new thread and sets it as a daemon thread:</p><pre><code class=language-java>Thread myThread = new Thread(new Runnable() {
+    public void run() {
+        // Do some background task here
+    }
+});
+myThread.setDaemon(true);
+myThread.start();
+
+</code></pre><p>Once a thread is set as a daemon thread, you cannot change it back to a non-daemon thread.</p><hr><p><strong>4. Joining Threads</strong> :</p><p>Joining threads in Java is done using the join() method, which allows one thread to wait for another thread to complete before continuing. Here&rsquo;s a simple example of how to use the join() method to join two threads:</p><pre><code class=language-java>public class JoinExample {
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(() -&gt; {
+            System.out.println(&quot;Thread 1 is running&quot;);
+            try {
+                Thread.sleep(2000); // simulate some work being done
+            } catch (InterruptedException e) {
+                System.out.println(&quot;Thread 1 was interrupted&quot;);
+            }
+            System.out.println(&quot;Thread 1 is finished&quot;);
+        });
+
+        Thread t2 = new Thread(() -&gt; {
+            System.out.println(&quot;Thread 2 is running&quot;);
+            try {
+                Thread.sleep(1000); // simulate some work being done
+            } catch (InterruptedException e) {
+                System.out.println(&quot;Thread 2 was interrupted&quot;);
+            }
+            System.out.println(&quot;Thread 2 is finished&quot;);
+        });
+
+        t1.start();
+        t2.start();
+
+        // wait for both threads to finish
+        t1.join();
+        t2.join();
+
+        System.out.println(&quot;Both threads have finished&quot;);
+    }
+}
+</code></pre><p>In this example, we create two threads t1 and t2 and start them. We then use the join() method to wait for both threads to finish before printing out a message indicating that both threads have finished.</p><p>When t1.join() and t2.join() are called, the main thread will block and wait until both t1 and t2 have finished executing. Once both threads have completed, the main thread will continue executing and print out the final message.</p><hr><p><strong>5. Resource Sharing in Threads</strong></p><p>In Java, resource sharing can be achieved using the concept of synchronized monitors. A synchronized monitor is a mechanism that allows only one thread to access a shared resource at a time.</p><p>To use synchronized monitors in Java, you can use the synchronized keyword to define a block of code that needs to be executed by only one thread at a time. The synchronized keyword can be applied to a method or a block of code.</p><p>Here&rsquo;s an example of using synchronized monitors to share a resource in Java:</p><pre><code class=language-java>public class SharedResource {
+    private int value;
+
+    public synchronized void increment() {
+        value++;
+    }
+
+    public synchronized int getValue() {
+        return value;
+    }
+}
+
+public class ResourceSharingExample {
+    public static void main(String[] args) {
+        SharedResource sharedResource = new SharedResource();
+
+        // create multiple threads to access the shared resource
+        Thread t1 = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 1000; i++) {
+                sharedResource.increment();
+            }
+        });
+
+        Thread t2 = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 1000; i++) {
+                sharedResource.increment();
+            }
+        });
+
+        // start the threads
+        t1.start();
+        t2.start();
+
+        // wait for the threads to finish
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // print the final value of the shared resource
+        System.out.println(&quot;Value: &quot; + sharedResource.getValue());
+    }
+}
+</code></pre><p>In this example, the SharedResource class represents a shared resource that contains a single integer value. The increment() method and getValue() method are both marked as synchronized, which means that only one thread can access them at a time.</p><p>The ResourceSharingExample class creates two threads that access the shared resource using the increment() method. The threads run concurrently, but because of the synchronized monitors, only one thread can execute the increment() method at a time. The final value of the shared resource is printed at the end of the program, which should be 2000 in this case.</p><p>We also achieve some result using Object lock instead of synchronized monitors in Java.</p><pre><code class=language-java>public class SharedResource {
+    private int value;
+    private final Object lock = new Object();
+
+    public void increment() {
+        synchronized (lock) {
+            value++;
+        }
+    }
+
+    public int getValue() {
+        synchronized (lock) {
+            return value;
+        }
+    }
+}
+
+public class ResourceSharingExample {
+    public static void main(String[] args) {
+        SharedResource sharedResource = new SharedResource();
+
+        // create multiple threads to access the shared resource
+        Thread t1 = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 1000; i++) {
+                sharedResource.increment();
+            }
+        });
+
+        Thread t2 = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 1000; i++) {
+                sharedResource.increment();
+            }
+        });
+
+        // start the threads
+        t1.start();
+        t2.start();
+
+        // wait for the threads to finish
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // print the final value of the shared resource
+        System.out.println(&quot;Value: &quot; + sharedResource.getValue());
+    }
+}
+</code></pre><p>Using mutiple object locks threads can access the shared resources concurrently without interfering with each other.</p><pre><code class=language-java>public class SharedResource {
+    private int value1;
+    private int value2;
+    private final Object lock1 = new Object();
+    private final Object lock2 = new Object();
+
+    public void incrementValue1() {
+        synchronized (lock1) {
+            value1++;
+        }
+    }
+
+    public int getValue1() {
+        synchronized (lock1) {
+            return value1;
+        }
+    }
+
+    public void incrementValue2() {
+        synchronized (lock2) {
+            value2++;
+        }
+    }
+
+    public int getValue2() {
+        synchronized (lock2) {
+            return value2;
+        }
+    }
+}
+
+public class ResourceSharingExample {
+    public static void main(String[] args) {
+        SharedResource sharedResource = new SharedResource();
+
+        // create multiple threads to access the shared resource
+        Thread t1 = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 1000; i++) {
+                sharedResource.incrementValue1();
+            }
+        });
+
+        Thread t2 = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 1000; i++) {
+                sharedResource.incrementValue2();
+            }
+        });
+
+        // start the threads
+        t1.start();
+        t2.start();
+
+        // wait for the threads to finish
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // print the final values of the shared resources
+        System.out.println(&quot;Value1: &quot; + sharedResource.getValue1());
+        System.out.println(&quot;Value2: &quot; + sharedResource.getValue2());
+    }
+}
+
+</code></pre><p>In this example, the SharedResource class contains two object locks, lock1 and lock2, and two methods for each value, incrementValue1(), getValue1(), incrementValue2(), and getValue2(). The incrementValue1() method and getValue1() method use lock1 to synchronize access to value1, while the incrementValue2() method and getValue2() method use lock2 to synchronize access to value2.</p><p>The ResourceSharingExample class creates two threads that access the shared resources using incrementValue1() and incrementValue2() methods. Because two different object locks are used to synchronize access to two different values, the <strong>threads can access the shared resources concurrently without interfering with each other</strong>. The final values of the shared resources are printed at the end of the program.</p><hr><p><strong>6. Reentrant lock</strong></p><p>A ReentrantLock is a synchronization mechanism in Java that provides a way to protect shared resources from simultaneous access by multiple threads. It is called &ldquo;reentrant&rdquo; because a thread that already holds the lock can acquire it again without blocking, unlike traditional synchronization using the synchronized keyword.</p><pre><code class=language-java>import java.util.concurrent.locks.ReentrantLock;
+
+public class SharedResource {
+    private int value;
+    private ReentrantLock lock = new ReentrantLock();
+
+    public void incrementValue() {
+        lock.lock();
+        try {
+            value++;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public int getValue() {
+        lock.lock();
+        try {
+            return value;
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+
+public class ResourceSharingExample {
+    public static void main(String[] args) {
+        SharedResource sharedResource = new SharedResource();
+
+        // create multiple threads to access the shared resource
+        Thread t1 = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 1000; i++) {
+                sharedResource.incrementValue();
+            }
+        });
+
+        Thread t2 = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 1000; i++) {
+                sharedResource.incrementValue();
+            }
+        });
+
+        // start the threads
+        t1.start();
+        t2.start();
+
+        // wait for the threads to finish
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // print the final value of the shared resource
+        System.out.println(&quot;Value: &quot; + sharedResource.getValue());
+    }
+}
+</code></pre><p>In this example, the SharedResource class contains a single ReentrantLock and two methods for incrementing and retrieving the value variable. The lock object is used to synchronize access to the value variable.</p><p>The ResourceSharingExample class creates two threads that access the shared resource using the incrementValue() method. Because a ReentrantLock is used to synchronize access to the shared resource, the threads can access the shared resource concurrently without interfering with each other.</p><p>ReentrantLock is like a special key that allows threads to take turns accessing a shared resource. And if a thread already has the key, it can use it again without waiting in line. It provides query methods for testing lock&rsquo;s internal state.</p><p>Example of using ReentrantLock and tryLock() method in Java:</p><pre><code class=language-java>import java.util.concurrent.locks.ReentrantLock;
+
+public class Example {
+    public static void main(String[] args) {
+        ReentrantLock lock = new ReentrantLock();
+
+        // acquire the lock using tryLock() method
+        boolean isLockAcquired = lock.tryLock();
+
+        if (isLockAcquired) {
+            try {
+                // perform critical section operations here
+                System.out.println(&quot;Lock acquired and critical section entered.&quot;);
+            } finally {
+                // release the lock
+                lock.unlock();
+                System.out.println(&quot;Lock released.&quot;);
+            }
+        } else {
+            System.out.println(&quot;Could not acquire lock. Another thread is holding the lock.&quot;);
+        }
+    }
+}
+</code></pre><p>Example of using ReentrantReadWriteLock and tryLock() method in Java:</p><pre><code class=language-java>import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+public class Example {
+    private Map&lt;String, String&gt; map = new HashMap&lt;&gt;();
+    private ReadWriteLock lock = new ReentrantReadWriteLock();
+
+    public void put(String key, String value) {
+        lock.writeLock().lock(); // acquire write lock
+        try {
+            map.put(key, value); // perform write operation
+        } finally {
+            lock.writeLock().unlock(); // release write lock
+        }
+    }
+
+    public String get(String key) {
+        lock.readLock().lock(); // acquire read lock
+        try {
+            return map.get(key); // perform read operation
+        } finally {
+            lock.readLock().unlock(); // release read lock
+        }
+    }
+}
+</code></pre><p>In this example, we have a Map object that is accessed by multiple threads. To ensure thread safety and prevent race conditions, we use a ReadWriteLock to control access to the map.</p><p>The put() method acquires a write lock using the writeLock() method, performs a write operation on the map, and then releases the write lock using the unlock() method.</p><p>The get() method acquires a read lock using the readLock() method, performs a read operation on the map, and then releases the read lock using the unlock() method.</p><p>With this approach, multiple threads can simultaneously read from the map, but only one thread can write to the map at a time. This can significantly improve performance in scenarios where reads are much more frequent than writes.</p><hr><p><strong>7. Volatile Keyword</strong></p><p>In Java, the volatile keyword is used as a modifier to indicate that a variable&rsquo;s value may be modified by multiple threads at the same time.</p><p>When a variable is marked as volatile, the JVM ensures that any write to that variable is immediately visible to other threads that may access it. This means that changes made to the variable by one thread will be immediately reflected in the value seen by other threads. Without the volatile keyword, there is no guarantee that changes made by one thread will be immediately visible to another thread, which can lead to hard-to-detect bugs.</p><p>The volatile keyword can be used with any primitive type, as well as with references to objects. However, it&rsquo;s important to note that using volatile does not provide atomicity, which means that if multiple threads try to modify the same variable at the same time, race conditions and inconsistencies can still occur.</p><p>In general, the volatile keyword should only be used when there is a specific need for multiple threads to access the same variable, and the programmer is sure that the volatile variable will be accessed in a safe and consistent way.</p><p>Here&rsquo;s an example to illustrate the use of volatile keyword in Java:</p><pre><code class=language-java>public class Counter {
+    private volatile int count;
+
+    public synchronized void increment() {
+        count++;
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+</code></pre><p>In this example, we have a Counter class with a private volatile integer field called count. The increment() method is used to increment the value of count by one, and the getCount() method returns the current value of count.</p><p>Without the volatile keyword, there is no guarantee that changes made to count by one thread will be immediately visible to another thread. However, since count is marked as volatile, the JVM ensures that any write to count is immediately visible to other threads that may access it.</p><p>Consider the following example usage of the Counter class by multiple threads:</p><pre><code class=language-java>public class Main {
+    public static void main(String[] args) {
+        Counter counter = new Counter();
+
+        Thread thread1 = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 10000; i++) {
+                counter.increment();
+            }
+        });
+
+        Thread thread2 = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 10000; i++) {
+                counter.increment();
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(&quot;Final count: &quot; + counter.getCount());
+    }
+}
+</code></pre><p>In this example, we create two threads, thread1 and thread2, which both increment the Counter object&rsquo;s count field 10,000 times. We then wait for both threads to complete using the join() method, and output the final value of count.</p><p>Without the volatile keyword on the count field in the Counter class, there is no guarantee that the final value of count will be 20,000. However, with count marked as volatile, we can be sure that changes made by one thread will be immediately visible to the other thread, and the final value of count will be 20,000.</p><hr><p><strong>8. Deadlocks</strong>
+In Java, a deadlock occurs when two or more threads are blocked, waiting for each other to release the locks they hold. As a result, none of the threads can make progress and the program hangs.</p><p>Here&rsquo;s an example to illustrate how a deadlock can occur in Java:</p><pre><code class=language-java>public class DeadlockExample {
+    private Object lock1 = new Object();
+    private Object lock2 = new Object();
+
+    public void method1() {
+        synchronized (lock1) {
+            System.out.println(&quot;Acquired lock1 in method1&quot;);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {}
+            synchronized (lock2) {
+                System.out.println(&quot;Acquired lock2 in method1&quot;);
+            }
+        }
+    }
+
+    public void method2() {
+        synchronized (lock2) {
+            System.out.println(&quot;Acquired lock2 in method2&quot;);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {}
+            synchronized (lock1) {
+                System.out.println(&quot;Acquired lock1 in method2&quot;);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        final DeadlockExample example = new DeadlockExample();
+        Thread thread1 = new Thread(new Runnable() {
+            public void run() {
+                example.method1();
+            }
+        });
+        Thread thread2 = new Thread(new Runnable() {
+            public void run() {
+                example.method2();
+            }
+        });
+        thread1.start();
+        thread2.start();
+    }
+}
+</code></pre><p>In this example, there are two methods, method1() and method2(), which each synchronize on a different lock. The main() method creates two threads that each call one of these methods.</p><p>Now, suppose that thread1 acquires lock1 and then calls method2(), which tries to acquire lock2. At the same time, thread2 has already acquired lock2 and is trying to acquire lock1. Both threads are blocked waiting for the other thread to release its lock, causing a deadlock.</p><p>Deadlock can occur in a concurrent system when the following conditions are met:</p><ul><li><p>Mutual Exclusion: At least one resource is held in a mutually exclusive mode, meaning only one thread can use it at a time.</p></li><li><p>Hold and Wait: A thread is holding at least one resource and is waiting to acquire additional resources that are currently held by other threads.</p></li><li><p>No Preemption: Resources cannot be preempted or taken away from threads that are holding them. The only way to release a resource is for the thread to voluntarily release it.</p></li><li><p>Circular Wait: A circular chain of threads exists, where each thread is waiting for a resource that is held by the next thread in the chain. In other words, there is a cycle in the resource allocation graph.</p></li></ul><p>To avoid deadlocks, you can use some techniques like:</p><ul><li><p>Acquire locks in a fixed order.</p></li><li><p>Use timeouts when acquiring locks to avoid indefinitely waiting for a lock.</p></li><li><p>Use tryLock() instead of synchronized blocks to acquire locks in a non-blocking way.</p></li><li><p>Use higher-level concurrency utilities like java.util.concurrent classes, which handle synchronization and - locking automatically.</p></li></ul></span></section><hr><footer><nav><ul><li>© 2023 Karthik Selvam</li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></footer></main></body></html>
