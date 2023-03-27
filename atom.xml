@@ -606,7 +606,257 @@ URL data storage: 200 bytes x 100,000,000 = 20,000,000,000 = 20 GB per day&lt;/p
 URL bandwidth: 20 GB per day / 100,000 seconds = 0.2 MB per second.&lt;/p>
 &lt;p>&lt;strong>Memory/Cache&lt;/strong>:
 Assuming we want to cache 20 urls per user, 200 bytes * 100,000,000 daily users * 20 = 20 GB * 20 = 400 GB of cache. If one machine/server can keep 150 GB of cache, we need 3 machines/servers for caching.&lt;/p>
-&lt;p>The framework outlined above provides a clear approach to tackle capacity estimation problems during interviews.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/capacity_estimation/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Fundamentals of Multithreading</title><link>https://karthikselvam.com/posts/2023/01/23/threads/</link><description>&lt;p>&lt;strong>1. Thread creation&lt;/strong> : In Java, you can create a thread by either extending the Thread class or implementing the Runnable interface. Here&amp;rsquo;s how you can do it:&lt;/p>
+&lt;p>The framework outlined above provides a clear approach to tackle capacity estimation problems during interviews.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/capacity_estimation/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Creational Design Patterns</title><link>https://karthikselvam.com/posts/2023/01/23/creational_patterns/</link><description>&lt;p>Creational Design Patterns&lt;/p>
+&lt;p>Creational design patterns solve common problems that arise during the creation of objects.&lt;/p>
+&lt;p>&lt;strong>1. Builder pattern&lt;/strong> : The Builder pattern is a creational design pattern that separates the construction of complex objects from their representation, allowing the same construction process to create different representations. This pattern is especially useful when creating objects that require many steps to initialize, and whose initialization steps are optional or may vary.&lt;/p>
+&lt;pre>&lt;code class="language-java">public class Car {
+private String make;
+private String model;
+private int year;
+private String color;
+private String engine;
+// Private constructor to enforce object creation through builder
+private Car(Builder builder) {
+this.make = builder.make;
+this.model = builder.model;
+this.year = builder.year;
+this.color = builder.color;
+this.engine = builder.engine;
+}
+public static class Builder {
+private String make;
+private String model;
+private int year;
+private String color;
+private String engine;
+public Builder make(String make) {
+this.make = make;
+return this;
+}
+public Builder model(String model) {
+this.model = model;
+return this;
+}
+public Builder year(int year) {
+this.year = year;
+return this;
+}
+public Builder color(String color) {
+this.color = color;
+return this;
+}
+public Builder engine(String engine) {
+this.engine = engine;
+return this;
+}
+public Car build() {
+return new Car(this);
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>In this example, the Car class has a private constructor to enforce object creation through the Builder. The Builder class has methods to set the different fields of the Car class, and a build() method to create the Car object.&lt;/p>
+&lt;p>Here&amp;rsquo;s an example of how to use the Builder to create a Car object:&lt;/p>
+&lt;pre>&lt;code class="language-java">Car car = new Car.Builder()
+.make(&amp;quot;Toyota&amp;quot;)
+.model(&amp;quot;Camry&amp;quot;)
+.year(2022)
+.color(&amp;quot;Silver&amp;quot;)
+.engine(&amp;quot;V6&amp;quot;)
+.build();
+&lt;/code>&lt;/pre>
+&lt;hr>
+&lt;p>&lt;strong>2. Factory pattern&lt;/strong> : The Factory pattern is a creational design pattern that provides a way to create objects without specifying the exact class of object that will be created. Instead, a factory class is used to create objects based on certain conditions or parameters.&lt;/p>
+&lt;pre>&lt;code class="language-java">public interface Car {
+public void drive();
+}
+public class Sedan implements Car {
+@Override
+public void drive() {
+System.out.println(&amp;quot;Driving a Sedan&amp;quot;);
+}
+}
+public class SUV implements Car {
+@Override
+public void drive() {
+System.out.println(&amp;quot;Driving an SUV&amp;quot;);
+}
+}
+public class CarFactory {
+public static Car createCar(String carType) {
+if(carType.equalsIgnoreCase(&amp;quot;Sedan&amp;quot;)) {
+return new Sedan();
+} else if(carType.equalsIgnoreCase(&amp;quot;SUV&amp;quot;)) {
+return new SUV();
+} else {
+throw new IllegalArgumentException(&amp;quot;Invalid car type: &amp;quot; + carType);
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>In this example, we have an interface called Car with a method called drive(), and two classes that implement the Car interface: Sedan and SUV. We also have a CarFactory class with a createCar() method that takes a carType parameter and creates a Car object based on the specified car type.&lt;/p>
+&lt;p>Here&amp;rsquo;s an example of how to use the CarFactory to create a Car object:&lt;/p>
+&lt;pre>&lt;code class="language-java">Car sedan = CarFactory.createCar(&amp;quot;Sedan&amp;quot;);
+sedan.drive(); // Output: &amp;quot;Driving a Sedan&amp;quot;
+Car suv = CarFactory.createCar(&amp;quot;SUV&amp;quot;);
+suv.drive(); // Output: &amp;quot;Driving an SUV&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>In this example, we create a Sedan and SUV object using the CarFactory.createCar() method, and then call the drive() method on each object to drive the car. The CarFactory class takes care of creating the correct type of Car object based on the input carType.&lt;/p>
+&lt;p>Advantages of using static method in factory method:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>It makes the method easily accessible: Since the method is static, it can be accessed directly from the class name, without the need to create an instance of the class.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>It simplifies the code: Since the method is static, it doesn&amp;rsquo;t require an instance of the class to be created, which can simplify the code.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>It is thread-safe: Static methods are thread-safe by default, which means that multiple threads can call the method simultaneously without causing any issues.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>&lt;strong>3. Abstract Factory pattern&lt;/strong> : The Abstract Factory Pattern is a creational design pattern that provides an interface for creating families of related or dependent objects without specifying their concrete classes. It is useful when you need to create a set of related objects that work together and have the same interface, but the concrete implementation of those objects may vary depending on some condition.&lt;/p>
+&lt;p>Here&amp;rsquo;s an example implementation of the Abstract Factory Pattern in Java:&lt;/p>
+&lt;pre>&lt;code class="language-java">public interface Car {
+public void drive();
+}
+public interface CarFactory {
+public Car createCar();
+}
+public class Sedan implements Car {
+@Override
+public void drive() {
+System.out.println(&amp;quot;Driving a Sedan&amp;quot;);
+}
+}
+public class SUV implements Car {
+@Override
+public void drive() {
+System.out.println(&amp;quot;Driving an SUV&amp;quot;);
+}
+}
+public class SedanFactory implements CarFactory {
+@Override
+public Car createCar() {
+return new Sedan();
+}
+}
+public class SUVFactory implements CarFactory {
+@Override
+public Car createCar() {
+return new SUV();
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>In this example, we have an interface called Car with a method called drive(), and an interface called CarFactory with a method called createCar(). We also have two classes that implement the Car interface: Sedan and SUV. Additionally, we have two classes that implement the CarFactory interface: SedanFactory and SUVFactory.&lt;/p>
+&lt;p>The SedanFactory and SUVFactory classes are responsible for creating Sedan and SUV objects, respectively. They implement the createCar() method to return a Car object of the corresponding type.&lt;/p>
+&lt;p>Here&amp;rsquo;s an example of how to use the Abstract Factory Pattern to create a set of related objects:&lt;/p>
+&lt;pre>&lt;code class="language-java">CarFactory sedanFactory = new SedanFactory();
+Car sedan = sedanFactory.createCar();
+sedan.drive(); // Output: &amp;quot;Driving a Sedan&amp;quot;
+CarFactory suvFactory = new SUVFactory();
+Car suv = suvFactory.createCar();
+suv.drive(); // Output: &amp;quot;Driving an SUV&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>In this example, we create two instances of CarFactory - SedanFactory and SUVFactory. We then use these factories to create Car objects of the corresponding type - Sedan and SUV. Finally, we call the drive() method on each object to drive the car.&lt;/p>
+&lt;p>The Abstract Factory Pattern makes it easy to create a set of related objects that work together and have the same interface, without specifying their concrete classes. This provides a lot of flexibility and makes it easier to modify the object creation process without affecting the rest of the code.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>4. Difference between factory and abstract factory&lt;/strong>
+The main difference between the Factory Pattern and the Abstract Factory Pattern is that the Factory Pattern creates individual objects, whereas the Abstract Factory Pattern creates families of related objects.&lt;/p>
+&lt;p>The Factory Pattern is used to create a single object of a specific type. It provides a single interface that can be used to create an object of a specific class, based on some condition. This pattern is useful when you need to create an object of a specific type and want to decouple the object creation process from the rest of the code.&lt;/p>
+&lt;p>On the other hand, the Abstract Factory Pattern is used to create a family of related objects. It provides an interface for creating families of related or dependent objects, without specifying their concrete classes. This pattern is useful when you need to create a set of related objects that work together and have the same interface, but the concrete implementation of those objects may vary depending on some condition.&lt;/p>
+&lt;p>In general, you would use the Factory Pattern when you need to create a single object of a specific type, and the Abstract Factory Pattern when you need to create a family of related objects that work together.&lt;/p>
+&lt;p>For example, let&amp;rsquo;s say you are building a car dealership application. You might use the Factory Pattern to create instances of individual car models, such as a Sedan or an SUV. However, you would use the Abstract Factory Pattern to create families of related objects, such as a family of Sedans that have the same engine type and features.&lt;/p>
+&lt;p>In summary, the Factory Pattern and the Abstract Factory Pattern are both useful creational design patterns, but they serve different purposes. The Factory Pattern is used to create individual objects of a specific type, whereas the Abstract Factory Pattern is used to create families of related objects that work together.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>5. Singleton pattern&lt;/strong> :The Singleton pattern is a creational design pattern that ensures that a class has only one instance and provides a global point of access to it. This pattern is useful when we need to ensure that only one instance of a class is created and shared across the application.&lt;/p>
+&lt;p>Here&amp;rsquo;s an example implementation of the Singleton pattern in Java using the car concept:&lt;/p>
+&lt;pre>&lt;code class="language-java">public class CarSingleton {
+// Private static instance of the singleton class
+private static CarSingleton instance;
+// Private constructor to prevent direct instantiation of the class
+private CarSingleton() {
+}
+// Public static method to get the singleton instance
+public static CarSingleton getInstance() {
+if (instance == null) {
+instance = new CarSingleton();
+}
+return instance;
+}
+public void drive() {
+System.out.println(&amp;quot;Driving the car...&amp;quot;);
+}
+}
+// Client class
+public class CarClient {
+public static void main(String[] args) {
+CarSingleton car1 = CarSingleton.getInstance();
+CarSingleton car2 = CarSingleton.getInstance();
+// Both car1 and car2 will reference the same instance
+System.out.println(car1 == car2);
+car1.drive();
+car2.drive();
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>In this example, we have a CarSingleton class that implements the Singleton pattern. The class has a private static instance of itself and a private constructor to prevent direct instantiation of the class. The public static method getInstance() returns the singleton instance, creating it if it doesn&amp;rsquo;t already exist. Finally, we have a drive() method that simulates driving the car.&lt;/p>
+&lt;p>In the client class, we create two CarSingleton objects using the getInstance() method. Since the getInstance() method returns the same instance each time it is called, both car1 and car2 will reference the same instance of the CarSingleton class. Finally, we call the drive() method on both car1 and car2 to demonstrate that they are referencing the same object.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>5. Singleton pattern&lt;/strong> : The Prototype pattern is a creational design pattern that allows creating new objects by copying existing ones, without exposing their underlying implementation details. This pattern provides a way to create new objects efficiently by cloning existing instances, rather than creating them from scratch.&lt;/p>
+&lt;p>Here&amp;rsquo;s an example implementation of the Prototype pattern in Java using the car concept:&lt;/p>
+&lt;pre>&lt;code class="language-java">// Prototype interface
+public interface CarPrototype extends Cloneable {
+public CarPrototype clone();
+}
+// Concrete Prototype
+public class Car implements CarPrototype {
+private String make;
+private String model;
+private int year;
+public Car(String make, String model, int year) {
+this.make = make;
+this.model = model;
+this.year = year;
+}
+public void setMake(String make) {
+this.make = make;
+}
+public void setModel(String model) {
+this.model = model;
+}
+public void setYear(int year) {
+this.year = year;
+}
+@Override
+public CarPrototype clone() {
+return new Car(make, model, year);
+}
+@Override
+public String toString() {
+return &amp;quot;Car{&amp;quot; +
+&amp;quot;make='&amp;quot; + make + '\'' +
+&amp;quot;, model='&amp;quot; + model + '\'' +
+&amp;quot;, year=&amp;quot; + year +
+'}';
+}
+}
+// Client class
+public class CarClient {
+public static void main(String[] args) {
+CarPrototype carPrototype = new Car(&amp;quot;Toyota&amp;quot;, &amp;quot;Camry&amp;quot;, 2022);
+CarPrototype clonedCar1 = carPrototype.clone();
+CarPrototype clonedCar2 = carPrototype.clone();
+// Changing properties of cloned car
+((Car) clonedCar1).setYear(2023);
+((Car) clonedCar2).setMake(&amp;quot;Honda&amp;quot;);
+System.out.println(carPrototype.toString());
+System.out.println(clonedCar1.toString());
+System.out.println(clonedCar2.toString());
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>In this example, we have a CarPrototype interface that defines the clone() method. The Car class implements the CarPrototype interface and provides an implementation of the clone() method. The CarClient class demonstrates how the prototype pattern can be used to create new Car objects efficiently by cloning an existing Car object. In the client class, we create a carPrototype object with some initial values. We then create two clonedCar objects by calling the clone() method on the carPrototype object. Finally, we modify the properties of the clonedCar objects to demonstrate that they are separate instances.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/creational_patterns/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Fundamentals of Multithreading</title><link>https://karthikselvam.com/posts/2023/01/23/threads/</link><description>&lt;p>&lt;strong>1. Thread creation&lt;/strong> : In Java, you can create a thread by either extending the Thread class or implementing the Runnable interface. Here&amp;rsquo;s how you can do it:&lt;/p>
 &lt;ul>
 &lt;li>Extending the Thread class:&lt;/li>
 &lt;/ul>
