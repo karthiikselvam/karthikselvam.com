@@ -1,5 +1,5 @@
 ---
-title: "Mastering Arrays"
+title: "Arrays"
 description: "2023"
 date: "2023-01-22"
 tags:
@@ -191,3 +191,32 @@ Thus, the output for the input array nums = [1, 2, 3, 4] is [24, 12, 8, 6], whic
 Time Complexity: O(n) - The solution traverses the array three times, each taking O(n) time. Thus, the overall time complexity is O(n).
 
 Space Complexity: O(1) - The solution uses only constant space for storing the variables, and the output array is not considered in the space complexity calculation.If we consider the output array in the space complexity calculation, the space complexity would be O(n).
+
+--- 
+**5. [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/description/).**
+```java
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(int num : nums){
+            map.put(num,map.getOrDefault(num,0)+1);
+        }
+        // Sorting in ascending order
+        //PriorityQueue<Map.Entry<Integer,Integer>> minHeap = new PriorityQueue<Map.Entry<Integer,Integer>>((e1,e2) -> e1.getValue() - e2.getValue());
+        PriorityQueue<Map.Entry<Integer,Integer>> maxHeap = new PriorityQueue<Map.Entry<Integer,Integer>>((e1,e2) -> e2.getValue() - e1.getValue());
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()) {
+           maxHeap.add(entry) ;
+        }
+        int i = 0; 
+        int[] result = new int[k];
+        while(i < k){
+           Map.Entry<Integer,Integer> currEntry = maxHeap.poll() ;
+           result[i] = currEntry.getKey();
+            i++;
+        }
+          return result;  
+    }
+```
+Time Complexity: Building the HashMap takes O(n) time, as we need to iterate through the entire input array.
+Building the PriorityQueue takes O(n log k) time. For each element in the HashMap, we perform an operation that takes O(log k) time to add the entry to the priority queue. We do this operation n times, so the total time complexity of building the PriorityQueue is O(n log k). Extracting the top k frequent elements from the PriorityQueue takes O(k log n) time. We perform the poll operation k times, which takes O(log n) time each time. Therefore, the overall time complexity of the topKFrequent method is O(n log k).
+
+Space Complexity: O(n) because we need to store the frequency of each element in the input array in the HashMap. The size of the HashMap is bounded by the number of distinct elements in the input array, which is at most n. The PriorityQueue can also have at most k elements, so its space complexity is O(k). Combining these two space requirements, the overall space complexity of the topKFrequent method is O(n).

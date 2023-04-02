@@ -6,9 +6,8 @@ tags:
 - fundamentals
 ---
 
-Creational Design Patterns 
 
-Creational design patterns solve common problems that arise during the creation of objects.
+Creational design patterns solve common problems that arise during the creation of objects. Following are some of the commonly used creational design patterns.
 
 **1. Builder pattern** : The Builder pattern is a creational design pattern that separates the construction of complex objects from their representation, allowing the same construction process to create different representations. This pattern is especially useful when creating objects that require many steps to initialize, and whose initialization steps are optional or may vary.
 
