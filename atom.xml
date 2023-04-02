@@ -606,8 +606,7 @@ URL data storage: 200 bytes x 100,000,000 = 20,000,000,000 = 20 GB per day&lt;/p
 URL bandwidth: 20 GB per day / 100,000 seconds = 0.2 MB per second.&lt;/p>
 &lt;p>&lt;strong>Memory/Cache&lt;/strong>:
 Assuming we want to cache 20 urls per user, 200 bytes * 100,000,000 daily users * 20 = 20 GB * 20 = 400 GB of cache. If one machine/server can keep 150 GB of cache, we need 3 machines/servers for caching.&lt;/p>
-&lt;p>The framework outlined above provides a clear approach to tackle capacity estimation problems during interviews.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/capacity_estimation/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Creational Design Patterns</title><link>https://karthikselvam.com/posts/2023/01/23/creational_patterns/</link><description>&lt;p>Creational Design Patterns&lt;/p>
-&lt;p>Creational design patterns solve common problems that arise during the creation of objects.&lt;/p>
+&lt;p>The framework outlined above provides a clear approach to tackle capacity estimation problems during interviews.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/capacity_estimation/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Creational Design Patterns</title><link>https://karthikselvam.com/posts/2023/01/23/creational_patterns/</link><description>&lt;p>Creational design patterns solve common problems that arise during the creation of objects. Following are some of the commonly used creational design patterns.&lt;/p>
 &lt;p>&lt;strong>1. Builder pattern&lt;/strong> : The Builder pattern is a creational design pattern that separates the construction of complex objects from their representation, allowing the same construction process to create different representations. This pattern is especially useful when creating objects that require many steps to initialize, and whose initialization steps are optional or may vary.&lt;/p>
 &lt;pre>&lt;code class="language-java">public class Car {
 private String make;
@@ -1368,7 +1367,41 @@ thread2.start();
 &lt;li>
 &lt;p>&lt;strong>Idempotency&lt;/strong>: Idempotency is the property of a system where performing the same operation multiple times has the same result as performing it once. By designing microservices to be idempotent, you can reduce the risk of failures and ensure consistency across the system.For example, Let&amp;rsquo;s say you have a system where a user can update their profile information. To ensure idempotency, you can design the microservice to only update the profile if the request includes a unique identifier, such as a UUID. If the same request is made multiple times, the microservice will recognize the duplicate request and return the same result as the original request. This ensures that the system remains consistent even if the same request is made multiple times.&lt;/p>
 &lt;/li>
-&lt;/ol></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/transactions/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Mastering Arrays</title><link>https://karthikselvam.com/posts/2023/01/22/arrays/</link><description>&lt;p>In this article, we will solve array-related problems that are commonly encountered in interviews.&lt;/p>
+&lt;/ol></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/transactions/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Structural Design Patterns</title><link>https://karthikselvam.com/posts/2023/01/23/structural_patterns/</link><description>&lt;p>Structural Design Patterns are design patterns that focus on the composition of classes and objects to form larger structures, without changing their individual behaviors. They help to simplify the relationships between objects and classes in a system, and to make the system more flexible and efficient. Following are some of the commonly used structural design patterns.&lt;/p>
+&lt;p>&lt;strong>1. Adapter pattern&lt;/strong> : Adapter pattern is a structural design pattern that allows incompatible classes to work together by converting the interface of one class into another interface that clients expect. This pattern is useful when you have an existing class that cannot be changed, but you need to use it with other classes that have different interfaces.&lt;/p>
+&lt;p>Let&amp;rsquo;s consider a car example to explain the Adapter pattern in Java. Suppose we have an existing class called &amp;ldquo;Car&amp;rdquo; that has a method called &amp;ldquo;drive()&amp;rdquo; that takes no arguments and starts the car. We also have another class called &amp;ldquo;Engine&amp;rdquo; that has a method called &amp;ldquo;start()&amp;rdquo; that starts the engine. However, the interfaces of these two classes are not compatible because the &amp;ldquo;drive()&amp;rdquo; method takes no arguments, while the &amp;ldquo;start()&amp;rdquo; method of the Engine class takes an argument.&lt;/p>
+&lt;p>To make these classes work together, we can create an adapter class called &amp;ldquo;EngineAdapter&amp;rdquo; that implements the Car interface and uses the Engine class to start the car. The EngineAdapter will have a reference to an Engine object and will use its &amp;ldquo;start()&amp;rdquo; method to start the car when the &amp;ldquo;drive()&amp;rdquo; method is called.&lt;/p>
+&lt;p>Here is the example code in Java:&lt;/p>
+&lt;pre>&lt;code class="language-java">interface Car {
+void drive();
+}
+class Engine {
+void start(String key) {
+System.out.println(&amp;quot;Starting engine with key: &amp;quot; + key);
+}
+}
+class EngineAdapter implements Car {
+private Engine engine;
+public EngineAdapter(Engine engine) {
+this.engine = engine;
+}
+@Override
+public void drive() {
+engine.start(&amp;quot;ignition key&amp;quot;);
+}
+}
+public class Main {
+public static void main(String[] args) {
+Engine engine = new Engine();
+Car car = new EngineAdapter(engine);
+car.drive();
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>In this example, the EngineAdapter class adapts the Engine class to the Car interface by implementing the drive() method and using the start() method of the Engine class to start the car. When we call the drive() method on the Car object, it calls the start() method of the Engine object, which starts the car engine.&lt;/p>
+&lt;p>In summary, the Adapter pattern allows us to use incompatible classes together by creating an adapter class that implements the required interface and uses the existing class to provide the required functionality.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>2. Composite pattern&lt;/strong> : Adapter pattern is a structural design pattern that allows incompatible classes to work together by converting the interface of one class into another interface that clients expect. This pattern is useful when you have an existing class that cannot be changed, but you need to use it with other classes that have different interfaces.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/structural_patterns/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Arrays</title><link>https://karthikselvam.com/posts/2023/01/22/arrays/</link><description>&lt;p>In this article, we will solve array-related problems that are commonly encountered in interviews.&lt;/p>
 &lt;p>&lt;strong>1. &lt;a href="https://leetcode.com/problems/contains-duplicate/">Contains Duplicate&lt;/a>.&lt;/strong>&lt;/p>
 &lt;pre>&lt;code class="language-java">
 class Solution {
@@ -1510,4 +1543,401 @@ return res;
 &lt;p>Next, we traverse the array from right to left and calculate the product of all elements to the right of each element. For the last element, there are no elements to the right, so we skip it. For the third element, the product of all elements to the right is simply the fourth element, so we set res[2] to 2 * 4 = 8. For the second element, the product of all elements to the right is 4 * 3 = 12, so we set res[1] to 1 * 12 = 12. For the first element, the product of all elements to the right is 4 * 3 * 2 = 24, so we set res[0] to 1 * 24 = 24. After this step, res = [24, 12, 8, 6].&lt;/p>
 &lt;p>Thus, the output for the input array nums = [1, 2, 3, 4] is [24, 12, 8, 6], which is the product of all elements in the array except the current element.&lt;/p>
 &lt;p>Time Complexity: O(n) - The solution traverses the array three times, each taking O(n) time. Thus, the overall time complexity is O(n).&lt;/p>
-&lt;p>Space Complexity: O(1) - The solution uses only constant space for storing the variables, and the output array is not considered in the space complexity calculation.If we consider the output array in the space complexity calculation, the space complexity would be O(n).&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/22/arrays/</guid><pubDate>Sun, 22 Jan 2023 00:00:00 +0000</pubDate></item></channel></rss>
+&lt;p>Space Complexity: O(1) - The solution uses only constant space for storing the variables, and the output array is not considered in the space complexity calculation.If we consider the output array in the space complexity calculation, the space complexity would be O(n).&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>5. &lt;a href="https://leetcode.com/problems/top-k-frequent-elements/description/">Top K Frequent Elements&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java"> public int[] topKFrequent(int[] nums, int k) {
+HashMap&amp;lt;Integer,Integer&amp;gt; map = new HashMap&amp;lt;Integer,Integer&amp;gt;();
+for(int num : nums){
+map.put(num,map.getOrDefault(num,0)+1);
+}
+// Sorting in ascending order
+//PriorityQueue&amp;lt;Map.Entry&amp;lt;Integer,Integer&amp;gt;&amp;gt; minHeap = new PriorityQueue&amp;lt;Map.Entry&amp;lt;Integer,Integer&amp;gt;&amp;gt;((e1,e2) -&amp;gt; e1.getValue() - e2.getValue());
+PriorityQueue&amp;lt;Map.Entry&amp;lt;Integer,Integer&amp;gt;&amp;gt; maxHeap = new PriorityQueue&amp;lt;Map.Entry&amp;lt;Integer,Integer&amp;gt;&amp;gt;((e1,e2) -&amp;gt; e2.getValue() - e1.getValue());
+for(Map.Entry&amp;lt;Integer,Integer&amp;gt; entry : map.entrySet()) {
+maxHeap.add(entry) ;
+}
+int i = 0;
+int[] result = new int[k];
+while(i &amp;lt; k){
+Map.Entry&amp;lt;Integer,Integer&amp;gt; currEntry = maxHeap.poll() ;
+result[i] = currEntry.getKey();
+i++;
+}
+return result;
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time Complexity: Building the HashMap takes O(n) time, as we need to iterate through the entire input array.
+Building the PriorityQueue takes O(n log k) time. For each element in the HashMap, we perform an operation that takes O(log k) time to add the entry to the priority queue. We do this operation n times, so the total time complexity of building the PriorityQueue is O(n log k). Extracting the top k frequent elements from the PriorityQueue takes O(k log n) time. We perform the poll operation k times, which takes O(log n) time each time. Therefore, the overall time complexity of the topKFrequent method is O(n log k).&lt;/p>
+&lt;p>Space Complexity: O(n) because we need to store the frequency of each element in the input array in the HashMap. The size of the HashMap is bounded by the number of distinct elements in the input array, which is at most n. The PriorityQueue can also have at most k elements, so its space complexity is O(k). Combining these two space requirements, the overall space complexity of the topKFrequent method is O(n).&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/22/arrays/</guid><pubDate>Sun, 22 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Greedy Problems</title><link>https://karthikselvam.com/posts/2023/01/22/greedy/</link><description>&lt;p>In this article, we will solve greedy problems that are commonly encountered in interviews.&lt;/p>
+&lt;p>&lt;strong>1. &lt;a href="https://leetcode.com/problems/jump-game/">Jump Game&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public boolean canJump(int[] nums) {
+int lastIndex = nums.length - 1; // set last index as the end of the array
+for (int i = nums.length - 2; i &amp;gt;= 0; i--) { // iterate backwards through the array
+if (i + nums[i] &amp;gt;= lastIndex) { // check if we can reach the current last index from current index
+lastIndex = i; // update last index to current index
+}
+}
+return lastIndex == 0; // check if we can reach the first index
+}
+&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>if (i + nums[i] &amp;gt;= lastIndex)
+&lt;/code>&lt;/pre>
+&lt;p>This line checks if we can reach the current lastIndex from the current index i. Here&amp;rsquo;s how it works:&lt;/p>
+&lt;ul>
+&lt;li>i is the current index we&amp;rsquo;re looking at.&lt;/li>
+&lt;li>nums[i] is the maximum number of steps we can take from index i.&lt;/li>
+&lt;li>i + nums[i] is the index we would end up at if we were to make a jump of size nums[i] from index i.&lt;/li>
+&lt;li>lastIndex is the last index we need to be able to reach.&lt;/li>
+&lt;/ul>
+&lt;p>Time complexity: O(n) where n is the length of the input array. This is because we only iterate through the input array once.&lt;/p>
+&lt;p>Space complexity: O(1) because we only use a constant amount of extra space to store the lastIndex variable.&lt;/p>
+&lt;hr></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/22/greedy/</guid><pubDate>Sun, 22 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Intervals</title><link>https://karthikselvam.com/posts/2023/01/22/intervals/</link><description>&lt;p>In this article, we will solve intervals-related problems that are commonly encountered in interviews.&lt;/p>
+&lt;p>&lt;strong>1. &lt;a href="https://leetcode.com/problems/merge-intervals/">Merge Intervals&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public int[][] merge(int[][] intervals) {
+List&amp;lt;int[]&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+if (intervals.length &amp;lt; 2) {
+return intervals;
+}
+Arrays.sort(intervals, Comparator.comparingInt(a -&amp;gt; a[0]));
+int start = intervals[0][0];
+int end = intervals[0][1];
+for (int i = 1; i &amp;lt; intervals.length; i++) {
+if (end &amp;gt;= intervals[i][0]) {
+end = Math.max(end, intervals[i][1]);
+} else {
+result.add(new int[]{start, end});
+start = intervals[i][0];
+end = intervals[i][1];
+}
+}
+result.add(new int[]{start, end});
+return result.toArray(new int[result.size()][]);
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n log n) for the initial sorting of the intervals array, plus O(n) for the loop that iterates over the sorted intervals. Within the loop, the operations Math.max and adding to the result list take constant time. Therefore, the overall time complexity is O(n log n + n) = O(n log n).&lt;/p>
+&lt;p>Space complexity: O(n) for the result list, which could potentially store all n intervals if none of them overlap. The intervals array is modified in place, so it does not contribute to the space complexity. Therefore, the overall space complexity is O(n).&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>2. &lt;a href="https://leetcode.com/problems/non-overlapping-intervals/">Non-overlapping Intervals&lt;/a>.&lt;/strong>
+One approach to solve this problem is to use the greedy algorithm. We can first sort the intervals based on their end time. Then, you can iterate through the intervals and keep track of the current end time. If the start time of the current interval is less than the current end time, then it overlaps with the previous interval and needs to be removed. Otherwise, update the current end time to be the end time of the current interval.&lt;/p>
+&lt;pre>&lt;code class="language-java"> public int eraseOverlapIntervals(int[][] intervals) {
+Arrays.sort(intervals,Comparator.comparingInt(a -&amp;gt; a[1]));
+int count = 0;
+int end = Integer.MIN_VALUE;
+for(int[] interval : intervals){
+int start = interval[0];
+int currEnd = interval[1];
+if(start &amp;lt; end){
+count++;
+} else{
+end = currEnd;
+}
+}
+return count;
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n log n) for the initial sorting of the intervals array, plus O(n) for the loop that iterates over the sorted intervals. Within the loop, the operations Math.max and adding to the result list take constant time. Therefore, the overall time complexity is O(n log n + n) = O(n log n).&lt;/p>
+&lt;p>Space complexity: O(1)&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>3. &lt;a href="https://leetcode.com/problems/insert-interval/">Insert Interval&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java"> class Solution {
+public int[][] insert(int[][] intervals, int[] newInterval) {
+List&amp;lt;int[]&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+int i = 0;
+// add all intervals before newInterval
+while (i &amp;lt; intervals.length &amp;amp;&amp;amp; intervals[i][1] &amp;lt; newInterval[0]) {
+result.add(intervals[i]);
+i++;
+}
+// merge intervals that overlap with newInterval
+while (i &amp;lt; intervals.length &amp;amp;&amp;amp; intervals[i][0] &amp;lt;= newInterval[1]) {
+newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+i++;
+}
+result.add(newInterval);
+// add all remaining intervals
+while (i &amp;lt; intervals.length) {
+result.add(intervals[i]);
+i++;
+}
+return result.toArray(new int[result.size()][2]);
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n), The method iterates through each interval once, which takes O(n) time complexity.&lt;/p>
+&lt;p>Space complexity: O(n), The method uses an ArrayList to store the resulting intervals, which can take up to O(n) space complexity in the worst case.&lt;/p>
+&lt;hr></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/22/intervals/</guid><pubDate>Sun, 22 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Trees</title><link>https://karthikselvam.com/posts/2023/01/22/trees/</link><description>&lt;p>In this article, we will solve trees-related problems that are commonly encountered in interviews.&lt;/p>
+&lt;p>&lt;strong>1. &lt;a href="https://leetcode.com/problems/invert-binary-tree/">Invert Binary Tree&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public TreeNode invertTree(TreeNode root) {
+if(root == null) {
+return null;
+}
+TreeNode tempNode = root.left;
+root.left = root.right;
+root.right = tempNode;
+invertTree(root.left);
+invertTree(root.right);
+return root;
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n) The given code performs a depth-first search traversal of the binary tree, and visits each node exactly once. Therefore, the time complexity of the code is O(n), where n is the number of nodes in the binary tree.&lt;/p>
+&lt;p>Space complexity: O(n) The space complexity of the code depends on the maximum depth of the binary tree. In the worst case, if the binary tree is skewed (i.e., all the nodes are in a straight line), the maximum depth of the tree would be n (the number of nodes), and the space complexity of the code would be O(n) due to the recursive function calls. However, in the best case, if the binary tree is balanced, the maximum depth of the tree would be log(n), and the space complexity of the code would be O(log(n)).&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>2. &lt;a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/">Maximum Depth of Binary Tree&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java"> public int maxDepth(TreeNode root) {
+if(root == null){
+return 0;
+}
+int left = maxDepth(root.left);
+int right = maxDepth(root.right);
+return 1 + Math.max(left,right);
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n) where n is the number of nodes in the binary tree, since the code visits each node exactly once.&lt;/p>
+&lt;p>Space complexity: O(h), where h is the height of the binary tree, since the code uses a recursive approach, and the maximum depth of the recursive call stack is equal to the height of the binary tree. In the worst case, where the binary tree is skewed (i.e., all the nodes are in a straight line), the height of the tree would be n (the number of nodes), and the space complexity of the code would be O(n). However, in the best case, where the binary tree is balanced, the height of the tree would be log(n), and the space complexity of the code would be O(log(n)).&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>3. &lt;a href="https://leetcode.com/problems/diameter-of-binary-tree/">Diameter of Binary Tree&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public int diameterOfBinaryTree(TreeNode root) {
+int leftDepth = depth(root.left);
+int rightDepth = depth(root.right);
+return Math.max(Math.max(diameterOfBinaryTree(root.left), diameterOfBinaryTree(root.right)), leftDepth + rightDepth);
+}
+private int depth(TreeNode root){
+if(root == null){
+return 0;
+}
+int left = depth(root.left);
+int right = depth(root.right);
+return 1 + Math.max(left, right);
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n^2^) wwhere n is the number of nodes in the binary tree, since for each node, the code visits all the nodes in its left and right subtrees to compute the diameter.&lt;/p>
+&lt;p>Space complexity: O(h), where h is the height of the binary tree, since the code uses a recursive approach, and the maximum depth of the recursive call stack is equal to the height of the binary tree. In the worst case, where the binary tree is skewed (i.e., all the nodes are in a straight line), the height of the tree would be n (the number of nodes), and the space complexity of the code would be O(n). However, in the best case, where the binary tree is balanced, the height of the tree would be log(n), and the space complexity of the code would be O(log(n)).&lt;/p>
+&lt;p>Optimized Verison : We can optimize by computing the diameter of the binary tree in a single pass, instead of recursively computing the depth of each node multiple times.&lt;/p>
+&lt;pre>&lt;code class="language-java">public int diameterOfBinaryTree(TreeNode root) {
+int[] max = {0};
+depth(root, max);
+return max[0];
+}
+private int depth(TreeNode root, int[] max) {
+if (root == null) {
+return 0;
+}
+int left = depth(root.left, max);
+int right = depth(root.right, max);
+max[0] = Math.max(max[0], left + right);
+return 1 + Math.max(left, right);
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n) where n is the number of nodes in the binary tree.&lt;/p>
+&lt;p>Space complexity: O(h), where h is the height of the binary tree.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>4. &lt;a href="https://leetcode.com/problems/balanced-binary-tree/">Balanced Binary Tree&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public boolean isBalanced(TreeNode root) {
+if(root == null){
+return true;
+}
+int leftHeight = height(root.left);
+int rightHeight = height(root.right);
+if(Math.abs(leftHeight - rightHeight) &amp;gt; 1){
+return false;
+}
+return isBalanced(root.left) &amp;amp;&amp;amp; isBalanced(root.right);
+}
+private int height(TreeNode root){
+if(root == null){
+return 0;
+}
+int left = height(root.left);
+int right = height(root.right);
+return 1 + Math.max(left,right);
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n log n) in the worst case, where n is the number of nodes in the binary tree. This is because the height of each node is computed recursively using the height method, which has a time complexity of O(n) in the worst case. Since the height method is called for each node in the binary tree, the overall time complexity of isBalanced is O(n log n), because the binary tree has a maximum of log n levels.&lt;/p>
+&lt;p>Space complexity: O(n) in the worst case, where n is the number of nodes in the binary tree. This is because the height method is called recursively for each node in the binary tree, and the maximum depth of the recursive call stack is equal to the height of the binary tree, which is O(n) in the worst case. Additionally, the method uses a constant amount of extra space to store the heights of the left and right subtrees of each node. Therefore, the overall space complexity of isBalanced is O(n).&lt;/p>
+&lt;p>Optimized version :&lt;/p>
+&lt;pre>&lt;code class="language-java">public boolean isBalanced(TreeNode root) {
+return checkBalance(root) != -1;
+}
+private int checkBalance(TreeNode root) {
+if (root == null) {
+return 0;
+}
+int left = checkBalance(root.left);
+if (left == -1) {
+return -1;
+}
+int right = checkBalance(root.right);
+if (right == -1) {
+return -1;
+}
+if (Math.abs(left - right) &amp;gt; 1) {
+return -1;
+}
+return 1 + Math.max(left, right);
+}
+&lt;/code>&lt;/pre>
+&lt;p>The time complexity of the optimized isBalanced method is O(n), where n is the number of nodes in the binary tree, because each node is visited only once and its height is computed in constant time. The space complexity is O(n) as well, because the maximum depth of the recursive call stack is equal to the height of the binary tree, which is O(n) in the worst case.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>5. &lt;a href="https://leetcode.com/problems/same-tree/">Same Tree&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public boolean isSameTree(TreeNode p, TreeNode q) {
+if (p == null &amp;amp;&amp;amp; q == null) {
+return true;
+}
+if (p == null || q == null || p.val != q.val) {
+return false;
+}
+return isSameTree(p.left, q.left) &amp;amp;&amp;amp; isSameTree(p.right, q.right);
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n), where n is the total number of nodes in the tree. This is because the function performs a recursive traversal of the entire tree, visiting each node once.&lt;/p>
+&lt;p>Space complexity: O(n), where n is the height of the tree. This is because the function uses a call stack to keep track of the recursive calls, and the maximum size of the call stack is proportional to the height of the tree. In the worst case, when the tree is completely unbalanced and resembles a linked list, the space complexity of the function becomes O(n). However, in a balanced tree, the space complexity is closer to O(log n), where log n is the height of the tree.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>6. &lt;a href="https://leetcode.com/problems/subtree-of-another-tree/">Subtree of Another Tree&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public boolean isSubtree(TreeNode s, TreeNode t) {
+if (s == null) {
+return false;
+}
+if (isSameTree(s, t)) {
+return true;
+}
+return isSubtree(s.left, t) || isSubtree(s.right, t);
+}
+public boolean isSameTree(TreeNode p, TreeNode q) {
+if (p == null &amp;amp;&amp;amp; q == null) {
+return true;
+}
+if (p == null || q == null || p.val != q.val) {
+return false;
+}
+return isSameTree(p.left, q.left) &amp;amp;&amp;amp; isSameTree(p.right, q.right);
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(m * n), where m and n are the number of nodes in the trees s and t, respectively. This is because in the worst case, the function performs an isSameTree check for each node in s with t, which takes O(n) time. However, in the average case, the time complexity is closer to O(m), as the function will terminate early once it finds a matching subtree.&lt;/p>
+&lt;p>Space complexity: O(max(m, n)), as the function uses a call stack to keep track of the recursive calls, and the maximum size of the call stack is proportional to the height of the trees. In the worst case, when the trees are completely unbalanced and resemble linked lists, the space complexity becomes O(m) or O(n), whichever is greater.&lt;/p>
+&lt;p>Optimized version :&lt;/p>
+&lt;pre>&lt;code class="language-java">public boolean isSubtree(TreeNode s, TreeNode t) {
+String sPreOrder = getPreOrder(s);
+String tPreOrder = getPreOrder(t);
+return sPreOrder.indexOf(tPreOrder) != -1;
+}
+private String getPreOrder(TreeNode node) {
+if (node == null) {
+return &amp;quot;null&amp;quot;;
+}
+String left = getPreOrder(node.left);
+String right = getPreOrder(node.right);
+return &amp;quot;#&amp;quot; + node.val + &amp;quot; &amp;quot; + left + &amp;quot; &amp;quot; + right;
+}
+&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>sPreOrder: &amp;quot;#3 #4 #1 null null #2 null null #5 null null&amp;quot;
+tPreOrder: &amp;quot;#4 #1 null null #2 null null&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>The substring &amp;ldquo;#4 #1 null null #2 null null&amp;rdquo; is found in the string &amp;ldquo;#3 #4 #1 null null #2 null null #5 null null&amp;rdquo;, so we know that t is a subtree of s. Therefore, the function returns true.&lt;/p>
+&lt;p>Note that if t were not a subtree of s, then the function would have returned false. The pre-order traversal string of t would not be a substring of the pre-order traversal string of s, so the indexOf method would return -1.&lt;/p>
+&lt;p>Time complexity: O(m + n), where m and n are the number of nodes in the trees s and t, respectively. This is because the function only needs to traverse each tree once to get the pre-order traversal string, and the string matching operation takes O(m + n) time in the worst case&lt;/p>
+&lt;p>Space complexity: O(m + n), as it needs to store the pre-order traversal strings of both trees.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>6. &lt;a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/">Lowest Common Ancestor of a Binary Search Tree&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">class Solution {
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+if (root == null || p == null || q == null) {
+return null;
+}
+if (p.val &amp;lt; root.val &amp;amp;&amp;amp; q.val &amp;lt; root.val) {
+return lowestCommonAncestor(root.left, p, q);
+}
+if (p.val &amp;gt; root.val &amp;amp;&amp;amp; q.val &amp;gt; root.val) {
+return lowestCommonAncestor(root.right, p, q);
+}
+return root;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(log N) in the best case and O(N) in the worst case, where N is the number of nodes in the BST. In the best case, when the BST is balanced, the time complexity of the algorithm is O(log N) since we eliminate half of the tree at each level. In the worst case, when the BST is skewed, the time complexity is O(N) since we may have to traverse the entire tree.&lt;/p>
+&lt;p>Space complexity: O(log N) in the best case and O(N) in the worst case. In the best case, when the BST is balanced, the space complexity of the algorithm is O(log N) since we only use a constant amount of space for each level of the recursive call stack. In the worst case, when the BST is skewed, the space complexity is O(N) since we may have to store all N nodes on the call stack.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>7. &lt;a href="https://leetcode.com/problems/binary-tree-level-order-traversal/">Binary Tree Level Order Traversal&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">class Solution {
+public List&amp;lt;List&amp;lt;Integer&amp;gt;&amp;gt; levelOrder(TreeNode root) {
+List&amp;lt;List&amp;lt;Integer&amp;gt;&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+if (root == null) {
+return result;
+}
+Queue&amp;lt;TreeNode&amp;gt; queue = new LinkedList&amp;lt;&amp;gt;();
+queue.offer(root);
+while (!queue.isEmpty()) {
+int levelSize = queue.size();
+List&amp;lt;Integer&amp;gt; levelNodes = new ArrayList&amp;lt;&amp;gt;();
+for (int i = 0; i &amp;lt; levelSize; i++) {
+TreeNode node = queue.poll();
+levelNodes.add(node.val);
+if (node.left != null) {
+queue.offer(node.left);
+}
+if (node.right != null) {
+queue.offer(node.right);
+}
+}
+result.add(levelNodes);
+}
+return result;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(N), where N is the number of nodes in the binary tree, since we need to visit each node once.&lt;/p>
+&lt;p>Space complexity: O(N) since we may need to store all N nodes in the queue at once in the worst case.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>8. &lt;a href="https://leetcode.com/problems/binary-tree-right-side-view/">Binary Tree Right Side View&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">class Solution {
+public List&amp;lt;Integer&amp;gt; rightSideView(TreeNode root) {
+List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+if (root == null) {
+return result;
+}
+Queue&amp;lt;TreeNode&amp;gt; queue = new LinkedList&amp;lt;&amp;gt;();
+queue.offer(root);
+while (!queue.isEmpty()) {
+int levelSize = queue.size();
+for (int i = 0; i &amp;lt; levelSize; i++) {
+TreeNode node = queue.poll();
+if (i == levelSize - 1) {
+result.add(node.val);
+}
+if (node.left != null) {
+queue.offer(node.left);
+}
+if (node.right != null) {
+queue.offer(node.right);
+}
+}
+}
+return result;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(N), where N is the number of nodes in the binary tree, since we need to visit each node once.&lt;/p>
+&lt;p>Space complexity: O(N) since we may need to store all N nodes in the queue at once in the worst case.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>8. &lt;a href="https://leetcode.com/problems/validate-binary-search-tree/">Validate Binary Search Tree&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">class Solution {
+public boolean isValidBST(TreeNode root) {
+// Use long instead of int to handle edge cases where value equals Integer.MIN_VALUE or Integer.MAX_VALUE
+return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+}
+private boolean isValidBST(TreeNode node, long minVal, long maxVal) {
+if (node == null) {
+return true;
+}
+if (node.val &amp;lt;= minVal || node.val &amp;gt;= maxVal) {
+return false;
+}
+return isValidBST(node.left, minVal, node.val) &amp;amp;&amp;amp; isValidBST(node.right, node.val, maxVal);
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n), where n is the number of nodes in the tree. This is because we visit each node exactly once during the in-order traversal.&lt;/p>
+&lt;p>Space complexity: O(n), where n is the number of nodes in the tree. This is because we need to store the recursive call stack during the traversal, which can be as large as the height of the tree, and in the worst case the height of the tree can be n.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>8. &lt;a href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/">Kth Smallest Element in a BST&lt;/a>.&lt;/strong>&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/22/trees/</guid><pubDate>Sun, 22 Jan 2023 00:00:00 +0000</pubDate></item></channel></rss>
