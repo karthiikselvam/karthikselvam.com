@@ -1,0 +1,13 @@
+---
+title: "Awesome Stuff"
+description: "2023"
+date: "2023-02-25"
+draft: true
+tags:
+- fundamentals
+---
+
+**1. [Engineering Blogs](https://github.com/kilimchoi/engineering-blogs)**
+
+**2. [Java Packages with UML Diagrams](https://www.falkhausen.de/index.html)**
+

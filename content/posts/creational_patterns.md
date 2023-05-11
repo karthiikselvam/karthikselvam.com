@@ -1,7 +1,7 @@
 ---
 title: "Creational Design Patterns"
 description: "2023"
-date: "2023-01-23"
+date: "2023-03-23"
 tags:
 - fundamentals
 ---
