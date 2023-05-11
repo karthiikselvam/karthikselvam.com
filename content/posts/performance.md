@@ -2,7 +2,6 @@
 title: "System Performance"
 description: "2023"
 date: "2023-01-27"
-draft: true
 tags:
 - fundamentals
 ---

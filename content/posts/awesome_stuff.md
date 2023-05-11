@@ -2,7 +2,6 @@
 title: "Awesome Stuff"
 description: "2023"
 date: "2023-02-25"
-draft: true
 tags:
 - fundamentals
 ---

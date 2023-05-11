@@ -2,7 +2,6 @@
 title: "JVM Profiling"
 description: "2023"
 date: "2023-01-25"
-draft: true
 tags:
 - fundamentals
 ---

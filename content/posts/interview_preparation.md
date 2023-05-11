@@ -2,7 +2,6 @@
 title: "Interview Preparation"
 description: "2023"
 date: "2023-01-20"
-draft: true
 tags:
 - fundamentals
 ---
