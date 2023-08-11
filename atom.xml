@@ -1,4 +1,95 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2023, Ronalds Vilcins</copyright><lastBuildDate>Thu, 23 Mar 2023 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Creational Design Patterns</title><link>https://karthikselvam.com/posts/2023/03/23/creational_patterns/</link><description>&lt;p>Creational design patterns solve common problems that arise during the creation of objects. Following are some of the commonly used creational design patterns.&lt;/p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2023, Ronalds Vilcins</copyright><lastBuildDate>Sat, 05 Aug 2023 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>System Design Concepts</title><link>https://karthikselvam.com/posts/2023/08/05/system_design_meta/</link><description>&lt;p>&lt;strong>1. How to transfer data at large scale ?&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Non blocking I/O&lt;/li>
+&lt;li>Buffering and Batching&lt;/li>
+&lt;li>Network Protocols&lt;/li>
+&lt;li>Message Formats&lt;/li>
+&lt;li>Load Balancing&lt;/li>
+&lt;li>Partitioning&lt;/li>
+&lt;li>Consistent Hashing&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>2. How to aggregate data efficiently ?&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Push vs Pull&lt;/li>
+&lt;li>Deduplication&lt;/li>
+&lt;li>Checkpointing&lt;/li>
+&lt;li>Data enrichment&lt;/li>
+&lt;li>Embeded database&lt;/li>
+&lt;li>State management&lt;/li>
+&lt;li>Fallback&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>3. How to store data reliably ?&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Reverse Proxy&lt;/li>
+&lt;li>Coordination service&lt;/li>
+&lt;li>Health checking&lt;/li>
+&lt;li>Peer and service discovery&lt;/li>
+&lt;li>Replication&lt;/li>
+&lt;li>Quorum&lt;/li>
+&lt;li>Availability zone&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>4. How to retrieve data quickly ?&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Aggregate on write&lt;/li>
+&lt;li>Eventual consistency&lt;/li>
+&lt;li>Denormalization&lt;/li>
+&lt;li>Data rollup&lt;/li>
+&lt;li>Hot and cold storage&lt;/li>
+&lt;li>Polyglot persistence&lt;/li>
+&lt;li>Distributed cache&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>4. How to define system requirements ?&lt;/strong>
+Functional requirement - Define the qualities of the system. What a system is supposed to do ? Example The system must allow application to exchange messages.
+Non Function requirement - Define the qualites of a system how a system is supposed to be. Example scalable, highly available and fast.&lt;/p>
+&lt;p>How to go about defining functional requirement ?
+Start with the customer and work backward.
+We need to identify who is going to use the system and how ?
+For well know systems like youtube, twitter, facebook etc its easy. But for systems such has rate limiting, content delivery network, it can be quite challenging. In such systems its better to start with customer/clients/users and work backwards on how they use the system. For example, In youtube the customers are content creators and viewers and how they are going to use the system ? content creators will upload videos, create posts where as viewers search for videos, watch videos, and comment. Similarly in the case of content delivery network the customer are webservices and the system will trottle there request.&lt;/p>
+&lt;p>Non functional requirements - High availability
+Availability - Defines the system uptime, the percentage of time the system has been working and available. Example, 99% availbility, The system was unavialable about 3.65 days a years.&lt;/p>
+&lt;p>Success ration of request - 1 request out of 100 fails.&lt;/p>
+&lt;p>What is a highly aviable system ?
+Its not about a number. Its is about architecture and process.&lt;/p>
+&lt;p>Design principles behind high avilability&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Build redundancy to eleminate single points of failure. Example : regions, availability zones, fallback, data replication, high availability pair.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Switch from one server to another without losing data. Example: DNS,load balancing, reverse proxy,API gateway, peer discovery, service discovery.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Protect the system from atypical client behavior. Example : load shedding, rate limiting, shuffle sharding, cell- based architecture.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Protect the system from failures and perfomance degradation of its dependencies Example: timeouts, circuit breaker, bulkhead, retries, idempotency.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Detect failure as they occure. Example : monitoring&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>Process behind high availability:&lt;/p>
+&lt;ol>
+&lt;li>Change management - All code and configration changes are reviewed and approved.&lt;/li>
+&lt;li>QA - regaularly execercise tests to validate that newly introduced changes meet functional and non-functional requirements.&lt;/li>
+&lt;li>Deployment - Deploy changes to a production environment frequently, quickly, safely, automated rollback.&lt;/li>
+&lt;li>Capacity planning : Monitor system utilization and add resources to meet growing demand.&lt;/li>
+&lt;li>Disaster recovery : Recover system quickly in the event of a diaster, regularly test failover to diaster recovery.&lt;/li>
+&lt;li>Root cause analysis : Establish the root cause of the failure and identify preventive measures&lt;/li>
+&lt;li>Operational readiness review : Evaluate system&amp;rsquo;s operational state and identify gaps in operations. Define actions to remediate risks.&lt;/li>
+&lt;li>Game day : simulate a failure or event and test system and team responses.&lt;/li>
+&lt;li>Team culture : Good team culture promotes process discipline.&lt;/li>
+&lt;/ol>
+&lt;p>Nonfunctional requirements - Fault tolerance&lt;/p>
+&lt;ol>
+&lt;li>Fault tolerance - is the property that enables a system to continue operating properly in the even of one or more faults within some of its components.&lt;/li>
+&lt;li>Fault tolerance vs High availability - fault tolerant system has the goal of zero downtime. Where as high availability system the down time is possible and the system trie to minimize it. Fault tolerance can be achieved by using same design principles and processes as of high availability and requires more redundancy.&lt;/li>
+&lt;/ol>
+&lt;p>Nonfunctional requirements - Resilience&lt;/p>
+&lt;ol>
+&lt;li>Reilience - Systems that in the face of faults can provide and maitain an acceptable level of service are called resilient systems.&lt;/li>
+&lt;li>To ensure resiliency we need faults to happen in the system periodically to test resilience also called chaos engineering. Example - Killing instances of a server.&lt;/li>
+&lt;/ol></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/08/05/system_design_meta/</guid><pubDate>Sat, 05 Aug 2023 00:00:00 +0000</pubDate></item><item><title>Creational Design Patterns</title><link>https://karthikselvam.com/posts/2023/03/23/creational_patterns/</link><description>&lt;p>Creational design patterns solve common problems that arise during the creation of objects. Following are some of the commonly used creational design patterns.&lt;/p>
 &lt;p>&lt;strong>1. Builder pattern&lt;/strong> : The Builder pattern is a creational design pattern that separates the construction of complex objects from their representation, allowing the same construction process to create different representations. This pattern is especially useful when creating objects that require many steps to initialize, and whose initialization steps are optional or may vary.&lt;/p>
 &lt;pre>&lt;code class="language-java">public class Car {
 private String make;
