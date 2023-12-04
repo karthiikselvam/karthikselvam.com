@@ -3,7 +3,8 @@ title: About
 ---
 
 
-<!-- ![Karthik Selvam](/images/karthik1.JPG) -->
+![Karthik Selvam](../../static/images/karthik1.jpeg) 
+
 
 ### Personal Bio
 
