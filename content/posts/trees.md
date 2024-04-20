@@ -352,4 +352,31 @@ Space complexity: O(n), where n is the number of nodes in the tree. This is beca
 
 ---
 
-**8. [Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/).**
+**8. [Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/).**
+```java
+class Solution {
+    public int goodNodes(TreeNode root) {
+        return countGoodNodes(root, Integer.MIN_VALUE);
+    }
+    
+    private int countGoodNodes(TreeNode node, int maxSoFar) {
+        if (node == null) return 0;
+        
+        int count = 0;
+        if (node.val >= maxSoFar) {
+            count++;
+            maxSoFar = node.val;
+        }
+        
+        count += countGoodNodes(node.left, maxSoFar);
+        count += countGoodNodes(node.right, maxSoFar);
+        
+        return count;
+    }
+}
+```
+Time complexity:  O(n), where n is the number of nodes in the binary tree. This is because we traverse each node once in a depth-first manner.
+
+Space complexity:O(h), where h is the height of the binary tree. This space is used for the recursive call stack. In the worst case, where the binary tree is skewed and has a height equivalent to the number of nodes (h ≈ n), the space complexity would be O(n). However, in a balanced binary tree, the space complexity would be O(log n), where log n is the height of the tree.
+
+--- 
