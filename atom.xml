@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2023, Ronalds Vilcins</copyright><lastBuildDate>Sat, 05 Aug 2023 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>System Design Concepts</title><link>https://karthikselvam.com/posts/2023/08/05/system_design_meta/</link><description>&lt;p>&lt;strong>1. How to transfer data at large scale ?&lt;/strong>&lt;/p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2024, Ronalds Vilcins</copyright><lastBuildDate>Sat, 05 Aug 2023 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>System Design Concepts</title><link>https://karthikselvam.com/posts/2023/08/05/system_design_meta/</link><description>&lt;p>&lt;strong>1. How to transfer data at large scale ?&lt;/strong>&lt;/p>
 &lt;ol>
 &lt;li>Non blocking I/O&lt;/li>
 &lt;li>Buffering and Batching&lt;/li>
@@ -2429,5 +2429,25 @@ return isValidBST(node.left, minVal, node.val) &amp;amp;&amp;amp; isValidBST(nod
 &lt;p>Time complexity: O(n), where n is the number of nodes in the tree. This is because we visit each node exactly once during the in-order traversal.&lt;/p>
 &lt;p>Space complexity: O(n), where n is the number of nodes in the tree. This is because we need to store the recursive call stack during the traversal, which can be as large as the height of the tree, and in the worst case the height of the tree can be n.&lt;/p>
 &lt;hr>
-&lt;p>&lt;strong>8. &lt;a href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/">Kth Smallest Element in a BST&lt;/a>.&lt;/strong>&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/22/trees/</guid><pubDate>Sun, 22 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Interview Preparation</title><link>https://karthikselvam.com/posts/2023/01/20/interview_preparation/</link><description>&lt;p>&lt;strong>1. &lt;a href="https://medium.com/paypal-tech/how-to-prepare-for-an-engineering-interview-at-paypal-india-288dd90e4804">PayPal Interview Preparation Guide&lt;/a>&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>8. &lt;a href="https://leetcode.com/problems/count-good-nodes-in-binary-tree/">Count Good Nodes in Binary Tree&lt;/a>.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">class Solution {
+public int goodNodes(TreeNode root) {
+return countGoodNodes(root, Integer.MIN_VALUE);
+}
+private int countGoodNodes(TreeNode node, int maxSoFar) {
+if (node == null) return 0;
+int count = 0;
+if (node.val &amp;gt;= maxSoFar) {
+count++;
+maxSoFar = node.val;
+}
+count += countGoodNodes(node.left, maxSoFar);
+count += countGoodNodes(node.right, maxSoFar);
+return count;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>Time complexity: O(n), where n is the number of nodes in the binary tree. This is because we traverse each node once in a depth-first manner.&lt;/p>
+&lt;p>Space complexity:O(h), where h is the height of the binary tree. This space is used for the recursive call stack. In the worst case, where the binary tree is skewed and has a height equivalent to the number of nodes (h ≈ n), the space complexity would be O(n). However, in a balanced binary tree, the space complexity would be O(log n), where log n is the height of the tree.&lt;/p>
+&lt;hr></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/22/trees/</guid><pubDate>Sun, 22 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Interview Preparation</title><link>https://karthikselvam.com/posts/2023/01/20/interview_preparation/</link><description>&lt;p>&lt;strong>1. &lt;a href="https://medium.com/paypal-tech/how-to-prepare-for-an-engineering-interview-at-paypal-india-288dd90e4804">PayPal Interview Preparation Guide&lt;/a>&lt;/strong>&lt;/p>
 &lt;p>&lt;strong>1. &lt;a href="https://medium.com/paypal-tech/how-to-prepare-for-an-engineering-interview-at-paypal-india-288dd90e4804">Test Setup&lt;/a>&lt;/strong>&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/20/interview_preparation/</guid><pubDate>Fri, 20 Jan 2023 00:00:00 +0000</pubDate></item></channel></rss>
