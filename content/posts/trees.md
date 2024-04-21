@@ -175,6 +175,7 @@ Time complexity:  O(n), where n is the total number of nodes in the tree. This i
 Space complexity: O(n), where n is the height of the tree. This is because the function uses a call stack to keep track of the recursive calls, and the maximum size of the call stack is proportional to the height of the tree. In the worst case, when the tree is completely unbalanced and resembles a linked list, the space complexity of the function becomes O(n). However, in a balanced tree, the space complexity is closer to O(log n), where log n is the height of the tree.
 
 --- 
+
 **6. [Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/).**
 ```java
 public boolean isSubtree(TreeNode s, TreeNode t) {
@@ -232,7 +233,7 @@ Space complexity: O(m + n), as it needs to store the pre-order traversal strings
 
 ---
 
-**6. [Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/).**
+**7. [Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/).**
 ```java
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -257,7 +258,7 @@ Time complexity:  O(log N) in the best case and O(N) in the worst case, where N 
 Space complexity:  O(log N) in the best case and O(N) in the worst case. In the best case, when the BST is balanced, the space complexity of the algorithm is O(log N) since we only use a constant amount of space for each level of the recursive call stack. In the worst case, when the BST is skewed, the space complexity is O(N) since we may have to store all N nodes on the call stack.
 
 --- 
-**7. [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/).**
+**8. [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/).**
 ```java
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
@@ -292,7 +293,7 @@ Space complexity: O(N) since we may need to store all N nodes in the queue at on
 
 --- 
 
-**8. [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/).**
+**9. [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/).**
 ```java
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
@@ -327,32 +328,7 @@ Space complexity: O(N) since we may need to store all N nodes in the queue at on
 
 ---
 
-**8. [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/).**
-```java
-class Solution {
-    public boolean isValidBST(TreeNode root) {
-        // Use long instead of int to handle edge cases where value equals Integer.MIN_VALUE or Integer.MAX_VALUE
-        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
-    }
-    
-    private boolean isValidBST(TreeNode node, long minVal, long maxVal) {
-        if (node == null) {
-            return true;
-        }
-        if (node.val <= minVal || node.val >= maxVal) {
-            return false;
-        }
-        return isValidBST(node.left, minVal, node.val) && isValidBST(node.right, node.val, maxVal);
-    }
-}
-```
-Time complexity: O(n), where n is the number of nodes in the tree. This is because we visit each node exactly once during the in-order traversal.
-
-Space complexity: O(n), where n is the number of nodes in the tree. This is because we need to store the recursive call stack during the traversal, which can be as large as the height of the tree, and in the worst case the height of the tree can be n.
-
----
-
-**8. [Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/).**
+**10. [Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/).**
 ```java
 class Solution {
     public int goodNodes(TreeNode root) {
@@ -380,3 +356,162 @@ Time complexity:  O(n), where n is the number of nodes in the binary tree. This 
 Space complexity:O(h), where h is the height of the binary tree. This space is used for the recursive call stack. In the worst case, where the binary tree is skewed and has a height equivalent to the number of nodes (h ≈ n), the space complexity would be O(n). However, in a balanced binary tree, the space complexity would be O(log n), where log n is the height of the tree.
 
 --- 
+
+**11. [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/).**
+```java
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        // Use long instead of int to handle edge cases where value equals Integer.MIN_VALUE or Integer.MAX_VALUE
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+    
+    private boolean isValidBST(TreeNode node, long minVal, long maxVal) {
+        if (node == null) {
+            return true;
+        }
+        if (node.val <= minVal || node.val >= maxVal) {
+            return false;
+        }
+        return isValidBST(node.left, minVal, node.val) && isValidBST(node.right, node.val, maxVal);
+    }
+}
+```
+Time complexity: O(n), where n is the number of nodes in the tree. This is because we visit each node exactly once during the in-order traversal.
+
+Space complexity: O(n), where n is the number of nodes in the tree. This is because we need to store the recursive call stack during the traversal, which can be as large as the height of the tree, and in the worst case the height of the tree can be n.
+
+---
+
+**12. [Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/).**
+```java
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> list = new ArrayList<>();
+        inorder(root, list);
+        return list.get(k - 1);
+    }
+
+    private void inorder(TreeNode root, List<Integer> list) {
+        if (root == null) return;
+        inorder(root.left, list);
+        list.add(root.val);
+        inorder(root.right, list);
+    }
+}
+```
+Time complexity: O(n), where n is the number of nodes in the tree. This is because we visit each node exactly once during the in-order traversal.
+
+Space complexity: O(n),as it uses additional space to store the in-order traversal sequence in the list.
+
+---
+
+**13. [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/).**
+```java
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return buildTreeHelper(preorder, inorder, 0, 0, inorder.length - 1);
+    }
+    
+    private TreeNode buildTreeHelper(int[] preorder, int[] inorder, int preStart, int inStart, int inEnd) {
+        if (preStart > preorder.length - 1 || inStart > inEnd) {
+            return null;
+        }
+        
+        TreeNode root = new TreeNode(preorder[preStart]);
+        int inIndex = 0;
+        for (int i = inStart; i <= inEnd; i++) {
+            if (inorder[i] == root.val) {
+                inIndex = i;
+            }
+        }
+        
+        root.left = buildTreeHelper(preorder, inorder, preStart + 1, inStart, inIndex - 1);
+        root.right = buildTreeHelper(preorder, inorder, preStart + inIndex - inStart + 1, inIndex + 1, inEnd);
+        
+        return root;
+    }
+}
+```
+Time complexity: O(n), where n is the number of nodes in the tree.
+
+Space complexity: O(n),due to the recursion stack, where n is the height of the binary tree.
+
+---
+
+**14. [Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum).**
+```java
+class Solution {
+    int maxSum = Integer.MIN_VALUE;
+    
+    public int maxPathSum(TreeNode root) {
+        calculateMaxSum(root);
+        return maxSum;
+    }
+    
+    private int calculateMaxSum(TreeNode node) {
+        if (node == null) return 0;
+        
+        // Calculate maximum sum in left and right subtrees
+        int leftSum = Math.max(0, calculateMaxSum(node.left));
+        int rightSum = Math.max(0, calculateMaxSum(node.right));
+        
+        // Update maxSum by considering the current node's path
+        maxSum = Math.max(maxSum, node.val + leftSum + rightSum);
+        
+        // Return the maximum sum of the path through the current node
+        return node.val + Math.max(leftSum, rightSum);
+    }
+}
+```
+Time complexity: O(n), where n is the number of nodes in the tree.
+
+Space complexity: O(h), where h is the height of the binary tree, due to the recursion stack.
+
+---
+
+**15. [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree).**
+```java
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        serializeHelper(root, sb);
+        return sb.toString();
+    }
+
+    private void serializeHelper(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append("null").append(",");
+            return;
+        }
+        sb.append(node.val).append(",");
+        serializeHelper(node.left, sb);
+        serializeHelper(node.right, sb);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] nodes = data.split(",");
+        Queue<String> queue = new LinkedList<>(Arrays.asList(nodes));
+        return deserializeHelper(queue);
+    }
+
+    private TreeNode deserializeHelper(Queue<String> queue) {
+        String val = queue.poll();
+        if (val.equals("null")) return null;
+        TreeNode node = new TreeNode(Integer.parseInt(val));
+        node.left = deserializeHelper(queue);
+        node.right = deserializeHelper(queue);
+        return node;
+    }
+}
+
+```
+Time complexity: We split the serialized string into an array of strings, which takes O(n) time. Then, we construct the binary tree recursively by visiting each node once. Therefore, the time complexity of deserialization is linear with respect to the number of nodes in the tree.
+
+Space complexity: The space complexity is O(n) because we use a queue to store the nodes during deserialization, and the size of the queue can be at most O(n) when all nodes are stored in it. Additionally, the recursion stack space used during deserialization is proportional to the height of the tree, which can be at most O(n) for a skewed binary tree.
+
+---
+
+
