@@ -8,5 +8,5 @@ tags:
 
 **1. [PayPal Interview Preparation Guide](https://medium.com/paypal-tech/how-to-prepare-for-an-engineering-interview-at-paypal-india-288dd90e4804)**
 
-**1. [Test Setup](https://medium.com/paypal-tech/how-to-prepare-for-an-engineering-interview-at-paypal-india-288dd90e4804)**
+**2. [Interviewing.io](https://interviewing.io/)**
 

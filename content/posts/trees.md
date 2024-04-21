@@ -1,7 +1,7 @@
 ---
 title: "Trees"
-description: "2023"
-date: "2023-01-22"
+description: "2024"
+date: "2024-04-21"
 tags:
 - datastructures
 ---
