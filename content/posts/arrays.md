@@ -220,3 +220,44 @@ Time Complexity: Building the HashMap takes O(n) time, as we need to iterate thr
 Building the PriorityQueue takes O(n log k) time. For each element in the HashMap, we perform an operation that takes O(log k) time to add the entry to the priority queue. We do this operation n times, so the total time complexity of building the PriorityQueue is O(n log k). Extracting the top k frequent elements from the PriorityQueue takes O(k log n) time. We perform the poll operation k times, which takes O(log n) time each time. Therefore, the overall time complexity of the topKFrequent method is O(n log k).
 
 Space Complexity: O(n) because we need to store the frequency of each element in the input array in the HashMap. The size of the HashMap is bounded by the number of distinct elements in the input array, which is at most n. The PriorityQueue can also have at most k elements, so its space complexity is O(k). Combining these two space requirements, the overall space complexity of the topKFrequent method is O(n).
+
+---
+
+**6. [Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence).**
+```java
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        if (nums == null || nums.length == 0)
+            return 0;
+
+        HashSet<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+
+        int longestStreak = 0;
+
+        for (int num : nums) {
+            if (!set.contains(num - 1)) { // Only process if it's the start of a sequence
+                int currentNum = num;
+                int currentStreak = 1;
+
+                while (set.contains(currentNum + 1)) {
+                    currentNum++;
+                    currentStreak++;
+                }
+
+                longestStreak = Math.max(longestStreak, currentStreak);
+            }
+        }
+
+        return longestStreak;
+    }
+}
+
+```
+Time complexity: Building the HashSet initially takes O(n) time, as we need to add each element of the array to the HashSet.The subsequent iteration over the array takes O(n) time as well, as we examine each element exactly once. Within the iteration, the while loop that checks for consecutive elements also takes O(n) time in the worst case, but it does not run for each element. It runs only when we encounter the start of a consecutive sequence, which happens relatively infrequently in practice.
+
+Space complexity: O(n), This is because we use a HashSet to store the elements of the array, which can take up to O(n) space in the worst case if all elements are unique.
+
+---
