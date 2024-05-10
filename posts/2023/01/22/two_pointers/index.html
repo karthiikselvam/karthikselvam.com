@@ -1,0 +1,144 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Ronalds Vilcins - https://karthikselvam.com/"><title>Two Pointers | Karthik Selvam</title><meta name=description content="2023"><meta name=twitter:card content="summary"><meta name=twitter:title content="Two Pointers"><meta name=twitter:description content="2023"><meta property="og:title" content="Two Pointers"><meta property="og:description" content="2023"><meta property="og:type" content="article"><meta property="og:url" content="https://karthikselvam.com/posts/2023/01/22/two_pointers/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-01-22T00:00:00+00:00"><meta property="article:modified_time" content="2023-01-22T00:00:00+00:00"><meta itemprop=name content="Two Pointers"><meta itemprop=description content="2023"><meta itemprop=datePublished content="2023-01-22T00:00:00+00:00"><meta itemprop=dateModified content="2023-01-22T00:00:00+00:00"><meta itemprop=wordCount content="736"><meta itemprop=keywords content="datastructures,"><link rel=canonical href=https://karthikselvam.com/posts/2023/01/22/two_pointers/><link rel=dns-prefetch href=https://www.google-analytics.com><link href=https://www.google-analytics.com rel=preconnect crossorigin><link rel=alternate type=application/atom+xml title="Karthik Selvam" href=https://karthikselvam.com/atom.xml><link rel=alternate type=application/json title="Karthik Selvam" href=https://karthikselvam.com/feed.json><script src=https://kit.fontawesome.com/8d06e0a013.js crossorigin=anonymous></script>
+<link rel="shortcut icon" type=image/png href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="><style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeSpeed}.posts hr{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:none;border-bottom:1px #353535;flex:1 0 1rem}main{max-width:70ch;padding:2ch;margin:auto}a,body{color:#353535}::selection,a:focus,a:hover{background-color:#353535;color:#fff}.meta{margin:0 0 2.5rem}.tags::before{content:"\2022";margin-left:1rem}code,pre{color:#353535;font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;border:1px solid #353535;font-size:small}code{padding:.1rem;border:none}pre{padding:.5rem;overflow-x:auto}pre code{border:none}img{max-width:100%;border:1px solid #353535}hr{background:#353535;height:1px;border:0}ul{list-style-type:square}ul,ol{padding-left:1.2rem}header li,footer li{display:inline;text-transform:uppercase}header a,footer a{text-decoration:none}header ul,footer ul{justify-content:space-between;display:flex}header,section,footer{padding:1rem 0}blockquote{border-left:5px solid #353535;padding-left:1rem}.posts ul,header ul,footer ul{list-style:none}.posts,header ul,footer ul{padding:0}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.7rem}.posts li a,.posts li div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}.hash{opacity:.25;text-decoration:none}table{border-collapse:collapse;text-align:left;width:100%}table tr{background:#fff;border-bottom:1px solid}table th,table td{padding:10px 20px}</style><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"posts","name":"Two Pointers","headline":"Two Pointers","alternativeHeadline":"","description":"2023","inLanguage":"en-us","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/karthikselvam.com\/posts\/2023\/01\/22\/two_pointers\/"},"author":{"@type":"Person","name":""},"creator":{"@type":"Person","name":""},"accountablePerson":{"@type":"Person","name":""},"copyrightHolder":"Karthik Selvam","copyrightYear":"2023","dateCreated":"2023-01-22T00:00:00.00Z","datePublished":"2023-01-22T00:00:00.00Z","dateModified":"2023-01-22T00:00:00.00Z","publisher":{"@type":"Organization","name":"Karthik Selvam","url":"https://karthikselvam.com/","logo":{"@type":"ImageObject","url":"https:\/\/karthikselvam.com\/","width":"32","height":"32"}},"image":"https://karthikselvam.com/","url":"https:\/\/karthikselvam.com\/posts\/2023\/01\/22\/two_pointers\/","wordCount":"736","genre":["datastructures"],"keywords":["datastructures"]}</script></head><body><main><header><nav><ul><li><a href=/>Blog</a></li><li><a href=/about/>@Karthik</a></li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></header><hr><section><h2 itemprop="name headline">Two Pointers</h2><p class=meta><time itemprop=datePublished datetime=2023-01-22>January 22, 2023</time> &bull;
+<a href=/tags/datastructures>datastructures</a></p><span itemprop=articleBody><p>In this article, we will solve Two Pointers related problems that are commonly encountered in interviews.</p><p><strong>1. <a href=https://leetcode.com/problems/valid-palindrome/>Valid Palindrome</a>.</strong></p><pre><code class=language-java>class Solution {
+    public boolean isPalindrome(String s) {
+        if (s == null || s.isEmpty()) {
+            return true; // Empty string is considered a palindrome
+        }
+        // Preprocess the string: remove non-alphanumeric characters and convert to lowercase
+        StringBuilder sb = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                sb.append(Character.toLowerCase(c));
+            }
+        }
+        String processedString = sb.toString();
+        // Use two pointers approach to check if the string is a palindrome
+        int left = 0, right = processedString.length() - 1;
+        while (left &lt; right) {
+            if (processedString.charAt(left) != processedString.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
+
+</code></pre><p>Time complexity: O(n), where n is the length of the input string.</p><p>Space complexity: O(n), The space required by the StringBuilder can be at most the same as the input string, which is O(n) in the worst case. The processed string may require additional space, but it is still bounded by the length of the input string, which is O(n). Therefore, the overall space complexity is also O(n).</p><hr><p><strong>2. <a href=https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/>Two Sum II - Input Array Is Sorted</a>.</strong></p><pre><code class=language-java>class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int left = 0;
+        int right = numbers.length - 1;
+        
+        while (left &lt; right) {
+            int sum = numbers[left] + numbers[right];
+            if (sum == target) {
+                return new int[]{left + 1, right + 1}; // Indices are 1-based
+            } else if (sum &lt; target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        
+        // If no such pair is found
+        return new int[]{-1, -1};
+    }
+}
+
+</code></pre><p>Time complexity: O(n), where n is the number of elements in the array.</p><p>Space complexity: O(1), meaning it uses constant extra space.</p><hr><p><strong>3. <a href=https://leetcode.com/problems/3sum/>3Sum</a>.</strong></p><pre><code class=language-java>class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) {
+        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+        Arrays.sort(nums); // Sort the array
+        for (int i = 0; i &lt; nums.length - 2; i++) {
+            // Avoid duplicates
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int left = i + 1;
+            int right = nums.length - 1;
+            while (left &lt; right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                
+                if (sum == 0) {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    // Avoid duplicates
+                    while (left &lt; right &amp;&amp; nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+                    while (left &lt; right &amp;&amp; nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+                    // Move pointers
+                    left++;
+                    right--;
+                } else if (sum &lt; 0) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+        return result;
+    }
+}
+
+</code></pre><p>Time complexity: O(n log n), Sorting the array takes O(n log n) time complexity.</p><p>Space complexity: The space complexity of the result list is O(m), where m is the number of unique triplets that sum up to zero.</p><hr><p><strong>4. <a href=https://leetcode.com/problems/container-with-most-water>Container With Most Water</a>.</strong></p><pre><code class=language-java>class Solution {
+    public int maxArea(int[] height) {
+        int maxArea = 0;
+        int left = 0;
+        int right = height.length - 1;
+        while (left &lt; right) {
+            int minHeight = Math.min(height[left], height[right]);
+            int width = right - left;
+            int area = width * minHeight;
+            maxArea = Math.max(maxArea, area);
+            
+            if (height[left] &lt; height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return maxArea;
+    }
+}
+
+</code></pre><p>Time complexity: O(n), where n is the number of elements in the array, the time complexity is O(n).</p><p>Space complexity: O(1)</p><hr><p><strong>5. <a href=https://leetcode.com/problems/trapping-rain-water/>Trapping Rain Water</a>.</strong></p><pre><code class=language-java>public class TrappingRainWater {
+    public int trap(int[] height) {
+        if (height == null || height.length == 0) {
+            return 0;
+        }
+        int n = height.length;
+        int[] leftMax = new int[n];
+        int[] rightMax = new int[n];
+        // Calculate the maximum height of bars to the left of each position
+        leftMax[0] = height[0];
+        for (int i = 1; i &lt; n; i++) {
+            leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+        }
+        // Calculate the maximum height of bars to the right of each position
+        rightMax[n - 1] = height[n - 1];
+        for (int i = n - 2; i &gt;= 0; i--) {
+            rightMax[i] = Math.max(rightMax[i + 1], height[i]);
+        }
+        // Calculate the trapped water at each position
+        int totalWater = 0;
+        for (int i = 0; i &lt; n; i++) {
+            int minHeight = Math.min(leftMax[i], rightMax[i]);
+            totalWater += minHeight - height[i];
+        }
+        return totalWater;
+    }
+}
+
+</code></pre><p>Time complexity: O(n), Each iteration through the array takes O(n) time, where n is the number of elements in the array.</p><p>Space complexity: O(n), where n is the number of elements in the array.</p><hr></span></section><hr><footer><nav><ul><li>© 2024 Karthik Selvam</li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></footer></main></body></html>
