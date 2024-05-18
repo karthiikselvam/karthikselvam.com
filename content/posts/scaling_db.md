@@ -19,3 +19,8 @@ Storage can be broadly classified into the following.
 - File storage : Data stored in files, which can be organized into directories/folders. We can see it as a form of key-value, with path as the key. 
 - Block storage : Stores data in evenly sized chunks with unique identifiers. We are unlikely to use block storage in web applications. Block storage is relevant for designing low-level components of other storage systems (such as databases).
 - Object storage : Flatter hierarchy than file storage. Objects are usually accessed with simple HTTP APIs. Writing objects is slow, and objects cannot be modified, so object storage is suited for static data. AWS S3 is a cloud example.
+
+1. When to use vs. avoid databases
+When deciding how to store a service’s data, you may discuss using a database vs. other possibilities such as file, block, and object storage. During the interview, remember that even though you may prefer certain approaches and you can state a preference during an interview, you must be able to discuss all relevant factors and consider others’ opin- ions.
+
+2. Replication

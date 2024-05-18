@@ -27,3 +27,4 @@ Horizontal scaling refers to spreading out the processing and storage requiremen
 - HTTP is a stateless protocol, so a backend service that uses it is easy to scale horizontally
 
 2. Availability - Availability is the percentage of time a system can accept requests and return the desired response.
+High availability is required in most services, and other non-functional requirements may be traded off to allow high availability without unnecessary complexity.

@@ -123,7 +123,7 @@ public class PermutationInString {
     }
 }
 ```
-Time complexity:  O(n), where n is the length of the input string s.
+Time complexity:  O(n),The algorithm iterates through both strings once to initialize the count arrays. Then, it iterates through the second string s2 once more to check for the presence of any permutation of s1. Therefore, the time complexity of the algorithm is O(n), where n is the length of the second string s2.
 
 Space complexity:  O(1), which is constant space.
 
