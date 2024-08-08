@@ -12,3 +12,8 @@ tags:
 
 **3. [Java Resources](https://github.com/hadign20/student-career-handbook/blob/master/domain-specific/a-deeper-understanding-of-java.md)**
 
+**4. [The Architecture of Open Source Applications](https://aosabook.org/en/)**
+
+**5. [System Design](https://books.dwf.dev/docs/system-design/c0)**
+
+
