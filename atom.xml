@@ -1544,7 +1544,9 @@ System.out.println(clonedCar2.toString());
 &lt;/code>&lt;/pre>
 &lt;p>In this example, we have a CarPrototype interface that defines the clone() method. The Car class implements the CarPrototype interface and provides an implementation of the clone() method. The CarClient class demonstrates how the prototype pattern can be used to create new Car objects efficiently by cloning an existing Car object. In the client class, we create a carPrototype object with some initial values. We then create two clonedCar objects by calling the clone() method on the carPrototype object. Finally, we modify the properties of the clonedCar objects to demonstrate that they are separate instances.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/03/23/creational_patterns/</guid><pubDate>Thu, 23 Mar 2023 00:00:00 +0000</pubDate></item><item><title>Awesome Stuff</title><link>https://karthikselvam.com/posts/2023/02/25/awesome_stuff/</link><description>&lt;p>&lt;strong>1. &lt;a href="https://github.com/kilimchoi/engineering-blogs">Engineering Blogs&lt;/a>&lt;/strong>&lt;/p>
 &lt;p>&lt;strong>2. &lt;a href="https://www.falkhausen.de/index.html">Java Packages with UML Diagrams&lt;/a>&lt;/strong>&lt;/p>
-&lt;p>&lt;strong>3. &lt;a href="https://github.com/hadign20/student-career-handbook/blob/master/domain-specific/a-deeper-understanding-of-java.md">Java Resources&lt;/a>&lt;/strong>&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/02/25/awesome_stuff/</guid><pubDate>Sat, 25 Feb 2023 00:00:00 +0000</pubDate></item><item><title>Using Collections the right way</title><link>https://karthikselvam.com/posts/2023/02/23/collections/</link><description>&lt;h3 id="iterating-through-a-list">Iterating through a List &lt;a href="#iterating-through-a-list" class="hash">#&lt;/a>&lt;/h3>
+&lt;p>&lt;strong>3. &lt;a href="https://github.com/hadign20/student-career-handbook/blob/master/domain-specific/a-deeper-understanding-of-java.md">Java Resources&lt;/a>&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>4. &lt;a href="https://aosabook.org/en/">The Architecture of Open Source Applications&lt;/a>&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>5. &lt;a href="https://books.dwf.dev/docs/system-design/c0">System Design&lt;/a>&lt;/strong>&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/02/25/awesome_stuff/</guid><pubDate>Sat, 25 Feb 2023 00:00:00 +0000</pubDate></item><item><title>Using Collections the right way</title><link>https://karthikselvam.com/posts/2023/02/23/collections/</link><description>&lt;h3 id="iterating-through-a-list">Iterating through a List &lt;a href="#iterating-through-a-list" class="hash">#&lt;/a>&lt;/h3>
 &lt;ol>
 &lt;li>Iterating through a List using Index.&lt;/li>
 &lt;/ol>
@@ -2493,7 +2495,56 @@ System.out.println(&amp;quot;Connecting to &amp;quot; + jdbcUrl.get());
 }
 }
 &lt;/code>&lt;/pre>
-&lt;p>That&amp;rsquo;s it, now you have solid understanding of SOLID principles.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/24/solid_principles/</guid><pubDate>Tue, 24 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Capacity Estimation on the fly</title><link>https://karthikselvam.com/posts/2023/01/23/capacity_estimation/</link><description>&lt;p>Capacity estimation is a crucial component of system design interviews, and it can be quite challenging if one is not adequately prepared. However, with the right approach, it is possible to accurately estimate the storage, bandwidth, and memory/cache requirements needed for a particular system. This article provides a comprehensive framework for capacity estimation, which will enable you to confidently tackle capacity-related questions during system design interviews.&lt;/p>
+&lt;p>That&amp;rsquo;s it, now you have solid understanding of SOLID principles.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/24/solid_principles/</guid><pubDate>Tue, 24 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Builder Design Pattern Practice Qestions</title><link>https://karthikselvam.com/posts/2023/01/23/builder_pattern/</link><description>&lt;p>Exercise 1: Basic Builder Implementation
+Objective: Implement a basic builder.
+Steps:
+Create a House class with attributes walls, roof, and windows.
+Create a HouseBuilder class with methods to set the attributes of House.
+Implement a build() method in HouseBuilder that returns a House instance.
+Demonstrate building a House object using HouseBuilder.&lt;/p>
+&lt;p>Exercise 2: Fluent Builder Interface
+Objective: Implement a builder with a fluent interface.
+Steps:
+Create a Car class with attributes engine, wheels, and color.
+Create a CarBuilder class with methods to set the attributes of Car.
+Implement the methods in CarBuilder to return the builder itself for method chaining.
+Demonstrate building a Car object using the fluent interface.&lt;/p>
+&lt;p>Exercise 3: Director in Builder Pattern
+Objective: Use a director to manage the construction process.
+Steps:
+Create a Computer class with attributes CPU, RAM, storage, and graphicsCard.
+Create a ComputerBuilder class with methods to set the attributes of Computer.
+Create a Director class with methods to construct different types of computers (e.g., gaming computer, office computer).
+Demonstrate building different types of computers using the Director.&lt;/p>
+&lt;p>Exercise 4: Immutable Objects with Builder Pattern
+Objective: Implement the builder pattern for creating immutable objects.
+Steps:
+Create an immutable Person class with attributes firstName, lastName, age, and address.
+Create a PersonBuilder class to set the attributes of Person.
+Ensure the Person class has private final fields and no setters.
+Demonstrate creating a Person object using PersonBuilder.&lt;/p>
+&lt;p>Exercise 5: Nested Builders
+Objective: Implement nested builders for complex objects.
+Steps:
+Create a House class with an inner class Garden and attributes walls, roof, and garden.
+Create a HouseBuilder class with methods to set the attributes of House.
+Create a nested GardenBuilder class inside HouseBuilder to build the Garden object.
+Demonstrate building a House object with a nested Garden using the builders.&lt;/p>
+&lt;p>Exercise 6: Copy Builder
+Objective: Implement a builder that can copy attributes from an existing object.
+Steps:
+Create a Book class with attributes title, author, pages, and publisher.
+Create a BookBuilder class with methods to set the attributes of Book.
+Implement a method from(Book book) in BookBuilder that copies the attributes from an existing Book object.
+Demonstrate creating a new Book object by copying attributes from an existing Book using BookBuilder.&lt;/p>
+&lt;p>Exercise 7: Builder Pattern with Inheritance
+Objective: Implement the builder pattern with inheritance.
+Steps:
+Create a base class Employee with attributes name and employeeId.
+Create a derived class Manager with an additional attribute department.
+Create a builder EmployeeBuilder to build Employee objects.
+Create a builder ManagerBuilder that extends EmployeeBuilder to build Manager objects.
+Demonstrate building Employee and Manager objects using their respective builders.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/builder_pattern/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Capacity Estimation on the fly</title><link>https://karthikselvam.com/posts/2023/01/23/capacity_estimation/</link><description>&lt;p>Capacity estimation is a crucial component of system design interviews, and it can be quite challenging if one is not adequately prepared. However, with the right approach, it is possible to accurately estimate the storage, bandwidth, and memory/cache requirements needed for a particular system. This article provides a comprehensive framework for capacity estimation, which will enable you to confidently tackle capacity-related questions during system design interviews.&lt;/p>
 &lt;p>Typically following estimates are required :&lt;/p>
 &lt;ol>
 &lt;li>Storage&lt;/li>
@@ -2548,7 +2599,58 @@ URL data storage: 200 bytes x 100,000,000 = 20,000,000,000 = 20 GB per day&lt;/p
 URL bandwidth: 20 GB per day / 100,000 seconds = 0.2 MB per second.&lt;/p>
 &lt;p>&lt;strong>Memory/Cache&lt;/strong>:
 Assuming we want to cache 20 urls per user, 200 bytes * 100,000,000 daily users * 20 = 20 GB * 20 = 400 GB of cache. If one machine/server can keep 150 GB of cache, we need 3 machines/servers for caching.&lt;/p>
-&lt;p>The framework outlined above provides a clear approach to tackle capacity estimation problems during interviews.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/capacity_estimation/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Fundamentals of Multithreading</title><link>https://karthikselvam.com/posts/2023/01/23/threads/</link><description>&lt;p>&lt;strong>1. Thread creation&lt;/strong> : In Java, you can create a thread by either extending the Thread class or implementing the Runnable interface. Here&amp;rsquo;s how you can do it:&lt;/p>
+&lt;p>The framework outlined above provides a clear approach to tackle capacity estimation problems during interviews.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/capacity_estimation/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Factory Design Pattern Practice Qestions</title><link>https://karthikselvam.com/posts/2023/01/23/factory_pattern/</link><description>&lt;p>Exercise 1: Simple Factory
+Objective: Implement a simple factory.
+Steps:
+Create a Shape interface with a method draw().
+Implement concrete classes Circle, Square, and Rectangle that implement Shape.
+Create a ShapeFactory class with a method getShape(String shapeType) that returns an instance of a specific shape.
+Demonstrate using ShapeFactory to create and use different shapes.&lt;/p>
+&lt;p>Exercise 2: Factory Method
+Objective: Implement the Factory Method pattern.
+Steps:
+Create a Product interface with a method use().
+Implement concrete classes ConcreteProductA and ConcreteProductB that implement Product.
+Create an abstract class Creator with an abstract method createProduct().
+Implement concrete creators ConcreteCreatorA and ConcreteCreatorB that extend Creator and implement the createProduct() method.
+Demonstrate using different creators to create and use products.&lt;/p>
+&lt;p>Exercise 3: Abstract Factory
+Objective: Implement the Abstract Factory pattern.
+Steps:
+Create an interface GUIFactory with methods createButton() and createCheckbox().
+Implement concrete factories WindowsFactory and MacFactory that implement GUIFactory.
+Create interfaces Button and Checkbox with a method render().
+Implement concrete classes WindowsButton, MacButton, WindowsCheckbox, and MacCheckbox that implement Button and Checkbox.
+Demonstrate creating different GUIs using the abstract factory.&lt;/p>
+&lt;p>Exercise 4: Parameterized Factory
+Objective: Implement a factory with parameterized creation.
+Steps:
+Create a Vehicle interface with a method drive().
+Implement concrete classes Car, Bike, and Truck that implement Vehicle.
+Create a VehicleFactory class with a method getVehicle(String vehicleType, String color, int horsepower) that returns an instance of a specific vehicle with given parameters.
+Demonstrate creating and using vehicles with different parameters.&lt;/p>
+&lt;p>Exercise 5: Factory with Registry
+Objective: Implement a factory with a registry for product creation.
+Steps:
+Create an Animal interface with a method speak().
+Implement concrete classes Dog, Cat, and Bird that implement Animal.
+Create an AnimalFactory class with a registry to map string types to animal constructors.
+Add methods to AnimalFactory to register and create animals based on string types.
+Demonstrate registering and creating different animals using the factory.&lt;/p>
+&lt;p>Exercise 6: Singleton Factory
+Objective: Combine Singleton and Factory patterns.
+Steps:
+Create a Connection interface with a method connect().
+Implement concrete classes MySQLConnection and PostgreSQLConnection that implement Connection.
+Create a singleton ConnectionFactory with a method getConnection(String type) that returns a specific connection instance.
+Demonstrate using the singleton factory to create and use different connections.&lt;/p>
+&lt;p>Exercise 7: Reflection-Based Factory
+Objective: Use reflection to create objects in a factory.
+Steps:
+Create an Appliance interface with a method operate().
+Implement concrete classes Washer and Dryer that implement Appliance.
+Create an ApplianceFactory class with a method getAppliance(Class&amp;lt;? extends Appliance&amp;gt; applianceClass) that uses reflection to create instances.
+Demonstrate creating and using appliances with the reflection-based factory.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/factory_pattern/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Fundamentals of Multithreading</title><link>https://karthikselvam.com/posts/2023/01/23/threads/</link><description>&lt;p>&lt;strong>1. Thread creation&lt;/strong> : In Java, you can create a thread by either extending the Thread class or implementing the Runnable interface. Here&amp;rsquo;s how you can do it:&lt;/p>
 &lt;ul>
 &lt;li>Extending the Thread class:&lt;/li>
 &lt;/ul>
@@ -3060,7 +3162,147 @@ thread2.start();
 &lt;li>
 &lt;p>&lt;strong>Idempotency&lt;/strong>: Idempotency is the property of a system where performing the same operation multiple times has the same result as performing it once. By designing microservices to be idempotent, you can reduce the risk of failures and ensure consistency across the system.For example, Let&amp;rsquo;s say you have a system where a user can update their profile information. To ensure idempotency, you can design the microservice to only update the profile if the request includes a unique identifier, such as a UUID. If the same request is made multiple times, the microservice will recognize the duplicate request and return the same result as the original request. This ensures that the system remains consistent even if the same request is made multiple times.&lt;/p>
 &lt;/li>
-&lt;/ol></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/transactions/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Structural Design Patterns</title><link>https://karthikselvam.com/posts/2023/01/23/structural_patterns/</link><description>&lt;p>Structural Design Patterns are design patterns that focus on the composition of classes and objects to form larger structures, without changing their individual behaviors. They help to simplify the relationships between objects and classes in a system, and to make the system more flexible and efficient. Following are some of the commonly used structural design patterns.&lt;/p>
+&lt;/ol></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/transactions/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Prototype Design Pattern Practice Qestions</title><link>https://karthikselvam.com/posts/2023/01/23/prototype_pattern/</link><description>&lt;p>Exercise 1: Basic Prototype Implementation
+Objective: Implement a basic prototype.
+Steps:
+Create an interface Prototype with a method Prototype clone().
+Implement a class ConcretePrototype that implements Prototype and includes some fields.
+Demonstrate creating and cloning instances of ConcretePrototype.&lt;/p>
+&lt;p>Exercise 2: Deep vs. Shallow Copy
+Objective: Understand deep and shallow copying.
+Steps:
+Create a class Address with fields street and city.
+Modify ConcretePrototype to include an Address field.
+Implement both shallow and deep copy methods in ConcretePrototype.
+Demonstrate the differences between shallow and deep copying.&lt;/p>
+&lt;p>Exercise 3: Registry for Prototypes
+Objective: Use a prototype registry.
+Steps:
+Create a prototype registry class that maintains a map of prototype names to prototype instances.
+Implement methods to add prototypes to the registry and to create new instances by cloning prototypes.
+Demonstrate using the registry to create new instances of different prototypes.&lt;/p>
+&lt;p>Exercise 4: Prototype with Composition
+Objective: Implement the Prototype Pattern with composition.
+Steps:
+Create a class Document with fields title and a list of Page objects.
+Implement Page as a class with a content field.
+Implement cloning for both Document and Page classes.
+Demonstrate cloning a Document with multiple Page objects.&lt;/p>
+&lt;p>Exercise 5: Prototype Pattern in a Game
+Objective: Apply the Prototype Pattern in a real-world scenario.
+Steps:
+Create a class Enemy with fields type, health, and attackPower.
+Implement the clone method in Enemy.
+Create a registry for different types of enemies.
+Demonstrate cloning different types of enemies from the registry.&lt;/p>
+&lt;p>Exercise 6: Prototype with Immutable Objects
+Objective: Implement cloning for immutable objects.
+Steps:
+Create an immutable class Person with fields name and age.
+Implement a builder for Person to facilitate creating instances.
+Demonstrate creating and cloning immutable Person instances using the builder.&lt;/p>
+&lt;p>Exercise 7: Prototype with Polymorphism
+Objective: Use the Prototype Pattern with polymorphism.
+Steps:
+Create an abstract class Shape with a method clone().
+Implement concrete classes Circle and Square that extend Shape.
+Create a registry of Shape objects.
+Demonstrate cloning different shapes from the registry.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/prototype_pattern/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Singleton Design Pattern Practice Qestions</title><link>https://karthikselvam.com/posts/2023/01/23/singleton_pattern/</link><description>&lt;p>Exercise 1: Basic Singleton Implementation
+Objective: Implement a basic Singleton Pattern.
+Steps:
+Create a Logger class that follows the Singleton Pattern.
+Ensure only one instance of Logger is created.
+Add a method log(String message) to log messages.&lt;/p>
+&lt;p>Exercise 2: Thread-Safe Singleton
+Objective: Implement a thread-safe Singleton.
+Steps:
+Modify the Logger class to make it thread-safe.
+Use the double-checked locking principle to ensure thread safety.
+Demonstrate logging from multiple threads.&lt;/p>
+&lt;p>Exercise 3: Lazy Initialization
+Objective: Implement Singleton with lazy initialization.
+Steps:
+Create a DatabaseConnection class that follows the Singleton Pattern with lazy initialization.
+Ensure the instance is created only when needed.
+Add a method connect() to simulate database connection.&lt;/p>
+&lt;p>Exercise 4: Singleton with Enum
+Objective: Implement Singleton using an enum.
+Steps:
+Create an enum Configuration that follows the Singleton Pattern.
+Add methods to set and get configuration values.
+Demonstrate setting and getting configuration values.&lt;/p>
+&lt;p>Exercise 5: Serialization and Singleton
+Objective: Ensure Singleton property during serialization.
+Steps:
+Create a Settings class that follows the Singleton Pattern.
+Ensure the Singleton property is maintained during serialization and deserialization.
+Demonstrate serialization and deserialization of Settings.&lt;/p>
+&lt;p>Exercise 6: Singleton and Reflection
+Objective: Protect Singleton from reflection attacks.
+Steps:
+Create a Preferences class that follows the Singleton Pattern.
+Protect the Singleton instance from being instantiated via reflection.
+Demonstrate the protection mechanism.&lt;/p>
+&lt;p>Exercise 7: Singleton in Multithreading Environment
+Objective: Implement a Singleton for a multi-threaded environment.
+Steps:
+Create a Cache class that follows the Singleton Pattern.
+Ensure the Cache class works correctly in a multi-threaded environment.
+Add methods to add and retrieve items from the cache.&lt;/p>
+&lt;p>Exercise 8: Singleton in Dependency Injection
+Objective: Integrate Singleton with a dependency injection framework.
+Steps:
+Choose a dependency injection framework (e.g., Spring).
+Create a ServiceManager class that follows the Singleton Pattern.
+Integrate ServiceManager with the chosen dependency injection framework.
+Demonstrate the injection of ServiceManager into a client class.&lt;/p>
+&lt;p>Exercise 9: Singleton with Bill Pugh Method
+Objective: Implement Singleton using Bill Pugh Singleton Design.
+Steps:
+Create a ResourceManager class that follows the Singleton Pattern using Bill Pugh Singleton Design.
+Ensure thread safety and lazy initialization.
+Demonstrate accessing the ResourceManager instance.&lt;/p>
+&lt;p>Exercise 10: Test Singleton Pattern
+Objective: Write unit tests for Singleton implementation.
+Steps:
+Choose a Singleton class (e.g., Logger).
+Write unit tests to ensure only one instance of the class is created.
+Write tests to ensure thread safety and correct behavior of methods&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/singleton_pattern/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Strategy Design Pattern Practice Qestions</title><link>https://karthikselvam.com/posts/2023/01/23/strategy_pattern_questions/</link><description>&lt;ol>
+&lt;li>Payment Processing System : Develop a payment processing system that supports multiple payment methods (e.g., Credit Card, PayPal, Bitcoin).&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>Define an interface PaymentStrategy with a method pay(double amount).&lt;/li>
+&lt;li>Implement concrete classes CreditCardPayment, PayPalPayment, and BitcoinPayment that implement the PaymentStrategy interface.&lt;/li>
+&lt;li>Create an Order class that uses a PaymentStrategy to process payments.&lt;/li>
+&lt;li>Demonstrate switching between different payment strategies at runtime.&lt;/li>
+&lt;/ul>
+&lt;ol start="2">
+&lt;li>Text Formatting : Create a text editor that can format text in various ways (e.g., plain text, HTML, Markdown).&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>Define an interface TextFormatter with a method format(String text).&lt;/li>
+&lt;li>Implement concrete classes PlainTextFormatter, HTMLFormatter, and MarkdownFormatter that implement the TextFormatter interface.&lt;/li>
+&lt;li>Create a TextEditor class that uses a TextFormatter to format text.&lt;/li>
+&lt;li>Demonstrate changing the text formatting strategy at runtime.&lt;/li>
+&lt;/ul>
+&lt;ol start="3">
+&lt;li>Travel Route Planning : Develop a travel planning application that can find routes using different transportation methods (e.g., Car, Bike, Walking).&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>Define an interface RouteStrategy with a method calculateRoute(String start, String end).&lt;/li>
+&lt;li>Implement concrete classes CarRoute, BikeRoute, and WalkingRoute that implement the RouteStrategy interface.&lt;/li>
+&lt;li>Create a TravelPlanner class that uses a RouteStrategy to calculate routes.&lt;/li>
+&lt;li>Demonstrate changing the route calculation strategy at runtime.&lt;/li>
+&lt;/ul>
+&lt;ol start="4">
+&lt;li>Context-Aware Strategies : Create a recommendation system that provides different recommendations based on user context (e.g., Movie Recommendations, Book Recommendations, Product Recommendations).&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>Define an interface RecommendationStrategy with a method recommend(String userContext).&lt;/li>
+&lt;li>Implement concrete classes MovieRecommendation, BookRecommendation, and ProductRecommendation that implement the RecommendationStrategy interface.&lt;/li>
+&lt;li>Create a Recommender class that uses a RecommendationStrategy to generate recommendations.&lt;/li>
+&lt;li>Demonstrate adapting the recommendation strategy based on different user contexts.&lt;/li>
+&lt;/ul></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/23/strategy_pattern_questions/</guid><pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Structural Design Patterns</title><link>https://karthikselvam.com/posts/2023/01/23/structural_patterns/</link><description>&lt;p>Structural Design Patterns are design patterns that focus on the composition of classes and objects to form larger structures, without changing their individual behaviors. They help to simplify the relationships between objects and classes in a system, and to make the system more flexible and efficient. Following are some of the commonly used structural design patterns.&lt;/p>
 &lt;p>&lt;strong>1. Adapter pattern&lt;/strong> : Adapter pattern is a structural design pattern that allows incompatible classes to work together by converting the interface of one class into another interface that clients expect. This pattern is useful when you have an existing class that cannot be changed, but you need to use it with other classes that have different interfaces.&lt;/p>
 &lt;p>Let&amp;rsquo;s consider a car example to explain the Adapter pattern in Java. Suppose we have an existing class called &amp;ldquo;Car&amp;rdquo; that has a method called &amp;ldquo;drive()&amp;rdquo; that takes no arguments and starts the car. We also have another class called &amp;ldquo;Engine&amp;rdquo; that has a method called &amp;ldquo;start()&amp;rdquo; that starts the engine. However, the interfaces of these two classes are not compatible because the &amp;ldquo;drive()&amp;rdquo; method takes no arguments, while the &amp;ldquo;start()&amp;rdquo; method of the Engine class takes an argument.&lt;/p>
 &lt;p>To make these classes work together, we can create an adapter class called &amp;ldquo;EngineAdapter&amp;rdquo; that implements the Car interface and uses the Engine class to start the car. The EngineAdapter will have a reference to an Engine object and will use its &amp;ldquo;start()&amp;rdquo; method to start the car when the &amp;ldquo;drive()&amp;rdquo; method is called.&lt;/p>

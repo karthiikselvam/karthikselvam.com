@@ -1,0 +1,62 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Ronalds Vilcins - https://karthikselvam.com/"><title>Singleton Design Pattern Practice Qestions | Karthik Selvam</title><meta name=description content="2023"><meta name=twitter:card content="summary"><meta name=twitter:title content="Singleton Design Pattern Practice Qestions"><meta name=twitter:description content="2023"><meta property="og:title" content="Singleton Design Pattern Practice Qestions"><meta property="og:description" content="2023"><meta property="og:type" content="article"><meta property="og:url" content="https://karthikselvam.com/posts/2023/01/23/singleton_pattern/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-01-23T00:00:00+00:00"><meta property="article:modified_time" content="2023-01-23T00:00:00+00:00"><meta itemprop=name content="Singleton Design Pattern Practice Qestions"><meta itemprop=description content="2023"><meta itemprop=datePublished content="2023-01-23T00:00:00+00:00"><meta itemprop=dateModified content="2023-01-23T00:00:00+00:00"><meta itemprop=wordCount content="390"><meta itemprop=keywords content="fundamentals,"><link rel=canonical href=https://karthikselvam.com/posts/2023/01/23/singleton_pattern/><link rel=dns-prefetch href=https://www.google-analytics.com><link href=https://www.google-analytics.com rel=preconnect crossorigin><link rel=alternate type=application/atom+xml title="Karthik Selvam" href=https://karthikselvam.com/atom.xml><link rel=alternate type=application/json title="Karthik Selvam" href=https://karthikselvam.com/feed.json><script src=https://kit.fontawesome.com/8d06e0a013.js crossorigin=anonymous></script>
+<link rel="shortcut icon" type=image/png href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="><style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeSpeed}.posts hr{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:none;border-bottom:1px #353535;flex:1 0 1rem}main{max-width:70ch;padding:2ch;margin:auto}a,body{color:#353535}::selection,a:focus,a:hover{background-color:#353535;color:#fff}.meta{margin:0 0 2.5rem}.tags::before{content:"\2022";margin-left:1rem}code,pre{color:#353535;font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;border:1px solid #353535;font-size:small}code{padding:.1rem;border:none}pre{padding:.5rem;overflow-x:auto}pre code{border:none}img{max-width:100%;border:1px solid #353535}hr{background:#353535;height:1px;border:0}ul{list-style-type:square}ul,ol{padding-left:1.2rem}header li,footer li{display:inline;text-transform:uppercase}header a,footer a{text-decoration:none}header ul,footer ul{justify-content:space-between;display:flex}header,section,footer{padding:1rem 0}blockquote{border-left:5px solid #353535;padding-left:1rem}.posts ul,header ul,footer ul{list-style:none}.posts,header ul,footer ul{padding:0}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.7rem}.posts li a,.posts li div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}.hash{opacity:.25;text-decoration:none}table{border-collapse:collapse;text-align:left;width:100%}table tr{background:#fff;border-bottom:1px solid}table th,table td{padding:10px 20px}</style><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"posts","name":"Singleton Design Pattern Practice Qestions","headline":"Singleton Design Pattern Practice Qestions","alternativeHeadline":"","description":"2023","inLanguage":"en-us","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/karthikselvam.com\/posts\/2023\/01\/23\/singleton_pattern\/"},"author":{"@type":"Person","name":""},"creator":{"@type":"Person","name":""},"accountablePerson":{"@type":"Person","name":""},"copyrightHolder":"Karthik Selvam","copyrightYear":"2023","dateCreated":"2023-01-23T00:00:00.00Z","datePublished":"2023-01-23T00:00:00.00Z","dateModified":"2023-01-23T00:00:00.00Z","publisher":{"@type":"Organization","name":"Karthik Selvam","url":"https://karthikselvam.com/","logo":{"@type":"ImageObject","url":"https:\/\/karthikselvam.com\/","width":"32","height":"32"}},"image":"https://karthikselvam.com/","url":"https:\/\/karthikselvam.com\/posts\/2023\/01\/23\/singleton_pattern\/","wordCount":"390","genre":["fundamentals"],"keywords":["fundamentals"]}</script></head><body><main><header><nav><ul><li><a href=/>Blog</a></li><li><a href=/about/>@Karthik</a></li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></header><hr><section><h2 itemprop="name headline">Singleton Design Pattern Practice Qestions</h2><p class=meta><time itemprop=datePublished datetime=2023-01-23>January 23, 2023</time> &bull;
+<a href=/tags/fundamentals>fundamentals</a></p><span itemprop=articleBody><p>Exercise 1: Basic Singleton Implementation
+Objective: Implement a basic Singleton Pattern.
+Steps:
+Create a Logger class that follows the Singleton Pattern.
+Ensure only one instance of Logger is created.
+Add a method log(String message) to log messages.</p><p>Exercise 2: Thread-Safe Singleton
+Objective: Implement a thread-safe Singleton.
+Steps:
+Modify the Logger class to make it thread-safe.
+Use the double-checked locking principle to ensure thread safety.
+Demonstrate logging from multiple threads.</p><p>Exercise 3: Lazy Initialization
+Objective: Implement Singleton with lazy initialization.
+Steps:
+Create a DatabaseConnection class that follows the Singleton Pattern with lazy initialization.
+Ensure the instance is created only when needed.
+Add a method connect() to simulate database connection.</p><p>Exercise 4: Singleton with Enum
+Objective: Implement Singleton using an enum.
+Steps:
+Create an enum Configuration that follows the Singleton Pattern.
+Add methods to set and get configuration values.
+Demonstrate setting and getting configuration values.</p><p>Exercise 5: Serialization and Singleton
+Objective: Ensure Singleton property during serialization.
+Steps:
+Create a Settings class that follows the Singleton Pattern.
+Ensure the Singleton property is maintained during serialization and deserialization.
+Demonstrate serialization and deserialization of Settings.</p><p>Exercise 6: Singleton and Reflection
+Objective: Protect Singleton from reflection attacks.
+Steps:
+Create a Preferences class that follows the Singleton Pattern.
+Protect the Singleton instance from being instantiated via reflection.
+Demonstrate the protection mechanism.</p><p>Exercise 7: Singleton in Multithreading Environment
+Objective: Implement a Singleton for a multi-threaded environment.
+Steps:
+Create a Cache class that follows the Singleton Pattern.
+Ensure the Cache class works correctly in a multi-threaded environment.
+Add methods to add and retrieve items from the cache.</p><p>Exercise 8: Singleton in Dependency Injection
+Objective: Integrate Singleton with a dependency injection framework.
+Steps:
+Choose a dependency injection framework (e.g., Spring).
+Create a ServiceManager class that follows the Singleton Pattern.
+Integrate ServiceManager with the chosen dependency injection framework.
+Demonstrate the injection of ServiceManager into a client class.</p><p>Exercise 9: Singleton with Bill Pugh Method
+Objective: Implement Singleton using Bill Pugh Singleton Design.
+Steps:
+Create a ResourceManager class that follows the Singleton Pattern using Bill Pugh Singleton Design.
+Ensure thread safety and lazy initialization.
+Demonstrate accessing the ResourceManager instance.</p><p>Exercise 10: Test Singleton Pattern
+Objective: Write unit tests for Singleton implementation.
+Steps:
+Choose a Singleton class (e.g., Logger).
+Write unit tests to ensure only one instance of the class is created.
+Write tests to ensure thread safety and correct behavior of methods</p></span></section><hr><footer><nav><ul><li>© 2024 Karthik Selvam</li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></footer></main></body></html>
