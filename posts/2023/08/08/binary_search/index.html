@@ -1,0 +1,558 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Ronalds Vilcins - https://karthikselvam.com/"><title>Binary Search | Karthik Selvam</title><meta name=description content="2024"><meta name=twitter:card content="summary"><meta name=twitter:title content="Binary Search"><meta name=twitter:description content="2024"><meta property="og:title" content="Binary Search"><meta property="og:description" content="2024"><meta property="og:type" content="article"><meta property="og:url" content="https://karthikselvam.com/posts/2023/08/08/binary_search/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-08-08T00:00:00+00:00"><meta property="article:modified_time" content="2023-08-08T00:00:00+00:00"><meta itemprop=name content="Binary Search"><meta itemprop=description content="2024"><meta itemprop=datePublished content="2023-08-08T00:00:00+00:00"><meta itemprop=dateModified content="2023-08-08T00:00:00+00:00"><meta itemprop=wordCount content="3484"><meta itemprop=keywords content="datastructures,"><link rel=canonical href=https://karthikselvam.com/posts/2023/08/08/binary_search/><link rel=dns-prefetch href=https://www.google-analytics.com><link href=https://www.google-analytics.com rel=preconnect crossorigin><link rel=alternate type=application/atom+xml title="Karthik Selvam" href=https://karthikselvam.com/atom.xml><link rel=alternate type=application/json title="Karthik Selvam" href=https://karthikselvam.com/feed.json><script src=https://kit.fontawesome.com/8d06e0a013.js crossorigin=anonymous></script>
+<link rel="shortcut icon" type=image/png href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="><style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeSpeed}.posts hr{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:none;border-bottom:1px #353535;flex:1 0 1rem}main{max-width:70ch;padding:2ch;margin:auto}a,body{color:#353535}::selection,a:focus,a:hover{background-color:#353535;color:#fff}.meta{margin:0 0 2.5rem}.tags::before{content:"\2022";margin-left:1rem}code,pre{color:#353535;font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;border:1px solid #353535;font-size:small}code{padding:.1rem;border:none}pre{padding:.5rem;overflow-x:auto}pre code{border:none}img{max-width:100%;border:1px solid #353535}hr{background:#353535;height:1px;border:0}ul{list-style-type:square}ul,ol{padding-left:1.2rem}header li,footer li{display:inline;text-transform:uppercase}header a,footer a{text-decoration:none}header ul,footer ul{justify-content:space-between;display:flex}header,section,footer{padding:1rem 0}blockquote{border-left:5px solid #353535;padding-left:1rem}.posts ul,header ul,footer ul{list-style:none}.posts,header ul,footer ul{padding:0}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.7rem}.posts li a,.posts li div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}.hash{opacity:.25;text-decoration:none}table{border-collapse:collapse;text-align:left;width:100%}table tr{background:#fff;border-bottom:1px solid}table th,table td{padding:10px 20px}</style><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"posts","name":"Binary Search","headline":"Binary Search","alternativeHeadline":"","description":"2024","inLanguage":"en-us","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/karthikselvam.com\/posts\/2023\/08\/08\/binary_search\/"},"author":{"@type":"Person","name":""},"creator":{"@type":"Person","name":""},"accountablePerson":{"@type":"Person","name":""},"copyrightHolder":"Karthik Selvam","copyrightYear":"2023","dateCreated":"2023-08-08T00:00:00.00Z","datePublished":"2023-08-08T00:00:00.00Z","dateModified":"2023-08-08T00:00:00.00Z","publisher":{"@type":"Organization","name":"Karthik Selvam","url":"https://karthikselvam.com/","logo":{"@type":"ImageObject","url":"https:\/\/karthikselvam.com\/","width":"32","height":"32"}},"image":"https://karthikselvam.com/","url":"https:\/\/karthikselvam.com\/posts\/2023\/08\/08\/binary_search\/","wordCount":"3484","genre":["datastructures"],"keywords":["datastructures"]}</script></head><body><main><header><nav><ul><li><a href=/>Blog</a></li><li><a href=/about/>@Karthik</a></li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></header><hr><section><h2 itemprop="name headline">Binary Search</h2><p class=meta><time itemprop=datePublished datetime=2023-08-08>August 08, 2023</time> &bull;
+<a href=/tags/datastructures>datastructures</a></p><span itemprop=articleBody><p>In this article, we will solve binary search related problems that are commonly encountered in interviews.</p><p><strong>1. Implement a binary search on a sorted array to find the index of a target element.</strong></p><pre><code class=language-java>public class BinarySearchExample {
+    public static int binarySearch(int[] array, int target) {
+        int left = 0;
+        int right = array.length - 1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            if (array[mid] == target) {
+                return mid; // Target found
+            } else if (array[mid] &lt; target) {
+                left = mid + 1; // Search right half
+            } else {
+                right = mid - 1; // Search left half
+            }
+        }
+
+        return -1; // Target not found
+    }
+
+    public static void main(String[] args) {
+        int[] sortedArray = {1, 3, 5, 7, 9, 11};
+        int target = 7;
+
+        int result = binarySearch(sortedArray, target);
+
+        if (result != -1) {
+            System.out.println(&quot;Target found at index: &quot; + result);
+        } else {
+            System.out.println(&quot;Target not found.&quot;);
+        }
+    }
+}
+
+</code></pre><p><strong>2. Modify binary search to return the index of the first occurrence of a target element (handling duplicates).</strong></p><pre><code class=language-java>public class BinarySearchFirstOccurrence {
+    public static int binarySearchFirstOccurrence(int[] array, int target) {
+        int left = 0;
+        int right = array.length - 1;
+        int result = -1; // Variable to store the index of the first occurrence
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            if (array[mid] == target) {
+                result = mid; // Update result to current index
+                right = mid - 1; // Continue searching in the left half
+            } else if (array[mid] &lt; target) {
+                left = mid + 1; // Search right half
+            } else {
+                right = mid - 1; // Search left half
+            }
+        }
+
+        return result; // Return the index of the first occurrence or -1 if not found
+    }
+
+    public static void main(String[] args) {
+        int[] sortedArray = {1, 2, 2, 2, 3, 4, 5};
+        int target = 2;
+
+        int result = binarySearchFirstOccurrence(sortedArray, target);
+
+        if (result != -1) {
+            System.out.println(&quot;First occurrence of target found at index: &quot; + result);
+        } else {
+            System.out.println(&quot;Target not found.&quot;);
+        }
+    }
+}
+
+</code></pre><p><strong>3. Given a rotated sorted array, search for a target value. Modify the binary search algorithm to account for rotation.</strong></p><pre><code class=language-java>public class SearchInRotatedSortedArray {
+    public static int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            // Check if mid is the target
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            // Determine which side is sorted
+            if (nums[left] &lt;= nums[mid]) { // Left half is sorted
+                if (target &gt;= nums[left] &amp;&amp; target &lt; nums[mid]) {
+                    right = mid - 1; // Target is in the left half
+                } else {
+                    left = mid + 1; // Target is in the right half
+                }
+            } else { // Right half is sorted
+                if (target &gt; nums[mid] &amp;&amp; target &lt;= nums[right]) {
+                    left = mid + 1; // Target is in the right half
+                } else {
+                    right = mid - 1; // Target is in the left half
+                }
+            }
+        }
+
+        return -1; // Target not found
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {4, 5, 6, 7, 0, 1, 2};
+        int target = 0;
+
+        int result = search(nums, target);
+
+        if (result != -1) {
+            System.out.println(&quot;Target found at index: &quot; + result);
+        } else {
+            System.out.println(&quot;Target not found.&quot;);
+        }
+    }
+}
+
+</code></pre><p><strong>4. Search in a rotated sorted array with duplicates.</strong></p><pre><code class=language-java>public class SearchInRotatedSortedArrayWithDuplicates {
+    public static int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            // Check if mid is the target
+            if (nums[mid] == target) {
+                return mid; // Return the index if target is found
+            }
+
+            // If duplicates are present, we cannot be sure of the sorted part
+            if (nums[left] == nums[mid] &amp;&amp; nums[mid] == nums[right]) {
+                left++;
+                right--;
+            } else if (nums[left] &lt;= nums[mid]) { // Left half is sorted
+                if (target &gt;= nums[left] &amp;&amp; target &lt; nums[mid]) {
+                    right = mid - 1; // Target is in the left half
+                } else {
+                    left = mid + 1; // Target is in the right half
+                }
+            } else { // Right half is sorted
+                if (target &gt; nums[mid] &amp;&amp; target &lt;= nums[right]) {
+                    left = mid + 1; // Target is in the right half
+                } else {
+                    right = mid - 1; // Target is in the left half
+                }
+            }
+        }
+
+        return -1; // Target not found
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 5, 6, 0, 0, 1, 2};
+        int target = 0;
+
+        int result = search(nums, target);
+
+        if (result != -1) {
+            System.out.println(&quot;Target found at index: &quot; + result);
+        } else {
+            System.out.println(&quot;Target not found.&quot;);
+        }
+    }
+}
+
+</code></pre><p><strong>5. Given a rotated sorted array, find the minimum element.</strong>
+By comparing the middle element (nums[mid]) with the rightmost element (nums[right]), we can determine whether the minimum element is to the right or left of mid. If nums[mid] > nums[right], it means the minimum is in the right half. If nums[mid] &lt;= nums[right], it means the minimum is in the left half or could be mid itself.</p><pre><code class=language-java>public class FindMinimumInRotatedSortedArrayWithDuplicates {
+    public static int findMin(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left &lt; right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] &gt; nums[right]) {
+                // Minimum is in the right part
+                left = mid + 1;
+            } else if (nums[mid] &lt; nums[right]) {
+                // Minimum is in the left part including mid
+                right = mid;
+            } else {
+                // nums[mid] == nums[right], we cannot determine the side, reduce the search space (since duplicates at the end do not help in locating the minimum).
+                right--;
+            }
+        }
+
+        // When left == right, the minimum element is found
+        return nums[left];
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 2, 2, 0, 1};
+        int minElement = findMin(nums);
+        System.out.println(&quot;The minimum element is: &quot; + minElement);
+    }
+}
+
+</code></pre><p><strong>6. Given an array where adjacent elements are not equal, find a peak element (an element that is greater than its neighbors).</strong>
+In a peak-finding problem, we are interested in the region where elements increase and then decrease, creating a peak. If nums[mid] &lt; nums[mid - 1], it suggests that we are on a &ldquo;downhill slope&rdquo; from nums[mid - 1] to nums[mid]. Since we&rsquo;re looking for a peak, and since nums[mid - 1] is greater than nums[mid], we know that a peak must exist either at nums[mid - 1] or further to the left. Therefore, we move our search to the left half by setting right = mid - 1.</p><pre><code class=language-java>public class FindPeakElement {
+    public static int findPeakElement(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+
+            // Check if mid is a peak element
+            boolean isPeak = (mid == 0 || nums[mid] &gt; nums[mid - 1]) &amp;&amp;
+                             (mid == nums.length - 1 || nums[mid] &gt; nums[mid + 1]);
+
+            if (isPeak) {
+                return mid; // Return the index of the peak element
+            } else if (mid &gt; 0 &amp;&amp; nums[mid] &lt; nums[mid - 1]) {
+                right = mid - 1; // Peak is in the left half
+            } else {
+                left = mid + 1; // Peak is in the right half
+            }
+        }
+
+        return -1; // This should never be reached if input constraints are met
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 3, 20, 4, 1};
+        int peakIndex = findPeakElement(nums);
+        if (peakIndex != -1) {
+            System.out.println(&quot;Peak element found at index: &quot; + peakIndex + &quot; with value: &quot; + nums[peakIndex]);
+        } else {
+            System.out.println(&quot;No peak element found.&quot;);
+        }
+    }
+}
+
+</code></pre><p><strong>7. Given a sorted array of integers, find the starting and ending position of a given target value.</strong>
+The idea is to perform two binary searches: one to find the first occurrence of the target and another to find the last occurrence.</p><pre><code class=language-java>public class FindFirstAndLastPosition {
+    public static int[] searchRange(int[] nums, int target) {
+        int[] result = new int[2];
+        result[0] = findFirstPosition(nums, target);
+        result[1] = findLastPosition(nums, target);
+        return result;
+    }
+
+    private static int findFirstPosition(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        int firstPosition = -1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (nums[mid] == target) {
+                firstPosition = mid;
+                right = mid - 1;  // Move left to find the first occurrence
+            } else if (nums[mid] &lt; target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return firstPosition;
+    }
+
+    private static int findLastPosition(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        int lastPosition = -1;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (nums[mid] == target) {
+                lastPosition = mid;
+                left = mid + 1;  // Move right to find the last occurrence
+            } else if (nums[mid] &lt; target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return lastPosition;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {5, 7, 7, 8, 8, 10};
+        int target = 8;
+        int[] positions = searchRange(nums, target);
+        System.out.println(&quot;Starting position: &quot; + positions[0] + &quot;, Ending position: &quot; + positions[1]);
+    }
+}
+
+</code></pre><p><strong>8. Implement integer square root calculation using binary search.</strong>
+The idea is to find the largest integer x such that x * x is less than or equal to the given number n. Check if mid * mid is less than or equal to n. Since mid * mid could overflow for large mid values, use mid &lt;= n / mid instead of mid * mid &lt;= n. If mid * mid is less than or equal to n, update result to mid and move to the right half (left = mid + 1) to see if there&rsquo;s a larger mid that also satisfies the condition. If mid * mid is greater than n, move to the left half (right = mid - 1).</p><pre><code class=language-java>public class IntegerSquareRoot {
+    public static int sqrt(int n) {
+        if (n &lt; 0) {
+            throw new IllegalArgumentException(&quot;Square root of a negative number is not defined.&quot;);
+        }
+        if (n == 0 || n == 1) {
+            return n;
+        }
+
+        int left = 1, right = n;
+        int result = 0;
+
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+            // Check if mid*mid is equal to n
+            if (mid &lt;= n / mid) {
+                // If mid*mid &lt;= n, move to the right half
+                result = mid;  // Update the result to mid as a potential answer
+                left = mid + 1;
+            } else {
+                // If mid*mid &gt; n, move to the left half
+                right = mid - 1;
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int number = 16;
+        int sqrtValue = sqrt(number);
+        System.out.println(&quot;The integer square root of &quot; + number + &quot; is: &quot; + sqrtValue);
+
+        number = 27;
+        sqrtValue = sqrt(number);
+        System.out.println(&quot;The integer square root of &quot; + number + &quot; is: &quot; + sqrtValue);
+    }
+}
+
+</code></pre><p><strong>8. Given a sorted array where every element appears exactly twice except for one element, find that single one using binary search.</strong>
+Before the Single Element: If the mid-point falls before the single element, the array behaves normally: pairs start at even indices. If mid is even and nums[mid] == nums[mid + 1], the single element is to the right, so you move low to mid + 2. At or After the Single Element: Once mid passes the single element, the pattern is broken. Now, if mid is even and nums[mid] != nums[mid + 1], it indicates that the single element is either at mid or to the left, so you move high to mid.</p><pre><code class=language-java>public class SingleElementInSortedArray {
+    public static int findSingleElement(int[] nums) {
+        int low = 0;
+        int high = nums.length - 1;
+
+        while (low &lt; high) {
+            int mid = low + (high - low) / 2;
+
+            // Ensure mid is even, to check pairs correctly
+            if (mid % 2 == 1) {
+                mid--;
+            }
+
+            // Check if the pair starts at mid
+            if (nums[mid] == nums[mid + 1]) {
+                // Single element is after mid
+                low = mid + 2;
+            } else {
+                // Single element is before mid
+                high = mid;
+            }
+        }
+
+        // Low should point to the single element
+        return nums[low];
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 1, 2, 2, 3, 4, 4, 5, 5};
+        int singleElement = findSingleElement(nums);
+        System.out.println(&quot;The single element is: &quot; + singleElement); // Output should be 3
+    }
+}
+
+</code></pre><p><strong>9. Given a 2D matrix, search for a target value using a modified binary search.</strong>
+When performing binary search on a 1D array, the index mid directly points to an element in that array. However, since the matrix is 2D, we need to access elements using row and column indices.Given a mid index in this flattened array, you need to determine which row and column it corresponds to in the original 2D matrix. The first n elements (where n is the number of columns) fill up the first row. The next n elements fill up the second row, and so on. Given that, by dividing mid by the number of columns (n), you&rsquo;re effectively counting how many complete rows fit into the first mid elements, and the remainder gives you the exact position within that row.</p><pre><code class=language-java>public class Search2DMatrix {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int low = 0;
+        int high = rows * cols - 1;
+
+        while (low &lt;= high) {
+            int mid = low + (high - low) / 2;
+            int midElement = matrix[mid / cols][mid % cols];
+
+            if (midElement == target) {
+                return true;
+            } else if (midElement &lt; target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        Search2DMatrix solution = new Search2DMatrix();
+        int[][] matrix = {
+            {1, 3, 5, 7},
+            {10, 11, 16, 20},
+            {23, 30, 34, 60}
+        };
+        int target = 3;
+        System.out.println(solution.searchMatrix(matrix, target)); // Output: true
+
+        target = 13;
+        System.out.println(solution.searchMatrix(matrix, target)); // Output: false
+    }
+}
+
+</code></pre><p><strong>10. Find the k-th smallest element in a sorted matrix (matrix is row-wise and column-wise sorted).</strong>
+Use a min-heap (priority queue) to store the smallest elements. Start by adding the first element of each row into the heap. Extract the smallest element from the heap, and add the next element from the same row to the heap. After performing this k-1 times, the root of the heap will be the k-th smallest element.</p><pre><code class=language-java>class Solution {
+    public int kthSmallest(int[][] matrix, int k) {
+        int n = matrix.length;
+        PriorityQueue&lt;int[]&gt; minHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; a[0] - b[0]);
+
+        // Initialize the heap with the first element of each row
+        for (int i = 0; i &lt; Math.min(n, k); i++) {
+            minHeap.offer(new int[]{matrix[i][0], i, 0});
+        }
+
+        // Extract the min element from the heap k-1 times
+        for (int i = 0; i &lt; k - 1; i++) {
+            int[] entry = minHeap.poll();
+            int row = entry[1], col = entry[2];
+            if (col + 1 &lt; n) {
+                minHeap.offer(new int[]{matrix[row][col + 1], row, col + 1});
+            }
+        }
+
+        return minHeap.poll()[0];
+    }
+}
+
+</code></pre><p>Binary Search :
+Perform binary search on the range of possible values in the matrix, from the smallest element to the largest element. For each middle value, count how many elements are less than or equal to it by traversing the matrix. If the count is less than k, adjust the search range to the higher half; otherwise, adjust to the lower half. When the search range converges, the value is the k-th smallest.</p><pre><code class=language-java>class Solution {
+    public int kthSmallest(int[][] matrix, int k) {
+        int n = matrix.length;
+        int low = matrix[0][0];
+        int high = matrix[n - 1][n - 1];
+
+        while (low &lt; high) {
+            int mid = low + (high - low) / 2;
+            int count = countLessEqual(matrix, mid);
+
+            if (count &lt; k) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+
+        return low;
+    }
+
+    private int countLessEqual(int[][] matrix, int target) {
+        int n = matrix.length;
+        int count = 0;
+        int row = n - 1;
+        int col = 0;
+
+        while (row &gt;= 0 &amp;&amp; col &lt; n) {
+            if (matrix[row][col] &lt;= target) {
+                count += (row + 1);
+                col++;
+            } else {
+                row--;
+            }
+        }
+
+        return count;
+    }
+}
+
+</code></pre><p><strong>9. Searching in a Sorted Matrix.</strong>
+Top-Right Approach : In this approach, you start from the top-right corner of the matrix at position (row = 0, col = n-1) where n is the number of columns. From this position: If the current element is equal to the target, you&rsquo;ve found the target. If the current element is greater than the target, you move left (decrease col). If the current element is smaller than the target, you move down (increase row).</p><pre><code class=language-java>matrix = [
+  [1, 4, 7, 11],
+  [2, 5, 8, 12],
+  [3, 6, 9, 16],
+  [10, 13, 14, 17]
+]
+int row = 0; // Start at the first row
+int col = matrix[0].length - 1; // Start at the last column
+
+while (row &lt; matrix.length &amp;&amp; col &gt;= 0) {
+    if (matrix[row][col] == target) {
+        // Target found
+        return true;
+    } else if (matrix[row][col] &gt; target) {
+        // Current element is greater than target, move left
+        col--;
+    } else {
+        // Current element is smaller than target, move down
+        row++;
+    }
+}
+
+// Target not found
+return false;
+
+</code></pre><p>Bottom-Left Approach : Starting from the bottom-left corner (n-1, 0): If the target is smaller than the current element, move up (decrease row). If the target is larger than the current element, move right (increase col).</p><pre><code class=language-java>int row = matrix.length - 1; // Start at the last row
+int col = 0; // Start at the first column
+
+while (row &gt;= 0 &amp;&amp; col &lt; matrix[0].length) {
+    if (matrix[row][col] == target) {
+        // Target found
+        return true;
+    } else if (matrix[row][col] &gt; target) {
+        // Target is smaller, move up
+        row--;
+    } else {
+        // Target is larger, move right
+        col++;
+    }
+}
+
+</code></pre><p><strong>11. Find the median of two sorted arrays. This problem requires an efficient solution using binary search..</strong>
+Ensure nums1 is the smaller array: Since the binary search will be applied on the smaller array, we ensure nums1 has fewer or equal elements compared to nums2. Binary Search on nums1:Define two pointers, low and high, representing the search range within nums1. Perform binary search by selecting a partition index i for nums1 and a corresponding partition index j for nums2 such that i + j = (m + n + 1) / 2. To find the median, we need to know how many elements should be on the left side of the partition. If the total number of elements is m + n, the left half should contain (m + n) / 2 elements if m + n is even, or (m + n + 1) / 2 elements if m + n is odd (we use (m + n + 1) / 2 to handle both cases with a single expression). We are using binary search on nums1, so we choose a partition index i for nums1. The remaining elements that should be in the left half must then come from nums2, which means we want totalLeft - i elements from nums2. Thus, the partition index j in nums2 should be j = totalLeft - i.</p><pre><code class=language-java>public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    if (nums1.length &gt; nums2.length) {
+        return findMedianSortedArrays(nums2, nums1);
+    }
+
+    int m = nums1.length;
+    int n = nums2.length;
+    int low = 0, high = m;
+
+    while (low &lt;= high) {
+        int i = (low + high) / 2;
+        int j = (m + n + 1) / 2 - i;
+
+        int maxLeft1 = (i == 0) ? Integer.MIN_VALUE : nums1[i - 1];
+        int minRight1 = (i == m) ? Integer.MAX_VALUE : nums1[i];
+
+        int maxLeft2 = (j == 0) ? Integer.MIN_VALUE : nums2[j - 1];
+        int minRight2 = (j == n) ? Integer.MAX_VALUE : nums2[j];
+
+        if (maxLeft1 &lt;= minRight2 &amp;&amp; maxLeft2 &lt;= minRight1) {
+            if ((m + n) % 2 == 0) {
+                return (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2.0;
+            } else {
+                return Math.max(maxLeft1, maxLeft2);
+            }
+        } else if (maxLeft1 &gt; minRight2) {
+            high = i - 1;
+        } else {
+            low = i + 1;
+        }
+    }
+
+    throw new IllegalArgumentException(&quot;Input arrays are not sorted&quot;);
+}
+</code></pre></span></section><hr><footer><nav><ul><li>© 2024 Karthik Selvam</li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></footer></main></body></html>
