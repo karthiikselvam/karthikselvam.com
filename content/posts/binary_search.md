@@ -194,6 +194,7 @@ public class SearchInRotatedSortedArrayWithDuplicates {
 ```
 
 **5. Given a rotated sorted array, find the minimum element.**
+
 By comparing the middle element (nums[mid]) with the rightmost element (nums[right]), we can determine whether the minimum element is to the right or left of mid. If nums[mid] > nums[right], it means the minimum is in the right half. If nums[mid] <= nums[right], it means the minimum is in the left half or could be mid itself.
 
 ```java
@@ -231,6 +232,7 @@ public class FindMinimumInRotatedSortedArrayWithDuplicates {
 ```
 
 **6. Given an array where adjacent elements are not equal, find a peak element (an element that is greater than its neighbors).**
+
 In a peak-finding problem, we are interested in the region where elements increase and then decrease, creating a peak. If nums[mid] < nums[mid - 1], it suggests that we are on a "downhill slope" from nums[mid - 1] to nums[mid]. Since we're looking for a peak, and since nums[mid - 1] is greater than nums[mid], we know that a peak must exist either at nums[mid - 1] or further to the left. Therefore, we move our search to the left half by setting right = mid - 1.
 
 ```java
@@ -272,6 +274,7 @@ public class FindPeakElement {
 ```
 
 **7. Given a sorted array of integers, find the starting and ending position of a given target value.**
+
 The idea is to perform two binary searches: one to find the first occurrence of the target and another to find the last occurrence.
 ```java
 public class FindFirstAndLastPosition {
@@ -331,6 +334,7 @@ public class FindFirstAndLastPosition {
 ```
 
 **8. Implement integer square root calculation using binary search.**
+
 The idea is to find the largest integer x such that x * x is less than or equal to the given number n. Check if mid * mid is less than or equal to n. Since mid * mid could overflow for large mid values, use mid <= n / mid instead of mid * mid <= n. If mid * mid is less than or equal to n, update result to mid and move to the right half (left = mid + 1) to see if there's a larger mid that also satisfies the condition. If mid * mid is greater than n, move to the left half (right = mid - 1).
 ```java
 public class IntegerSquareRoot {
@@ -375,6 +379,7 @@ public class IntegerSquareRoot {
 ```
 
 **8. Given a sorted array where every element appears exactly twice except for one element, find that single one using binary search.**
+
 Before the Single Element: If the mid-point falls before the single element, the array behaves normally: pairs start at even indices. If mid is even and nums[mid] == nums[mid + 1], the single element is to the right, so you move low to mid + 2. At or After the Single Element: Once mid passes the single element, the pattern is broken. Now, if mid is even and nums[mid] != nums[mid + 1], it indicates that the single element is either at mid or to the left, so you move high to mid.
 ```java
 public class SingleElementInSortedArray {
@@ -414,6 +419,7 @@ public class SingleElementInSortedArray {
 ```
 
 **9. Given a 2D matrix, search for a target value using a modified binary search.**
+
 When performing binary search on a 1D array, the index mid directly points to an element in that array. However, since the matrix is 2D, we need to access elements using row and column indices.Given a mid index in this flattened array, you need to determine which row and column it corresponds to in the original 2D matrix. The first n elements (where n is the number of columns) fill up the first row. The next n elements fill up the second row, and so on. Given that, by dividing mid by the number of columns (n), you're effectively counting how many complete rows fit into the first mid elements, and the remainder gives you the exact position within that row.
 ```java
 public class Search2DMatrix {
@@ -461,6 +467,7 @@ public class Search2DMatrix {
 ```
 
 **10. Find the k-th smallest element in a sorted matrix (matrix is row-wise and column-wise sorted).**
+
 Use a min-heap (priority queue) to store the smallest elements. Start by adding the first element of each row into the heap. Extract the smallest element from the heap, and add the next element from the same row to the heap. After performing this k-1 times, the root of the heap will be the k-th smallest element.
 ```java
 class Solution {
@@ -488,6 +495,7 @@ class Solution {
 
 ```
 Binary Search : 
+
 Perform binary search on the range of possible values in the matrix, from the smallest element to the largest element. For each middle value, count how many elements are less than or equal to it by traversing the matrix. If the count is less than k, adjust the search range to the higher half; otherwise, adjust to the lower half. When the search range converges, the value is the k-th smallest.
 ```java
 class Solution {
@@ -532,6 +540,7 @@ class Solution {
 ```
 
 **9. Searching in a Sorted Matrix.**
+
 Top-Right Approach : In this approach, you start from the top-right corner of the matrix at position (row = 0, col = n-1) where n is the number of columns. From this position: If the current element is equal to the target, you've found the target. If the current element is greater than the target, you move left (decrease col). If the current element is smaller than the target, you move down (increase row).
 ```java
 matrix = [
@@ -581,6 +590,7 @@ while (row >= 0 && col < matrix[0].length) {
 ```
 
 **11. Find the median of two sorted arrays. This problem requires an efficient solution using binary search..**
+
 Ensure nums1 is the smaller array: Since the binary search will be applied on the smaller array, we ensure nums1 has fewer or equal elements compared to nums2. Binary Search on nums1:Define two pointers, low and high, representing the search range within nums1. Perform binary search by selecting a partition index i for nums1 and a corresponding partition index j for nums2 such that i + j = (m + n + 1) / 2. To find the median, we need to know how many elements should be on the left side of the partition. If the total number of elements is m + n, the left half should contain (m + n) / 2 elements if m + n is even, or (m + n + 1) / 2 elements if m + n is odd (we use (m + n + 1) / 2 to handle both cases with a single expression). We are using binary search on nums1, so we choose a partition index i for nums1. The remaining elements that should be in the left half must then come from nums2, which means we want totalLeft - i elements from nums2. Thus, the partition index j in nums2 should be j = totalLeft - i.
 ```java
 public double findMedianSortedArrays(int[] nums1, int[] nums2) {
