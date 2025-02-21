@@ -1,0 +1,508 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Ronalds Vilcins - https://karthikselvam.com/"><title>Trees | Karthik Selvam</title><meta name=description content="2024"><meta name=twitter:card content="summary"><meta name=twitter:title content="Trees"><meta name=twitter:description content="2024"><meta property="og:title" content="Trees"><meta property="og:description" content="2024"><meta property="og:type" content="article"><meta property="og:url" content="https://karthikselvam.com/posts/2024/10/08/trees_part_2/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-10-08T00:00:00+00:00"><meta property="article:modified_time" content="2024-10-08T00:00:00+00:00"><meta itemprop=name content="Trees"><meta itemprop=description content="2024"><meta itemprop=datePublished content="2024-10-08T00:00:00+00:00"><meta itemprop=dateModified content="2024-10-08T00:00:00+00:00"><meta itemprop=wordCount content="2387"><meta itemprop=keywords content="datastructures,"><link rel=canonical href=https://karthikselvam.com/posts/2024/10/08/trees_part_2/><link rel=dns-prefetch href=https://www.google-analytics.com><link href=https://www.google-analytics.com rel=preconnect crossorigin><link rel=alternate type=application/atom+xml title="Karthik Selvam" href=https://karthikselvam.com/atom.xml><link rel=alternate type=application/json title="Karthik Selvam" href=https://karthikselvam.com/feed.json><script src=https://kit.fontawesome.com/8d06e0a013.js crossorigin=anonymous></script>
+<link rel="shortcut icon" type=image/png href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="><style>*,:after,:before{box-sizing:border-box;padding:0}body{font:1rem/1.5 '-apple-system',BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,ubuntu,roboto,noto,segoe ui,arial,sans-serif;text-rendering:optimizeSpeed}.posts hr{margin-top:0;margin-bottom:0;margin-right:.5rem;margin-left:.5rem;height:1px;border:none;border-bottom:1px #353535;flex:1 0 1rem}main{max-width:70ch;padding:2ch;margin:auto}a,body{color:#353535}::selection,a:focus,a:hover{background-color:#353535;color:#fff}.meta{margin:0 0 2.5rem}.tags::before{content:"\2022";margin-left:1rem}code,pre{color:#353535;font-family:San Francisco Mono,Monaco,consolas,lucida console,dejavu sans mono,bitstream vera sans mono,monospace;font-size:normal;border:1px solid #353535;font-size:small}code{padding:.1rem;border:none}pre{padding:.5rem;overflow-x:auto}pre code{border:none}img{max-width:100%;border:1px solid #353535}hr{background:#353535;height:1px;border:0}ul{list-style-type:square}ul,ol{padding-left:1.2rem}header li,footer li{display:inline;text-transform:uppercase}header a,footer a{text-decoration:none}header ul,footer ul{justify-content:space-between;display:flex}header,section,footer{padding:1rem 0}blockquote{border-left:5px solid #353535;padding-left:1rem}.posts ul,header ul,footer ul{list-style:none}.posts,header ul,footer ul{padding:0}.posts li{align-items:center;display:flex;justify-content:space-between;margin-bottom:.7rem}.posts li a,.posts li div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}.posts li time{padding-left:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}.hash{opacity:.25;text-decoration:none}table{border-collapse:collapse;text-align:left;width:100%}table tr{background:#fff;border-bottom:1px solid}table th,table td{padding:10px 20px}</style><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"posts","name":"Trees","headline":"Trees","alternativeHeadline":"","description":"2024","inLanguage":"en-us","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/karthikselvam.com\/posts\/2024\/10\/08\/trees_part_2\/"},"author":{"@type":"Person","name":""},"creator":{"@type":"Person","name":""},"accountablePerson":{"@type":"Person","name":""},"copyrightHolder":"Karthik Selvam","copyrightYear":"2024","dateCreated":"2024-10-08T00:00:00.00Z","datePublished":"2024-10-08T00:00:00.00Z","dateModified":"2024-10-08T00:00:00.00Z","publisher":{"@type":"Organization","name":"Karthik Selvam","url":"https://karthikselvam.com/","logo":{"@type":"ImageObject","url":"https:\/\/karthikselvam.com\/","width":"32","height":"32"}},"image":"https://karthikselvam.com/","url":"https:\/\/karthikselvam.com\/posts\/2024\/10\/08\/trees_part_2\/","wordCount":"2387","genre":["datastructures"],"keywords":["datastructures"]}</script></head><body><main><header><nav><ul><li><a href=/>Blog</a></li><li><a href=/about/>@Karthik</a></li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></header><hr><section><h2 itemprop="name headline">Trees</h2><p class=meta><time itemprop=datePublished datetime=2024-10-08>October 08, 2024</time> &bull;
+<a href=/tags/datastructures>datastructures</a></p><span itemprop=articleBody><p><strong>1. Binary Tree Inorder Traversal.</strong></p><pre><code class=language-java>public class BinaryTreeInorderTraversal {
+
+    public List&lt;Integer&gt; inorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        inorderHelper(root, result);
+        return result;
+    }
+
+    private void inorderHelper(TreeNode node, List&lt;Integer&gt; result) {
+        if (node == null) {
+            return;
+        }
+        // Traverse the left subtree
+        inorderHelper(node.left, result);
+        // Visit the root node
+        result.add(node.val);
+        // Traverse the right subtree
+        inorderHelper(node.right, result);
+    }
+}
+
+/*Iterative Approach using Stack */
+public class BinaryTreeInorderTraversalIterative {
+
+    public List&lt;Integer&gt; inorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        TreeNode current = root;
+
+        while (current != null || !stack.isEmpty()) {
+            // Reach the leftmost node of the current node
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+            // Current must be null at this point
+            current = stack.pop();
+            result.add(current.val); // Add the node to the result
+            // Visit the right subtree
+            current = current.right;
+        }
+
+        return result;
+    }
+}
+
+</code></pre><p><strong>2. Preorder Traversal.</strong></p><pre><code class=language-java>public class BinaryTreePreorderTraversal {
+    public List&lt;Integer&gt; preorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        preorderHelper(root, result);
+        return result;
+    }
+
+    private void preorderHelper(TreeNode node, List&lt;Integer&gt; result) {
+        if (node == null) {
+            return;
+        }
+        // Visit the root node
+        result.add(node.val);
+        // Traverse the left subtree
+        preorderHelper(node.left, result);
+        // Traverse the right subtree
+        preorderHelper(node.right, result);
+    }
+}
+
+/*Iterative Approach using Stack */
+public class BinaryTreePreorderTraversalIterative {
+
+    public List&lt;Integer&gt; preorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        if (root == null) return result;
+
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            result.add(node.val);
+
+            // Push right child first so that left child is processed first
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+        }
+
+        return result;
+    }
+}
+
+</code></pre><p><strong>3. Postorder Traversal.</strong></p><pre><code class=language-java>public class BinaryTreePostorderTraversal {
+    public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        postorderHelper(root, result);
+        return result;
+    }
+
+    private void postorderHelper(TreeNode node, List&lt;Integer&gt; result) {
+        if (node == null) {
+            return;
+        }
+        // Traverse the left subtree
+        postorderHelper(node.left, result);
+        // Traverse the right subtree
+        postorderHelper(node.right, result);
+        // Visit the root node
+        result.add(node.val);
+    }
+}
+
+/*Iterative Approach using Stack */
+public class BinaryTreePostorderTraversalIterative {
+    public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        if (root == null) return result;
+
+        Stack&lt;TreeNode&gt; stack1 = new Stack&lt;&gt;();
+        Stack&lt;TreeNode&gt; stack2 = new Stack&lt;&gt;();
+        stack1.push(root);
+
+        while (!stack1.isEmpty()) {
+            TreeNode node = stack1.pop();
+            stack2.push(node);
+
+            if (node.left != null) {
+                stack1.push(node.left);
+            }
+            if (node.right != null) {
+                stack1.push(node.right);
+            }
+        }
+
+        while (!stack2.isEmpty()) {
+            result.add(stack2.pop().val);
+        }
+
+        return result;
+    }
+}
+
+</code></pre><p><strong>3. Level Order Traversal.</strong></p><pre><code class=language-java>public class BinaryTreeLevelOrderTraversal {
+    public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+        if (root == null) return result;
+
+        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            List&lt;Integer&gt; currentLevel = new ArrayList&lt;&gt;();
+
+            for (int i = 0; i &lt; levelSize; i++) {
+                TreeNode currentNode = queue.poll();
+                currentLevel.add(currentNode.val);
+
+                if (currentNode.left != null) {
+                    queue.add(currentNode.left);
+                }
+                if (currentNode.right != null) {
+                    queue.add(currentNode.right);
+                }
+            }
+            result.add(currentLevel);
+        }
+
+        return result;
+    }
+}
+</code></pre><p><strong>4. Find the maximum depth of a binary tree.</strong></p><pre><code class=language-java>    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+        return Math.max(leftDepth, rightDepth) + 1;
+    }
+</code></pre><p><strong>5. Check if a binary tree is height-balanced.</strong></p><pre><code class=language-java>    public boolean isBalanced(TreeNode root) {
+        return checkHeight(root) != -1;
+    }
+
+    private int checkHeight(TreeNode node) {
+        if (node == null) {
+            return 0; // Base case: the height of an empty tree is 0
+        }
+
+        int leftHeight = checkHeight(node.left);
+        int rightHeight = checkHeight(node.right);
+
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) &gt; 1) {
+            return -1; // Not balanced
+        }
+
+        return Math.max(leftHeight, rightHeight) + 1; // Height of the current node
+    }
+</code></pre><p><strong>6. Validate Binary Search Tree.</strong></p><pre><code class=language-java>    public boolean isValidBST(TreeNode root) {
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+    
+    private boolean isValidBST(TreeNode node, long min, long max) {
+        if (node == null) {
+            return true; // An empty node is always a valid BST
+        }
+        
+        if (node.val &lt;= min || node.val &gt;= max) {
+            return false; // Node's value is out of the allowed range
+        }
+        
+        // Recursively validate the left subtree and right subtree
+        return isValidBST(node.left, min, node.val) &amp;&amp; isValidBST(node.right, node.val, max);
+    }
+</code></pre><p><strong>7. Find the lowest common ancestor of two nodes in a BST.</strong></p><p>In a BST: If both nodes (p and q) are less than the root node, then the LCA must be in the left subtree. If both nodes (p and q) are greater than the root node, then the LCA must be in the right subtree. If one node is on the left and the other node is on the right of the root, then the root is the LCA.</p><pre><code class=language-java>    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return null;
+        }
+        
+        // If both p and q are less than root, LCA is in the left subtree
+        if (p.val &lt; root.val &amp;&amp; q.val &lt; root.val) {
+            return lowestCommonAncestor(root.left, p, q);
+        }
+        
+        // If both p and q are greater than root, LCA is in the right subtree
+        if (p.val &gt; root.val &amp;&amp; q.val &gt; root.val) {
+            return lowestCommonAncestor(root.right, p, q);
+        }
+        
+        // If one node is on the left and the other is on the right, root is the LCA
+        return root;
+    }
+</code></pre><p><strong>8. Insert a node into a BST.</strong></p><p>Start at the Root: Begin at the root node.
+Traverse the Tree: Depending on the value of the node to be inserted: If the value is less than the current node&rsquo;s value, move to the left child. If the value is greater than or equal to the current node&rsquo;s value, move to the right child.
+Insert the Node: When you find an appropriate null position (left or right child), insert the new node there.</p><pre><code class=language-java>    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null) {
+            return new TreeNode(val); // Create a new node if the tree is empty
+        }
+        
+        if (val &lt; root.val) {
+            root.left = insertIntoBST(root.left, val); // Insert in the left subtree
+        } else {
+            root.right = insertIntoBST(root.right, val); // Insert in the right subtree
+        }
+        
+        return root; // Return the unchanged root
+    }
+</code></pre><p><strong>9. Delete Node in a BST.</strong>
+To delete a node in a Binary Search Tree (BST), you need to consider three main cases based on the number of children the node to be deleted has: Node with No Children (Leaf Node): Simply remove the node.
+Node with One Child: Remove the node and replace it with its single child.
+Node with Two Children: Find the node&rsquo;s in-order predecessor (maximum value in the left subtree) or in-order successor (minimum value in the right subtree), swap values with the node to be deleted, and then delete the predecessor or successor.</p><pre><code class=language-java>    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        
+        if (key &lt; root.val) {
+            root.left = deleteNode(root.left, key);
+        } else if (key &gt; root.val) {
+            root.right = deleteNode(root.right, key);
+        } else {
+            // Node to be deleted found
+            if (root.left == null) {
+                return root.right; // Node with only right child or no child
+            }
+            if (root.right == null) {
+                return root.left; // Node with only left child
+            }
+            
+            // Node with two children: Get the inorder predecessor (largest in the left subtree)
+            TreeNode minNode = getMin(root.right);
+            root.val = minNode.val; // Replace value with inorder successor's value
+            root.right = deleteNode(root.right, minNode.val); // Delete the inorder successor
+        }
+        
+        return root;
+    }
+    
+    private TreeNode getMin(TreeNode node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+</code></pre><p><strong>9. Convert Sorted Array to Binary Search Tree.</strong>
+Find the Middle Element: Choose the middle element of the array to be the root. This ensures that the tree will be balanced.
+Recursively Build Left and Right Subtrees: Apply the same process to the left and right subarrays to build the left and right subtrees.</p><pre><code class=language-java>     public TreeNode sortedArrayToBST(int[] nums) {
+        return sortedArrayToBSTHelper(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode sortedArrayToBSTHelper(int[] nums, int left, int right) {
+        if (left &gt; right) {
+            return null; // Base case: No elements to form a subtree
+        }
+
+        int mid = left + (right - left) / 2; // Find the middle index
+        TreeNode root = new TreeNode(nums[mid]); // Create the root node
+
+        root.left = sortedArrayToBSTHelper(nums, left, mid - 1); // Recursively build the left subtree
+        root.right = sortedArrayToBSTHelper(nums, mid + 1, right); // Recursively build the right subtree
+
+        return root;
+    }
+</code></pre><p><strong>9. Serialize and Deserialize Binary Tree.</strong></p><p>Serialization: Traverse the tree and record the value of each node. Use a delimiter to mark the end of children or the absence of children (e.g., null).
+Deserialization: Reconstruct the tree using the serialized data. Use the recorded values to build the tree structure, handling null values to manage missing nodes.</p><pre><code class=language-java>    public String serialize(TreeNode root) {
+        if (root == null) {
+            return &quot;null,&quot;;
+        }
+        StringBuilder sb = new StringBuilder();
+        serializeHelper(root, sb);
+        return sb.toString();
+    }
+
+    private void serializeHelper(TreeNode root, StringBuilder sb) {
+        if (root == null) {
+            sb.append(&quot;null,&quot;);
+            return;
+        }
+        sb.append(root.val).append(&quot;,&quot;);
+        serializeHelper(root.left, sb);
+        serializeHelper(root.right, sb);
+    }
+
+    // Deserialization
+    public TreeNode deserialize(String data) {
+        String[] values = data.split(&quot;,&quot;);
+        Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
+        for (String value : values) {
+            queue.add(value);
+        }
+        return deserializeHelper(queue);
+    }
+
+    private TreeNode deserializeHelper(Queue&lt;String&gt; queue) {
+        String value = queue.poll();
+        if (value.equals(&quot;null&quot;)) {
+            return null;
+        }
+        TreeNode node = new TreeNode(Integer.parseInt(value));
+        node.left = deserializeHelper(queue);
+        node.right = deserializeHelper(queue);
+        return node;
+    }
+</code></pre><p><strong>10. Binary Tree Zigzag Level Order Traversal.</strong></p><p>Use a Queue: Use a queue to perform a level order traversal (BFS).
+Alternate Directions: Keep track of the current level&rsquo;s direction. Use a flag to alternate between appending nodes from left to right and from right to left.
+Add Nodes to the Current Level: Depending on the direction, either add the nodes at the current level to the end of the current level&rsquo;s list or to the front.</p><pre><code class=language-java>    public List&lt;List&lt;Integer&gt;&gt; zigzagLevelOrder(TreeNode root) {
+        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+        if (root == null) {
+            return result;
+        }
+
+        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+        queue.offer(root);
+        boolean leftToRight = true;
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            LinkedList&lt;Integer&gt; currentLevel = new LinkedList&lt;&gt;();
+
+            for (int i = 0; i &lt; levelSize; i++) {
+                TreeNode currentNode = queue.poll();
+                
+                if (leftToRight) {
+                    currentLevel.add(currentNode.val);
+                } else {
+                    currentLevel.addFirst(currentNode.val);
+                }
+                
+                if (currentNode.left != null) {
+                    queue.offer(currentNode.left);
+                }
+                if (currentNode.right != null) {
+                    queue.offer(currentNode.right);
+                }
+            }
+
+            result.add(currentLevel);
+            leftToRight = !leftToRight; // Toggle the direction
+        }
+
+        return result;
+    }
+
+</code></pre><p><strong>11. Diameter of Binary Tree.</strong></p><p>Height of Subtrees: The diameter can be computed by using the height of the left and right subtrees for each node.
+Recursive Depth-First Search (DFS): Traverse the tree using DFS and calculate the height of each subtree. During this traversal, compute the diameter as the sum of the heights of the left and right subtrees. Update Maximum Diameter: Keep track of the maximum diameter encountered during the DFS traversal.</p><pre><code class=language-java>public class DiameterOfBinaryTree {
+    private int diameter = 0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        calculateHeight(root);
+        return diameter;
+    }
+    
+    private int calculateHeight(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        
+        int leftHeight = calculateHeight(node.left);
+        int rightHeight = calculateHeight(node.right);
+        
+        // Update the diameter if the path through this node is longer
+        diameter = Math.max(diameter, leftHeight + rightHeight);
+        
+        // Return the height of the subtree rooted at this node
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
+}
+</code></pre><p><strong>12. Find the kth smallest element in a BST..</strong></p><p>In-Order Traversal: Perform an in-order traversal of the BST. This traversal visits nodes in ascending order because, in a BST, the left subtree contains smaller elements, the root is the next smallest, and the right subtree contains larger elements.
+Tracking the k-th Element: During the in-order traversal, keep a count of the nodes visited. When the count equals k, the current node is the k-th smallest element.</p><pre><code class=language-java>public class KthSmallestElementInBST {
+    private int count = 0;
+    private int result = Integer.MIN_VALUE;
+
+    public int kthSmallest(TreeNode root, int k) {
+        inOrderTraversal(root, k);
+        return result;
+    }
+
+    private void inOrderTraversal(TreeNode node, int k) {
+        if (node == null) {
+            return;
+        }
+
+        // Traverse the left subtree
+        inOrderTraversal(node.left, k);
+
+        // Process the current node
+        count++;
+        if (count == k) {
+            result = node.val;
+            return;
+        }
+
+        // Traverse the right subtree
+        inOrderTraversal(node.right, k);
+    }
+}
+</code></pre><p><strong>13. Find the maximum path sum in a binary tree (path can start and end at any node).</strong></p><p>For each node, calculate the maximum sum of the path that passes through the node and update the global maximum if this value is higher.</p><pre><code class=language-java>public class MaxPathSum {
+    private int maxSum = Integer.MIN_VALUE;
+
+    public int maxPathSum(TreeNode root) {
+        calculateMaxSum(root);
+        return maxSum;
+    }
+
+    private int calculateMaxSum(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        // Calculate the max path sum from the left and right subtrees
+        int leftMax = Math.max(0, calculateMaxSum(node.left));  // if the value is negative, ignore it
+        int rightMax = Math.max(0, calculateMaxSum(node.right));
+
+        // Calculate the path sum that passes through the current node
+        int currentPathSum = node.val + leftMax + rightMax;
+
+        // Update the global max sum if the current path sum is greater
+        maxSum = Math.max(maxSum, currentPathSum);
+
+        // Return the maximum path sum including the current node and one of its subtrees
+        return node.val + Math.max(leftMax, rightMax);
+    }
+}
+</code></pre><p><strong>14. Construct Binary Tree from Preorder and Inorder Traversal.</strong></p><p>Start with the first element in the preorder array as the root. Find the index of this root element in the inorder array. Elements to the left of this index in the inorder array form the left subtree, and elements to the right form the right subtree. Recursively construct the left and right subtrees using the corresponding segments of the preorder and inorder arrays.</p><pre><code class=language-java>public class ConstructBinaryTree {
+    private int preorderIndex = 0;
+    private Map&lt;Integer, Integer&gt; inorderIndexMap = new HashMap&lt;&gt;();
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        // Build a map to store value -&gt; index relations from inorder traversal
+        for (int i = 0; i &lt; inorder.length; i++) {
+            inorderIndexMap.put(inorder[i], i);
+        }
+        return constructTree(preorder, 0, inorder.length - 1);
+    }
+
+    private TreeNode constructTree(int[] preorder, int inorderStart, int inorderEnd) {
+        if (inorderStart &gt; inorderEnd) {
+            return null;
+        }
+
+        // Get the current root from preorder traversal
+        int rootVal = preorder[preorderIndex++];
+        TreeNode root = new TreeNode(rootVal);
+
+        // Find the index of the root in inorder traversal
+        int inorderIndex = inorderIndexMap.get(rootVal);
+
+        // Recursively construct the left and right subtrees
+        root.left = constructTree(preorder, inorderStart, inorderIndex - 1);
+        root.right = constructTree(preorder, inorderIndex + 1, inorderEnd);
+
+        return root;
+    }
+}
+    int[] preorder = {3, 9, 20, 15, 7};
+    int[] inorder = {9, 3, 15, 20, 7};
+</code></pre></span></section><hr><footer><nav><ul><li>© 2025 Karthik Selvam</li><li><a href=https://twitter.com/karthiikselvam><i class="fa-brands fa-twitter"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.instagram.com/karthiikselvam/><i class="fa-brands fa-instagram"></i></a>
+&nbsp;&nbsp;
+<a href=https://www.linkedin.com/in/karthiiks/><i class="fa-brands fa-linkedin"></i></a></li></ul></nav></footer></main></body></html>

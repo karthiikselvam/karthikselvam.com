@@ -1,4 +1,520 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2024, Ronalds Vilcins</copyright><lastBuildDate>Fri, 10 May 2024 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Command Pattern</title><link>https://karthikselvam.com/posts/2024/05/10/command_pattern/</link><description>&lt;ol>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2025, Ronalds Vilcins</copyright><lastBuildDate>Tue, 08 Oct 2024 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Trees</title><link>https://karthikselvam.com/posts/2024/10/08/trees_part_2/</link><description>&lt;p>&lt;strong>1. Binary Tree Inorder Traversal.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public class BinaryTreeInorderTraversal {
+public List&amp;lt;Integer&amp;gt; inorderTraversal(TreeNode root) {
+List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+inorderHelper(root, result);
+return result;
+}
+private void inorderHelper(TreeNode node, List&amp;lt;Integer&amp;gt; result) {
+if (node == null) {
+return;
+}
+// Traverse the left subtree
+inorderHelper(node.left, result);
+// Visit the root node
+result.add(node.val);
+// Traverse the right subtree
+inorderHelper(node.right, result);
+}
+}
+/*Iterative Approach using Stack */
+public class BinaryTreeInorderTraversalIterative {
+public List&amp;lt;Integer&amp;gt; inorderTraversal(TreeNode root) {
+List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+Stack&amp;lt;TreeNode&amp;gt; stack = new Stack&amp;lt;&amp;gt;();
+TreeNode current = root;
+while (current != null || !stack.isEmpty()) {
+// Reach the leftmost node of the current node
+while (current != null) {
+stack.push(current);
+current = current.left;
+}
+// Current must be null at this point
+current = stack.pop();
+result.add(current.val); // Add the node to the result
+// Visit the right subtree
+current = current.right;
+}
+return result;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>2. Preorder Traversal.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public class BinaryTreePreorderTraversal {
+public List&amp;lt;Integer&amp;gt; preorderTraversal(TreeNode root) {
+List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+preorderHelper(root, result);
+return result;
+}
+private void preorderHelper(TreeNode node, List&amp;lt;Integer&amp;gt; result) {
+if (node == null) {
+return;
+}
+// Visit the root node
+result.add(node.val);
+// Traverse the left subtree
+preorderHelper(node.left, result);
+// Traverse the right subtree
+preorderHelper(node.right, result);
+}
+}
+/*Iterative Approach using Stack */
+public class BinaryTreePreorderTraversalIterative {
+public List&amp;lt;Integer&amp;gt; preorderTraversal(TreeNode root) {
+List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+if (root == null) return result;
+Stack&amp;lt;TreeNode&amp;gt; stack = new Stack&amp;lt;&amp;gt;();
+stack.push(root);
+while (!stack.isEmpty()) {
+TreeNode node = stack.pop();
+result.add(node.val);
+// Push right child first so that left child is processed first
+if (node.right != null) {
+stack.push(node.right);
+}
+if (node.left != null) {
+stack.push(node.left);
+}
+}
+return result;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>3. Postorder Traversal.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public class BinaryTreePostorderTraversal {
+public List&amp;lt;Integer&amp;gt; postorderTraversal(TreeNode root) {
+List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+postorderHelper(root, result);
+return result;
+}
+private void postorderHelper(TreeNode node, List&amp;lt;Integer&amp;gt; result) {
+if (node == null) {
+return;
+}
+// Traverse the left subtree
+postorderHelper(node.left, result);
+// Traverse the right subtree
+postorderHelper(node.right, result);
+// Visit the root node
+result.add(node.val);
+}
+}
+/*Iterative Approach using Stack */
+public class BinaryTreePostorderTraversalIterative {
+public List&amp;lt;Integer&amp;gt; postorderTraversal(TreeNode root) {
+List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+if (root == null) return result;
+Stack&amp;lt;TreeNode&amp;gt; stack1 = new Stack&amp;lt;&amp;gt;();
+Stack&amp;lt;TreeNode&amp;gt; stack2 = new Stack&amp;lt;&amp;gt;();
+stack1.push(root);
+while (!stack1.isEmpty()) {
+TreeNode node = stack1.pop();
+stack2.push(node);
+if (node.left != null) {
+stack1.push(node.left);
+}
+if (node.right != null) {
+stack1.push(node.right);
+}
+}
+while (!stack2.isEmpty()) {
+result.add(stack2.pop().val);
+}
+return result;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>3. Level Order Traversal.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java">public class BinaryTreeLevelOrderTraversal {
+public List&amp;lt;List&amp;lt;Integer&amp;gt;&amp;gt; levelOrder(TreeNode root) {
+List&amp;lt;List&amp;lt;Integer&amp;gt;&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+if (root == null) return result;
+Queue&amp;lt;TreeNode&amp;gt; queue = new LinkedList&amp;lt;&amp;gt;();
+queue.add(root);
+while (!queue.isEmpty()) {
+int levelSize = queue.size();
+List&amp;lt;Integer&amp;gt; currentLevel = new ArrayList&amp;lt;&amp;gt;();
+for (int i = 0; i &amp;lt; levelSize; i++) {
+TreeNode currentNode = queue.poll();
+currentLevel.add(currentNode.val);
+if (currentNode.left != null) {
+queue.add(currentNode.left);
+}
+if (currentNode.right != null) {
+queue.add(currentNode.right);
+}
+}
+result.add(currentLevel);
+}
+return result;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>4. Find the maximum depth of a binary tree.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java"> public int maxDepth(TreeNode root) {
+if (root == null) {
+return 0;
+}
+int leftDepth = maxDepth(root.left);
+int rightDepth = maxDepth(root.right);
+return Math.max(leftDepth, rightDepth) + 1;
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>5. Check if a binary tree is height-balanced.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java"> public boolean isBalanced(TreeNode root) {
+return checkHeight(root) != -1;
+}
+private int checkHeight(TreeNode node) {
+if (node == null) {
+return 0; // Base case: the height of an empty tree is 0
+}
+int leftHeight = checkHeight(node.left);
+int rightHeight = checkHeight(node.right);
+if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) &amp;gt; 1) {
+return -1; // Not balanced
+}
+return Math.max(leftHeight, rightHeight) + 1; // Height of the current node
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>6. Validate Binary Search Tree.&lt;/strong>&lt;/p>
+&lt;pre>&lt;code class="language-java"> public boolean isValidBST(TreeNode root) {
+return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+}
+private boolean isValidBST(TreeNode node, long min, long max) {
+if (node == null) {
+return true; // An empty node is always a valid BST
+}
+if (node.val &amp;lt;= min || node.val &amp;gt;= max) {
+return false; // Node's value is out of the allowed range
+}
+// Recursively validate the left subtree and right subtree
+return isValidBST(node.left, min, node.val) &amp;amp;&amp;amp; isValidBST(node.right, node.val, max);
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>7. Find the lowest common ancestor of two nodes in a BST.&lt;/strong>&lt;/p>
+&lt;p>In a BST: If both nodes (p and q) are less than the root node, then the LCA must be in the left subtree. If both nodes (p and q) are greater than the root node, then the LCA must be in the right subtree. If one node is on the left and the other node is on the right of the root, then the root is the LCA.&lt;/p>
+&lt;pre>&lt;code class="language-java"> public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+if (root == null) {
+return null;
+}
+// If both p and q are less than root, LCA is in the left subtree
+if (p.val &amp;lt; root.val &amp;amp;&amp;amp; q.val &amp;lt; root.val) {
+return lowestCommonAncestor(root.left, p, q);
+}
+// If both p and q are greater than root, LCA is in the right subtree
+if (p.val &amp;gt; root.val &amp;amp;&amp;amp; q.val &amp;gt; root.val) {
+return lowestCommonAncestor(root.right, p, q);
+}
+// If one node is on the left and the other is on the right, root is the LCA
+return root;
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>8. Insert a node into a BST.&lt;/strong>&lt;/p>
+&lt;p>Start at the Root: Begin at the root node.
+Traverse the Tree: Depending on the value of the node to be inserted: If the value is less than the current node&amp;rsquo;s value, move to the left child. If the value is greater than or equal to the current node&amp;rsquo;s value, move to the right child.
+Insert the Node: When you find an appropriate null position (left or right child), insert the new node there.&lt;/p>
+&lt;pre>&lt;code class="language-java"> public TreeNode insertIntoBST(TreeNode root, int val) {
+if (root == null) {
+return new TreeNode(val); // Create a new node if the tree is empty
+}
+if (val &amp;lt; root.val) {
+root.left = insertIntoBST(root.left, val); // Insert in the left subtree
+} else {
+root.right = insertIntoBST(root.right, val); // Insert in the right subtree
+}
+return root; // Return the unchanged root
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>9. Delete Node in a BST.&lt;/strong>
+To delete a node in a Binary Search Tree (BST), you need to consider three main cases based on the number of children the node to be deleted has: Node with No Children (Leaf Node): Simply remove the node.
+Node with One Child: Remove the node and replace it with its single child.
+Node with Two Children: Find the node&amp;rsquo;s in-order predecessor (maximum value in the left subtree) or in-order successor (minimum value in the right subtree), swap values with the node to be deleted, and then delete the predecessor or successor.&lt;/p>
+&lt;pre>&lt;code class="language-java"> public TreeNode deleteNode(TreeNode root, int key) {
+if (root == null) {
+return null;
+}
+if (key &amp;lt; root.val) {
+root.left = deleteNode(root.left, key);
+} else if (key &amp;gt; root.val) {
+root.right = deleteNode(root.right, key);
+} else {
+// Node to be deleted found
+if (root.left == null) {
+return root.right; // Node with only right child or no child
+}
+if (root.right == null) {
+return root.left; // Node with only left child
+}
+// Node with two children: Get the inorder predecessor (largest in the left subtree)
+TreeNode minNode = getMin(root.right);
+root.val = minNode.val; // Replace value with inorder successor's value
+root.right = deleteNode(root.right, minNode.val); // Delete the inorder successor
+}
+return root;
+}
+private TreeNode getMin(TreeNode node) {
+while (node.left != null) {
+node = node.left;
+}
+return node;
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>9. Convert Sorted Array to Binary Search Tree.&lt;/strong>
+Find the Middle Element: Choose the middle element of the array to be the root. This ensures that the tree will be balanced.
+Recursively Build Left and Right Subtrees: Apply the same process to the left and right subarrays to build the left and right subtrees.&lt;/p>
+&lt;pre>&lt;code class="language-java"> public TreeNode sortedArrayToBST(int[] nums) {
+return sortedArrayToBSTHelper(nums, 0, nums.length - 1);
+}
+private TreeNode sortedArrayToBSTHelper(int[] nums, int left, int right) {
+if (left &amp;gt; right) {
+return null; // Base case: No elements to form a subtree
+}
+int mid = left + (right - left) / 2; // Find the middle index
+TreeNode root = new TreeNode(nums[mid]); // Create the root node
+root.left = sortedArrayToBSTHelper(nums, left, mid - 1); // Recursively build the left subtree
+root.right = sortedArrayToBSTHelper(nums, mid + 1, right); // Recursively build the right subtree
+return root;
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>9. Serialize and Deserialize Binary Tree.&lt;/strong>&lt;/p>
+&lt;p>Serialization: Traverse the tree and record the value of each node. Use a delimiter to mark the end of children or the absence of children (e.g., null).
+Deserialization: Reconstruct the tree using the serialized data. Use the recorded values to build the tree structure, handling null values to manage missing nodes.&lt;/p>
+&lt;pre>&lt;code class="language-java"> public String serialize(TreeNode root) {
+if (root == null) {
+return &amp;quot;null,&amp;quot;;
+}
+StringBuilder sb = new StringBuilder();
+serializeHelper(root, sb);
+return sb.toString();
+}
+private void serializeHelper(TreeNode root, StringBuilder sb) {
+if (root == null) {
+sb.append(&amp;quot;null,&amp;quot;);
+return;
+}
+sb.append(root.val).append(&amp;quot;,&amp;quot;);
+serializeHelper(root.left, sb);
+serializeHelper(root.right, sb);
+}
+// Deserialization
+public TreeNode deserialize(String data) {
+String[] values = data.split(&amp;quot;,&amp;quot;);
+Queue&amp;lt;String&amp;gt; queue = new LinkedList&amp;lt;&amp;gt;();
+for (String value : values) {
+queue.add(value);
+}
+return deserializeHelper(queue);
+}
+private TreeNode deserializeHelper(Queue&amp;lt;String&amp;gt; queue) {
+String value = queue.poll();
+if (value.equals(&amp;quot;null&amp;quot;)) {
+return null;
+}
+TreeNode node = new TreeNode(Integer.parseInt(value));
+node.left = deserializeHelper(queue);
+node.right = deserializeHelper(queue);
+return node;
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>10. Binary Tree Zigzag Level Order Traversal.&lt;/strong>&lt;/p>
+&lt;p>Use a Queue: Use a queue to perform a level order traversal (BFS).
+Alternate Directions: Keep track of the current level&amp;rsquo;s direction. Use a flag to alternate between appending nodes from left to right and from right to left.
+Add Nodes to the Current Level: Depending on the direction, either add the nodes at the current level to the end of the current level&amp;rsquo;s list or to the front.&lt;/p>
+&lt;pre>&lt;code class="language-java"> public List&amp;lt;List&amp;lt;Integer&amp;gt;&amp;gt; zigzagLevelOrder(TreeNode root) {
+List&amp;lt;List&amp;lt;Integer&amp;gt;&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
+if (root == null) {
+return result;
+}
+Queue&amp;lt;TreeNode&amp;gt; queue = new LinkedList&amp;lt;&amp;gt;();
+queue.offer(root);
+boolean leftToRight = true;
+while (!queue.isEmpty()) {
+int levelSize = queue.size();
+LinkedList&amp;lt;Integer&amp;gt; currentLevel = new LinkedList&amp;lt;&amp;gt;();
+for (int i = 0; i &amp;lt; levelSize; i++) {
+TreeNode currentNode = queue.poll();
+if (leftToRight) {
+currentLevel.add(currentNode.val);
+} else {
+currentLevel.addFirst(currentNode.val);
+}
+if (currentNode.left != null) {
+queue.offer(currentNode.left);
+}
+if (currentNode.right != null) {
+queue.offer(currentNode.right);
+}
+}
+result.add(currentLevel);
+leftToRight = !leftToRight; // Toggle the direction
+}
+return result;
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>11. Diameter of Binary Tree.&lt;/strong>&lt;/p>
+&lt;p>Height of Subtrees: The diameter can be computed by using the height of the left and right subtrees for each node.
+Recursive Depth-First Search (DFS): Traverse the tree using DFS and calculate the height of each subtree. During this traversal, compute the diameter as the sum of the heights of the left and right subtrees. Update Maximum Diameter: Keep track of the maximum diameter encountered during the DFS traversal.&lt;/p>
+&lt;pre>&lt;code class="language-java">public class DiameterOfBinaryTree {
+private int diameter = 0;
+public int diameterOfBinaryTree(TreeNode root) {
+if (root == null) {
+return 0;
+}
+calculateHeight(root);
+return diameter;
+}
+private int calculateHeight(TreeNode node) {
+if (node == null) {
+return 0;
+}
+int leftHeight = calculateHeight(node.left);
+int rightHeight = calculateHeight(node.right);
+// Update the diameter if the path through this node is longer
+diameter = Math.max(diameter, leftHeight + rightHeight);
+// Return the height of the subtree rooted at this node
+return 1 + Math.max(leftHeight, rightHeight);
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>12. Find the kth smallest element in a BST..&lt;/strong>&lt;/p>
+&lt;p>In-Order Traversal: Perform an in-order traversal of the BST. This traversal visits nodes in ascending order because, in a BST, the left subtree contains smaller elements, the root is the next smallest, and the right subtree contains larger elements.
+Tracking the k-th Element: During the in-order traversal, keep a count of the nodes visited. When the count equals k, the current node is the k-th smallest element.&lt;/p>
+&lt;pre>&lt;code class="language-java">public class KthSmallestElementInBST {
+private int count = 0;
+private int result = Integer.MIN_VALUE;
+public int kthSmallest(TreeNode root, int k) {
+inOrderTraversal(root, k);
+return result;
+}
+private void inOrderTraversal(TreeNode node, int k) {
+if (node == null) {
+return;
+}
+// Traverse the left subtree
+inOrderTraversal(node.left, k);
+// Process the current node
+count++;
+if (count == k) {
+result = node.val;
+return;
+}
+// Traverse the right subtree
+inOrderTraversal(node.right, k);
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>13. Find the maximum path sum in a binary tree (path can start and end at any node).&lt;/strong>&lt;/p>
+&lt;p>For each node, calculate the maximum sum of the path that passes through the node and update the global maximum if this value is higher.&lt;/p>
+&lt;pre>&lt;code class="language-java">public class MaxPathSum {
+private int maxSum = Integer.MIN_VALUE;
+public int maxPathSum(TreeNode root) {
+calculateMaxSum(root);
+return maxSum;
+}
+private int calculateMaxSum(TreeNode node) {
+if (node == null) {
+return 0;
+}
+// Calculate the max path sum from the left and right subtrees
+int leftMax = Math.max(0, calculateMaxSum(node.left)); // if the value is negative, ignore it
+int rightMax = Math.max(0, calculateMaxSum(node.right));
+// Calculate the path sum that passes through the current node
+int currentPathSum = node.val + leftMax + rightMax;
+// Update the global max sum if the current path sum is greater
+maxSum = Math.max(maxSum, currentPathSum);
+// Return the maximum path sum including the current node and one of its subtrees
+return node.val + Math.max(leftMax, rightMax);
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>&lt;strong>14. Construct Binary Tree from Preorder and Inorder Traversal.&lt;/strong>&lt;/p>
+&lt;p>Start with the first element in the preorder array as the root. Find the index of this root element in the inorder array. Elements to the left of this index in the inorder array form the left subtree, and elements to the right form the right subtree. Recursively construct the left and right subtrees using the corresponding segments of the preorder and inorder arrays.&lt;/p>
+&lt;pre>&lt;code class="language-java">public class ConstructBinaryTree {
+private int preorderIndex = 0;
+private Map&amp;lt;Integer, Integer&amp;gt; inorderIndexMap = new HashMap&amp;lt;&amp;gt;();
+public TreeNode buildTree(int[] preorder, int[] inorder) {
+// Build a map to store value -&amp;gt; index relations from inorder traversal
+for (int i = 0; i &amp;lt; inorder.length; i++) {
+inorderIndexMap.put(inorder[i], i);
+}
+return constructTree(preorder, 0, inorder.length - 1);
+}
+private TreeNode constructTree(int[] preorder, int inorderStart, int inorderEnd) {
+if (inorderStart &amp;gt; inorderEnd) {
+return null;
+}
+// Get the current root from preorder traversal
+int rootVal = preorder[preorderIndex++];
+TreeNode root = new TreeNode(rootVal);
+// Find the index of the root in inorder traversal
+int inorderIndex = inorderIndexMap.get(rootVal);
+// Recursively construct the left and right subtrees
+root.left = constructTree(preorder, inorderStart, inorderIndex - 1);
+root.right = constructTree(preorder, inorderIndex + 1, inorderEnd);
+return root;
+}
+}
+int[] preorder = {3, 9, 20, 15, 7};
+int[] inorder = {9, 3, 15, 20, 7};
+&lt;/code>&lt;/pre></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2024/10/08/trees_part_2/</guid><pubDate>Tue, 08 Oct 2024 00:00:00 +0000</pubDate></item><item><title>Fundamental Analsysis Framework</title><link>https://karthikselvam.com/posts/2024/08/17/fundamental_framework/</link><description>&lt;ol>
+&lt;li>Understand the Company and Industry
+Company Overview: Begin by understanding what the company does, its products or services, its market position, and its business model.
+Industry Analysis: Analyze the industry the company operates in, including its growth prospects, competitive landscape, and key trends. Use frameworks like Porter’s Five Forces to understand the industry&amp;rsquo;s dynamics.&lt;/li>
+&lt;li>Financial Statement Analysis
+Income Statement:
+Revenue Growth: Look at the company’s top-line growth over time.
+Profit Margins: Analyze gross margin, operating margin, and net margin to understand profitability.
+Gross Margin shows how much profit is made after covering the cost of goods sold. Operating Margin shows how much profit remains after covering operating expenses. Net Margin shows the final profit after all expenses, including interest and taxes.
+Earnings Per Share (EPS): Evaluate trends in EPS, which reflects profitability on a per-share basis.
+Balance Sheet:
+Assets and Liabilities: Assess the company’s asset base, including cash, receivables, and long-term investments, compared to its liabilities.
+Debt Levels: Evaluate the company’s debt-to-equity ratio and other leverage ratios to understand its financial risk.
+Liquidity Ratios: Analyze current and quick ratios to gauge the company’s ability to meet short-term obligations.
+Cash Flow Statement:
+Operating Cash Flow: Determine how much cash the company generates from its core operations.
+Free Cash Flow: Evaluate free cash flow (operating cash flow minus capital expenditures), which is crucial for dividend payments, buybacks, and growth investments.
+Cash Flow from Investing and Financing: Look at the company’s investment in growth and how it finances its operations.&lt;/li>
+&lt;li>Valuation Analysis
+Price-to-Earnings (P/E) Ratio: Compare the P/E ratio with industry peers and the broader market to gauge valuation.
+Price-to-Book (P/B) Ratio: Evaluate how the market values the company relative to its book value.
+Price-to-Sales (P/S) Ratio: Analyze the valuation relative to revenue.
+Discounted Cash Flow (DCF) Analysis: Perform a DCF analysis to estimate the company’s intrinsic value by projecting future cash flows and discounting them to the present value.&lt;/li>
+&lt;li>Growth Prospects
+Historical Growth: Look at historical revenue, earnings, and cash flow growth rates.
+Future Growth Projections: Analyze analyst estimates, company guidance, and growth drivers such as market expansion, new products, or acquisitions.&lt;/li>
+&lt;li>Profitability and Efficiency Ratios
+Return on Equity (ROE): Measure how effectively the company uses shareholders’ equity to generate profit.
+Return on Assets (ROA): Evaluate how efficiently the company uses its assets to generate earnings.
+Return on Invested Capital (ROIC): Assess the company&amp;rsquo;s ability to generate returns on its investments.
+Operating Efficiency: Use ratios like asset turnover and inventory turnover to gauge operational efficiency.&lt;/li>
+&lt;li>Debt and Solvency Analysis
+Debt-to-Equity Ratio: Evaluate the proportion of debt used in the company’s capital structure.
+Interest Coverage Ratio: Determine the company’s ability to meet interest payments on its debt.
+Debt Servicing: Look at the company’s ability to repay its debt using free cash flow and operating income.&lt;/li>
+&lt;li>Dividend Analysis (if applicable)
+Dividend Yield: Compare the dividend yield to industry averages.
+Dividend Payout Ratio: Analyze the portion of earnings paid out as dividends.
+Sustainability: Assess whether the dividends are sustainable based on cash flow and earnings.&lt;/li>
+&lt;li>Management and Corporate Governance
+Management Quality: Review the experience and track record of the management team.
+Corporate Governance: Evaluate the company&amp;rsquo;s governance practices, board structure, and any history of shareholder issues.&lt;/li>
+&lt;li>Competitive Advantage (Moat)
+Economic Moat: Identify whether the company has a sustainable competitive advantage, such as brand strength, patents, cost leadership, or network effects.&lt;/li>
+&lt;li>Risk Analysis
+Operational Risks: Consider risks related to the company’s operations, such as supply chain issues or key dependencies.
+Market Risks: Assess market risks, including economic cycles, competition, and changes in consumer preferences.
+Regulatory Risks: Evaluate any regulatory or legal challenges the company faces.&lt;/li>
+&lt;li>ESG (Environmental, Social, Governance) Considerations
+Environmental Impact: Look at the company’s environmental practices and potential risks.
+Social Responsibility: Consider the company’s social impact and practices.
+Governance: Evaluate the company’s governance practices and transparency.&lt;/li>
+&lt;li>Peer and Industry Comparison
+Compare the company’s key metrics with industry averages and peer companies to gauge relative performance and valuation.&lt;/li>
+&lt;li>Final Investment Decision
+Intrinsic Value vs. Market Price: Compare the stock’s intrinsic value to its current market price to determine if it’s overvalued, undervalued, or fairly valued.
+Buy, Hold, or Sell: Based on your analysis, decide whether to buy, hold, or sell the stock.
+This step-by-step analysis provides a comprehensive view of the company’s fundamentals, helping you make an informed investment decision.&lt;/li>
+&lt;/ol></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2024/08/17/fundamental_framework/</guid><pubDate>Sat, 17 Aug 2024 00:00:00 +0000</pubDate></item><item><title>Command Pattern</title><link>https://karthikselvam.com/posts/2024/05/10/command_pattern/</link><description>&lt;ol>
 &lt;li>Implement Transaction Management: Extend the Command Pattern implementation to support transaction management. This exercise will involve implementing methods to start, commit, and rollback transactions, where a transaction consists of multiple commands that are executed atomically.&lt;/li>
 &lt;/ol>
 &lt;pre>&lt;code class="language-java">// Command interface
@@ -4020,7 +4536,63 @@ return longestStreak;
 &lt;/code>&lt;/pre>
 &lt;p>Time complexity: Building the HashSet initially takes O(n) time, as we need to add each element of the array to the HashSet.The subsequent iteration over the array takes O(n) time as well, as we examine each element exactly once. Within the iteration, the while loop that checks for consecutive elements also takes O(n) time in the worst case, but it does not run for each element. It runs only when we encounter the start of a consecutive sequence, which happens relatively infrequently in practice.&lt;/p>
 &lt;p>Space complexity: O(n), This is because we use a HashSet to store the elements of the array, which can take up to O(n) space in the worst case if all elements are unique.&lt;/p>
-&lt;hr></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/22/arrays/</guid><pubDate>Sun, 22 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Greedy Problems</title><link>https://karthikselvam.com/posts/2023/01/22/greedy/</link><description>&lt;p>In this article, we will solve greedy problems that are commonly encountered in interviews.&lt;/p>
+&lt;hr></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/22/arrays/</guid><pubDate>Sun, 22 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Arrays</title><link>https://karthikselvam.com/posts/2023/01/22/behavioral_questions/</link><description>&lt;p>&lt;strong>1. Tell me about a time when you went above and beyond to meet customer needs.&lt;/strong>
+Situation: In my previous role as a Senior Software Development Engineer at [Company Name], we had a critical customer who relied heavily on one of our core services for their day-to-day operations. The service was generally reliable, but we noticed an increase in latency during peak hours, which started to affect the customer’s business. They were experiencing delays that disrupted their workflow, leading to frustration and potential loss of business for them.&lt;/p>
+&lt;p>Task: As the senior engineer responsible for the service, I was tasked with investigating the root cause of the latency and finding a solution. The challenge was that this issue was intermittent and had not surfaced in our regular testing or monitoring processes. Additionally, the customer had an important launch event in two weeks, and they needed this issue resolved before then.&lt;/p>
+&lt;p>Action:
+I decided to go beyond the typical debugging process and took the following steps:&lt;/p>
+&lt;p>Deep Dive into Logs: I led a detailed analysis of logs and metrics from both our production and pre-production environments to identify patterns during peak times. I involved the DevOps team to help simulate the exact production load in a controlled environment.&lt;/p>
+&lt;p>Customer Collaboration: I personally reached out to the customer’s technical team to understand the specific scenarios where they were facing issues. This allowed me to replicate their exact usage patterns and identify bottlenecks that weren’t evident in generic load testing.&lt;/p>
+&lt;p>Optimizing the Code: Upon identifying the bottleneck, I worked on optimizing the service&amp;rsquo;s code, specifically focusing on the database queries and caching mechanisms that were causing the delays. I also refactored parts of the code to make the service more resilient under heavy load.&lt;/p>
+&lt;p>Proactive Communication: Throughout this process, I kept the customer informed about our progress, ensuring that they felt supported and knew we were prioritizing their needs.&lt;/p>
+&lt;p>Testing and Deployment: Once the optimizations were implemented, I coordinated with the QA team to conduct rigorous testing. I also worked with the DevOps team to deploy the changes in a phased manner, closely monitoring the service during the deployment to ensure there were no regressions.&lt;/p>
+&lt;p>Result:
+The optimization efforts reduced the service&amp;rsquo;s latency by 60% during peak hours, which significantly improved the customer’s experience. The issue was resolved well before their launch event, and they were able to proceed without any disruptions. The customer was highly appreciative of the proactive approach and the level of detail we went into to solve their problem. This not only strengthened our relationship with them but also led to a long-term partnership and additional business opportunities.&lt;/p>
+&lt;p>Reflection:
+This experience reinforced the importance of being customer-obsessed, especially in a senior role. Going beyond the expected duties, engaging directly with the customer, and ensuring that their needs are met, even under tight deadlines, is crucial in building trust and delivering exceptional service.&lt;/p>
+&lt;p>&lt;strong>2. Can you provide an example of a time when you received negative customer feedback? What did you do to address it?&lt;/strong>
+Situation:
+In my previous role as a Senior Software Development Engineer at [Company Name], we launched a new version of our platform with several major updates and features. However, shortly after the release, we started receiving negative feedback from a key customer segment. They reported that the new user interface was confusing, and some of the features they relied on were either harder to access or didn’t work as expected.&lt;/p>
+&lt;p>Task:
+As the senior engineer responsible for this project, my task was to address the feedback promptly. This involved understanding the root cause of the issues, devising a plan to resolve them, and restoring customer satisfaction.&lt;/p>
+&lt;p>Action:
+To tackle this, I took the following steps:&lt;/p>
+&lt;p>Engage Directly with Customers:
+I initiated direct communication with the affected customers to gather detailed feedback. I set up calls and meetings with key users to understand their specific pain points and how the changes impacted their workflow. This allowed me to get a clearer picture of the issues beyond what was reported in generic feedback channels.&lt;/p>
+&lt;p>Analyze the Feedback:
+I worked closely with the UX team to analyze the feedback and identify common patterns. We discovered that the navigation changes we made, though intended to streamline the interface, had unintentionally made it harder for some users to complete their tasks efficiently. Additionally, there were a few bugs in the new features that had slipped through our testing process.&lt;/p>
+&lt;p>Implement Rapid Improvements:
+Based on the feedback, I prioritized quick wins that could immediately improve the user experience. We rolled out a patch that fixed the bugs and made some immediate adjustments to the navigation flow based on customer input.
+I also proposed and led a short-term project to create customizable interface options, allowing users to revert to a layout closer to the previous version if they preferred it.&lt;/p>
+&lt;p>Proactive Communication:
+Throughout this process, I maintained open lines of communication with the affected customers, providing regular updates on our progress and the changes we were making. I also took the opportunity to thank them for their feedback and assured them that we were committed to addressing their concerns.&lt;/p>
+&lt;p>Post-Release Follow-Up:
+After the changes were implemented, I followed up with the customers to gather additional feedback and ensure the modifications addressed their issues. I also monitored the platform for further feedback to ensure the improvements were well-received.&lt;/p>
+&lt;p>Result:
+The quick response and the adjustments we made led to a significant reduction in customer complaints, and the feedback shifted from negative to positive. The customizable interface option was particularly well-received, as it gave users more control over their experience. Our relationship with the customers improved, and they appreciated our responsiveness and willingness to adapt based on their needs.&lt;/p>
+&lt;p>Reflection:
+This experience reinforced the importance of actively listening to customer feedback and being agile in responding to it. By engaging directly with customers and being transparent about the steps we were taking, we were able to turn a negative situation into a positive one, ultimately enhancing the customer experience and strengthening our product.&lt;/p>
+&lt;p>&lt;strong>3. Tell me about a time when you had to deliver a product or feature under a tight deadline. How did you ensure it met customer expectations??&lt;/strong>
+Situation: At my previous company, we had a client who requested a new feature for their application just weeks before their product launch. The feature was crucial for their marketing campaign, and they needed it delivered within an extremely tight deadline of two weeks.&lt;/p>
+&lt;p>Task: As the lead developer, my task was to ensure that we delivered a fully functional, high-quality feature on time, without compromising our existing development schedule.&lt;/p>
+&lt;p>Action: I started by breaking down the feature requirements into manageable tasks and prioritized them based on the client’s most critical needs. I then assembled a small team of developers and designers, ensuring everyone was clear on their responsibilities and the importance of meeting the deadline.&lt;/p>
+&lt;p>To maximize efficiency, I implemented daily stand-up meetings to track progress, identify any roadblocks early, and make quick decisions. I also set up a continuous integration pipeline to automate testing and deployment, so that we could catch and fix bugs as early as possible.&lt;/p>
+&lt;p>Throughout the development process, I maintained close communication with the client to keep them updated on our progress and to manage their expectations. This also allowed us to get quick feedback on the feature’s implementation, ensuring we were aligned with their vision.&lt;/p>
+&lt;p>Result: We successfully delivered the feature on time, and it met the client’s expectations in terms of functionality and quality. The client was impressed with our ability to meet such a tight deadline without compromising on the end product. This experience not only strengthened our relationship with the client but also demonstrated our team’s ability to work efficiently under pressure.&lt;/p>
+&lt;p>&lt;strong>4. Tell about a time you disagreed with your teamamt?&lt;/strong>
+Situation:
+In one of my previous projects, we were tasked with breaking down a monolithic application into microservices. The goal was to improve scalability and maintainability.&lt;/p>
+&lt;p>Task:
+My role was to design the microservices architecture and ensure a smooth transition from the monolithic system. However, a teammate and I had a fundamental disagreement about how to approach this.&lt;/p>
+&lt;p>Action:
+My teammate advocated for a &amp;ldquo;big bang&amp;rdquo; approach, where we would decompose the entire application at once and deploy all microservices simultaneously. They believed this would be more efficient and faster. I, on the other hand, favored an incremental approach. I suggested breaking down the application one component at a time, deploying each microservice individually, and ensuring that each one worked correctly before moving on to the next. I felt this would minimize risk and make it easier to identify and fix issues.&lt;/p>
+&lt;p>To resolve the disagreement, we decided to:
+Discuss Concerns: We sat down and outlined the pros and cons of both approaches. I highlighted the potential risks of a &amp;ldquo;big bang&amp;rdquo; deployment, such as the difficulty in debugging and the high impact of potential failures.
+Run Experiments: We agreed to conduct a proof-of-concept by splitting one part of the monolith into a microservice and deploying it. This would give us insights into the complexity and potential issues we might face.
+Consult with Stakeholders: We brought in our tech lead and a few other senior engineers to get their perspectives and advice. They supported the idea of an incremental approach given the complexity of our system.&lt;/p>
+&lt;p>Result:
+The proof-of-concept was successful and demonstrated the benefits of an incremental approach. It allowed us to catch and resolve issues early, and it provided the team with valuable learning experiences. As a result, we adopted the incremental approach for the rest of the project.&lt;/p>
+&lt;p>In the end, the project was a success. The incremental approach proved to be effective in managing risks and ensuring a smooth transition to microservices. This experience reinforced the importance of open communication, experimentation, and involving stakeholders in decision-making processes.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/22/behavioral_questions/</guid><pubDate>Sun, 22 Jan 2023 00:00:00 +0000</pubDate></item><item><title>Greedy Problems</title><link>https://karthikselvam.com/posts/2023/01/22/greedy/</link><description>&lt;p>In this article, we will solve greedy problems that are commonly encountered in interviews.&lt;/p>
 &lt;p>&lt;strong>1. &lt;a href="https://leetcode.com/problems/jump-game/">Jump Game&lt;/a>.&lt;/strong>&lt;/p>
 &lt;pre>&lt;code class="language-java">public boolean canJump(int[] nums) {
 int lastIndex = nums.length - 1; // set last index as the end of the array
