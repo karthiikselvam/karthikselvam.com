@@ -1,9 +1,9 @@
 ---
 title: "Deep Dive:PostgreSQL WAL, Replication, and Replication Slots"
 description: "2023"
-date: "2023-01-20"
+date: "2025-05-22"
 tags:
-- fundamentals
+- postgres
 ---
 
 PostgreSQL’s reliability and advanced replication features are built on its Write-Ahead Log (WAL) and the mechanisms that manage it. In this post, we’ll go deep into how WAL works, how physical and logical replication use it, and how replication slots ensure data safety and consistency. We’ll also look at the actual C structures and functions that implement these features.
