@@ -1,263 +1,141 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2025, Ronalds Vilcins</copyright><lastBuildDate>Thu, 22 May 2025 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Deep Dive:PostgreSQL WAL, Replication, and Replication Slots</title><link>https://karthikselvam.com/posts/2025/05/22/interview_preparation/</link><description>&lt;p>PostgreSQL’s reliability and advanced replication features are built on its Write-Ahead Log (WAL) and the mechanisms that manage it. In this post, we’ll go deep into how WAL works, how physical and logical replication use it, and how replication slots ensure data safety and consistency. We’ll also look at the actual C structures and functions that implement these features.&lt;/p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2025, Ronalds Vilcins</copyright><lastBuildDate>Thu, 22 May 2025 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Understanding PostgreSQL’s Write-Ahead Logging (WAL)</title><link>https://karthikselvam.com/posts/2025/05/22/interview_preparation/</link><description>&lt;p>PostgreSQL’s Write-Ahead Logging (WAL) is at the heart of its durability and crash recovery. If you’ve ever wondered how PostgreSQL ensures your data is safe—even in the event of a crash—this post will walk you through the architecture, flow, and the actual source code that makes it all work.&lt;/p>
 &lt;hr>
-&lt;h2 id="1-write-ahead-log-wal-the-foundation">1. Write-Ahead Log (WAL): The Foundation &lt;a href="#1-write-ahead-log-wal-the-foundation" class="hash">#&lt;/a>&lt;/h2>
+&lt;h2 id="high-level-architecture--flow-of-wal">High-Level Architecture &amp;amp; Flow of WAL &lt;a href="#high-level-architecture--flow-of-wal" class="hash">#&lt;/a>&lt;/h2>
 &lt;h3 id="what-is-wal">What is WAL? &lt;a href="#what-is-wal" class="hash">#&lt;/a>&lt;/h3>
-&lt;p>WAL is a sequential log of all changes made to the database. The core rule:&lt;br>
-&lt;strong>No change is made to the data files until the change is safely written to the WAL.&lt;/strong>&lt;/p>
-&lt;h3 id="how-wal-is-written">How WAL is Written &lt;a href="#how-wal-is-written" class="hash">#&lt;/a>&lt;/h3>
-&lt;p>When a transaction modifies data:&lt;/p>
+&lt;p>WAL is a mechanism that ensures all changes to the database are first recorded in a log before being applied to the data files. This guarantees that, even if the system crashes, PostgreSQL can recover to a consistent state.&lt;/p>
+&lt;h3 id="key-components">Key Components &lt;a href="#key-components" class="hash">#&lt;/a>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>WAL Buffers:&lt;/strong>&lt;br>
+In-memory buffers that temporarily hold WAL records before they’re written to disk.&lt;/li>
+&lt;li>&lt;strong>WAL Files:&lt;/strong>&lt;br>
+On-disk files (in &lt;code>pg_wal/&lt;/code>), typically 16MB each, storing the WAL records.&lt;/li>
+&lt;li>&lt;strong>WAL Writer Process:&lt;/strong>&lt;br>
+A background process that flushes WAL buffers to disk.&lt;/li>
+&lt;li>&lt;strong>Checkpointer:&lt;/strong>&lt;br>
+Ensures data files are consistent with WAL.&lt;/li>
+&lt;li>&lt;strong>Archiver:&lt;/strong>&lt;br>
+Optionally archives completed WAL segments for point-in-time recovery (PITR).&lt;/li>
+&lt;/ul>
+&lt;h3 id="sequence-of-events">Sequence of Events &lt;a href="#sequence-of-events" class="hash">#&lt;/a>&lt;/h3>
 &lt;ol>
+&lt;li>&lt;strong>Change Initiation:&lt;/strong>&lt;br>
+A transaction modifies data (e.g., an &lt;code>INSERT&lt;/code>).&lt;/li>
 &lt;li>&lt;strong>WAL Record Creation:&lt;/strong>&lt;br>
-Each change (insert, update, delete) generates a WAL record.&lt;/li>
+The change is encoded as a WAL record in memory.&lt;/li>
 &lt;li>&lt;strong>WAL Buffering:&lt;/strong>&lt;br>
-WAL records are first written to an in-memory buffer.&lt;/li>
+The WAL record is placed in the WAL buffers.&lt;/li>
 &lt;li>&lt;strong>WAL Flush:&lt;/strong>&lt;br>
-On commit, WAL records are flushed to disk (&lt;code>pg_wal/&lt;/code> directory) using &lt;code>XLogFlush()&lt;/code>.&lt;/li>
+Before a transaction commits, its WAL records are flushed to disk.&lt;/li>
+&lt;li>&lt;strong>WAL File Management:&lt;/strong>&lt;br>
+WAL files are rotated, archived, and recycled as needed.&lt;/li>
+&lt;li>&lt;strong>Crash Recovery:&lt;/strong>&lt;br>
+On restart after a crash, WAL is replayed to bring the database to a consistent state.&lt;/li>
 &lt;/ol>
-&lt;p>&lt;strong>Relevant code (simplified):&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">// filepath: src/backend/access/transam/xlog.c
-void
-XLogFlush(XLogRecPtr record)
-{
-// Ensures all WAL up to 'record' is written and fsync'd to disk
-}
-&lt;/code>&lt;/pre>
-&lt;h3 id="wal-segments-and-lsn">WAL Segments and LSN &lt;a href="#wal-segments-and-lsn" class="hash">#&lt;/a>&lt;/h3>
+&lt;hr>
+&lt;h2 id="mapping-wal-to-the-postgresql-source-code">Mapping WAL to the PostgreSQL Source Code &lt;a href="#mapping-wal-to-the-postgresql-source-code" class="hash">#&lt;/a>&lt;/h2>
+&lt;p>Let’s walk through the main code files and functions for each component.&lt;/p>
+&lt;h3 id="1-wal-record-creation">1. WAL Record Creation &lt;a href="#1-wal-record-creation" class="hash">#&lt;/a>&lt;/h3>
 &lt;ul>
-&lt;li>WAL is stored in segment files (default 16MB each).&lt;/li>
-&lt;li>Each WAL record has a Log Sequence Number (LSN), a unique pointer to its position in the log.&lt;/li>
+&lt;li>&lt;strong>File:&lt;/strong> xlog.c&lt;/li>
+&lt;li>&lt;strong>Key Struct:&lt;/strong> &lt;code>XLogRecord&lt;/code>&lt;/li>
+&lt;li>&lt;strong>Key Functions:&lt;/strong>
+&lt;ul>
+&lt;li>&lt;code>XLogInsert()&lt;/code>: Called whenever a change is made (e.g., tuple insert/update/delete). Constructs a WAL record and appends it to the WAL buffers.&lt;/li>
+&lt;li>&lt;code>XLogRegisterData()&lt;/code>, &lt;code>XLogRegisterBuffer()&lt;/code>: Used by lower-level code to register data and buffers that should be included in the WAL record.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-wal-buffering-and-flushing">2. WAL Buffering and Flushing &lt;a href="#2-wal-buffering-and-flushing" class="hash">#&lt;/a>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>File:&lt;/strong> xlog.c&lt;/li>
+&lt;li>&lt;strong>Key Struct:&lt;/strong> &lt;code>XLogCtlData&lt;/code> (shared memory control structure for WAL)&lt;/li>
+&lt;li>&lt;strong>Key Functions:&lt;/strong>
+&lt;ul>
+&lt;li>&lt;code>XLogWrite()&lt;/code>: Flushes WAL buffers to disk.&lt;/li>
+&lt;li>&lt;code>XLogFlush()&lt;/code>: Ensures that WAL up to a certain point is safely on disk (called before commit).&lt;/li>
+&lt;li>&lt;code>XLogBackgroundFlush()&lt;/code>: Used by the WAL writer background process.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-wal-writer-process">3. WAL Writer Process &lt;a href="#3-wal-writer-process" class="hash">#&lt;/a>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>File:&lt;/strong> walwriter.c&lt;/li>
+&lt;li>&lt;strong>Key Function:&lt;/strong>
+&lt;ul>
+&lt;li>&lt;code>WalWriterMain()&lt;/code>: Main loop for the WAL writer background process, periodically flushing WAL buffers.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-wal-file-management">4. WAL File Management &lt;a href="#4-wal-file-management" class="hash">#&lt;/a>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>File:&lt;/strong> xlog.c&lt;/li>
+&lt;li>&lt;strong>Key Functions:&lt;/strong>
+&lt;ul>
+&lt;li>&lt;code>XLogFileInit()&lt;/code>, &lt;code>XLogFileOpen()&lt;/code>, &lt;code>XLogFileClose()&lt;/code>: Manage creation, opening, and closing of WAL segment files.&lt;/li>
+&lt;li>&lt;code>XLogFileName()&lt;/code>: Generates the filename for a given WAL segment.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="5-crash-recovery">5. Crash Recovery &lt;a href="#5-crash-recovery" class="hash">#&lt;/a>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>File:&lt;/strong> xlog.c&lt;/li>
+&lt;li>&lt;strong>Key Function:&lt;/strong>
+&lt;ul>
+&lt;li>&lt;code>StartupXLOG()&lt;/code>: Main function for crash recovery; reads and replays WAL records.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="6-archiving">6. Archiving &lt;a href="#6-archiving" class="hash">#&lt;/a>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>File:&lt;/strong> xlogarchive.c&lt;/li>
+&lt;li>&lt;strong>Key Functions:&lt;/strong>
+&lt;ul>
+&lt;li>&lt;code>XLogArchiveNotify()&lt;/code>, &lt;code>XLogArchiveCheckDone()&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
 &lt;/ul>
 &lt;hr>
-&lt;h2 id="2-wal-replay-crash-recovery-and-standby-sync">2. WAL Replay: Crash Recovery and Standby Sync &lt;a href="#2-wal-replay-crash-recovery-and-standby-sync" class="hash">#&lt;/a>&lt;/h2>
-&lt;h3 id="on-the-primary">On the Primary &lt;a href="#on-the-primary" class="hash">#&lt;/a>&lt;/h3>
+&lt;h2 id="important-structs-macros-and-configurations">Important Structs, Macros, and Configurations &lt;a href="#important-structs-macros-and-configurations" class="hash">#&lt;/a>&lt;/h2>
 &lt;ul>
-&lt;li>WAL is both written and replayed as part of normal operation.&lt;/li>
-&lt;li>Crash recovery uses WAL to bring data files up to date.&lt;/li>
+&lt;li>&lt;strong>&lt;code>XLogRecPtr&lt;/code>&lt;/strong>: 64-bit pointer to a WAL location.&lt;/li>
+&lt;li>&lt;strong>&lt;code>XLogRecord&lt;/code>&lt;/strong>: Struct representing a single WAL record.&lt;/li>
+&lt;li>&lt;strong>&lt;code>XLogCtlData&lt;/code>&lt;/strong>: Shared memory structure for WAL state.&lt;/li>
 &lt;/ul>
-&lt;h3 id="on-the-standby">On the Standby &lt;a href="#on-the-standby" class="hash">#&lt;/a>&lt;/h3>
+&lt;p>&lt;strong>Configuration Parameters (in &lt;code>postgresql.conf&lt;/code>):&lt;/strong>&lt;/p>
 &lt;ul>
-&lt;li>Standby receives WAL from the primary (via streaming or file shipping).&lt;/li>
-&lt;li>Standby writes WAL to its own &lt;code>pg_wal/&lt;/code>.&lt;/li>
-&lt;li>Standby &lt;strong>replays&lt;/strong> WAL to apply changes to its data files.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>Key functions:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">// filepath: src/backend/access/transam/xlog.c
-XLogRecPtr GetXLogReplayRecPtr(TimeLineID *replayTLI);
-&lt;/code>&lt;/pre>
-&lt;hr>
-&lt;h2 id="3-physical-replication-streaming-wal">3. Physical Replication: Streaming WAL &lt;a href="#3-physical-replication-streaming-wal" class="hash">#&lt;/a>&lt;/h2>
-&lt;h3 id="how-it-works">How It Works &lt;a href="#how-it-works" class="hash">#&lt;/a>&lt;/h3>
-&lt;ul>
-&lt;li>Standby connects to primary using a replication protocol.&lt;/li>
-&lt;li>Primary sends WAL records as soon as they are written to disk.&lt;/li>
-&lt;li>Standby writes and replays WAL.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>Key function for sending WAL:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">// filepath: src/backend/replication/walsender.c
-void XLogSendPhysical(void)
-{
-// Reads WAL from disk and sends to standby
-}
-&lt;/code>&lt;/pre>
-&lt;h3 id="wal-positions">WAL Positions &lt;a href="#wal-positions" class="hash">#&lt;/a>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Received:&lt;/strong> WAL written to disk on standby.&lt;/li>
-&lt;li>&lt;strong>Replayed:&lt;/strong> WAL applied to data files on standby.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>Code to get these positions:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">// filepath: src/backend/replication/walreceiver.c
-XLogRecPtr GetWalRcvFlushRecPtr(TimeLineID *receiveTLI);
-&lt;/code>&lt;/pre>
-&lt;hr>
-&lt;h2 id="4-logical-replication-decoding-wal">4. Logical Replication: Decoding WAL &lt;a href="#4-logical-replication-decoding-wal" class="hash">#&lt;/a>&lt;/h2>
-&lt;h3 id="how-it-works-1">How It Works &lt;a href="#how-it-works-1" class="hash">#&lt;/a>&lt;/h3>
-&lt;ul>
-&lt;li>WAL is written and replayed on the source.&lt;/li>
-&lt;li>Logical decoding reads WAL and interprets it as logical changes (row-level).&lt;/li>
-&lt;li>Changes are sent to subscribers, which apply them at the SQL level.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>Logical decoding context:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">// filepath: src/include/replication/logical.h
-typedef struct LogicalDecodingContext LogicalDecodingContext;
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>Sending logical changes:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">// filepath: src/backend/replication/walsender.c
-void XLogSendLogical(void)
-{
-// Decodes and sends logical changes to subscriber
-}
-&lt;/code>&lt;/pre>
-&lt;h3 id="wal-position-for-logical-replication">WAL Position for Logical Replication &lt;a href="#wal-position-for-logical-replication" class="hash">#&lt;/a>&lt;/h3>
-&lt;ul>
-&lt;li>Logical decoding can only process WAL that has been &lt;strong>replayed&lt;/strong> (applied).&lt;/li>
-&lt;li>This ensures the database state is consistent for decoding.&lt;/li>
+&lt;li>&lt;code>wal_level&lt;/code>&lt;/li>
+&lt;li>&lt;code>wal_buffers&lt;/code>&lt;/li>
+&lt;li>&lt;code>wal_writer_delay&lt;/code>&lt;/li>
+&lt;li>&lt;code>archive_mode&lt;/code>, &lt;code>archive_command&lt;/code>&lt;/li>
+&lt;li>&lt;code>max_wal_size&lt;/code>, &lt;code>min_wal_size&lt;/code>&lt;/li>
 &lt;/ul>
 &lt;hr>
-&lt;h2 id="5-replication-slots-wal-retention-and-safety">5. Replication Slots: WAL Retention and Safety &lt;a href="#5-replication-slots-wal-retention-and-safety" class="hash">#&lt;/a>&lt;/h2>
-&lt;h3 id="what-is-a-replication-slot">What is a Replication Slot? &lt;a href="#what-is-a-replication-slot" class="hash">#&lt;/a>&lt;/h3>
-&lt;p>A replication slot is a persistent object that tells PostgreSQL to retain WAL files until a replica (physical or logical) has processed them.&lt;/p>
-&lt;h3 id="slot-types">Slot Types &lt;a href="#slot-types" class="hash">#&lt;/a>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Physical slots:&lt;/strong> Used for physical replication.&lt;/li>
-&lt;li>&lt;strong>Logical slots:&lt;/strong> Used for logical replication.&lt;/li>
-&lt;/ul>
-&lt;h3 id="slot-structures">Slot Structures &lt;a href="#slot-structures" class="hash">#&lt;/a>&lt;/h3>
-&lt;p>&lt;strong>On-disk and in-memory representation:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">// filepath: src/include/replication/slot.h
-typedef struct ReplicationSlotPersistentData
-{
-NameData name;
-Oid database;
-ReplicationSlotPersistency persistency;
-TransactionId xmin;
-TransactionId catalog_xmin;
-XLogRecPtr restart_lsn;
-ReplicationSlotInvalidationCause invalidated;
-XLogRecPtr confirmed_flush;
-// ... more fields
-} ReplicationSlotPersistentData;
-typedef struct ReplicationSlot
-{
-slock_t mutex;
-bool in_use;
-pid_t active_pid;
-bool just_dirtied;
-bool dirty;
-TransactionId effective_xmin;
-TransactionId effective_catalog_xmin;
-ReplicationSlotPersistentData data;
-LWLock io_in_progress_lock;
-ConditionVariable active_cv;
-// ... more fields for logical slots
-} ReplicationSlot;
-&lt;/code>&lt;/pre>
-&lt;h3 id="slot-creation-and-management">Slot Creation and Management &lt;a href="#slot-creation-and-management" class="hash">#&lt;/a>&lt;/h3>
-&lt;p>&lt;strong>Creating a physical slot:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-sql">SELECT * FROM pg_create_physical_replication_slot('myslot');
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>Creating a logical slot:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-sql">SELECT * FROM pg_create_logical_replication_slot('myslot', 'pgoutput');
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>Dropping a slot:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-sql">SELECT pg_drop_replication_slot('myslot');
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>C functions:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">// filepath: src/backend/replication/slot.c
-void ReplicationSlotCreate(const char *name, bool db_specific,
-ReplicationSlotPersistency persistency,
-bool two_phase, bool failover, bool synced);
-void ReplicationSlotDrop(const char *name, bool nowait);
-&lt;/code>&lt;/pre>
-&lt;h3 id="how-slots-work">How Slots Work &lt;a href="#how-slots-work" class="hash">#&lt;/a>&lt;/h3>
-&lt;ul>
-&lt;li>Each slot tracks the oldest WAL LSN needed by the replica.&lt;/li>
-&lt;li>The server will &lt;strong>not remove&lt;/strong> WAL segments older than this LSN.&lt;/li>
-&lt;li>As the replica processes WAL, it reports progress, and the slot’s LSN advances.&lt;/li>
-&lt;li>Slots are stored in &lt;code>pg_replslot/&lt;/code> and in shared memory.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>Advancing slot LSN:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">// filepath: src/backend/replication/slot.c
-void ReplicationSlotSave(void)
-{
-// Saves slot state to disk
-}
-&lt;/code>&lt;/pre>
+&lt;h2 id="step-by-step-exploration">Step-by-Step Exploration &lt;a href="#step-by-step-exploration" class="hash">#&lt;/a>&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>WAL Record Creation:&lt;/strong>&lt;br>
+Start in &lt;code>xlog.c&lt;/code> with &lt;code>XLogInsert()&lt;/code>. See how a WAL record is constructed and added to the buffer. Explore how &lt;code>XLogRegisterData()&lt;/code> and &lt;code>XLogRegisterBuffer()&lt;/code> are used to build the record.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>WAL Buffering and Flushing:&lt;/strong>&lt;br>
+Follow &lt;code>XLogWrite()&lt;/code> and &lt;code>XLogFlush()&lt;/code>. See how WAL buffers are managed and flushed to disk. Understand the role of &lt;code>XLogCtlData&lt;/code>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>WAL Writer Process:&lt;/strong>&lt;br>
+Look at &lt;code>WalWriterMain()&lt;/code> in &lt;code>walwriter.c&lt;/code>. See how the background process periodically flushes WAL.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>WAL File Management:&lt;/strong>&lt;br>
+Explore &lt;code>XLogFileInit()&lt;/code>, &lt;code>XLogFileOpen()&lt;/code>, etc. See how WAL files are created, opened, and rotated.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Crash Recovery:&lt;/strong>&lt;br>
+Study &lt;code>StartupXLOG()&lt;/code>. See how WAL is replayed after a crash.&lt;/p>
+&lt;/li>
+&lt;/ol>
 &lt;hr>
-&lt;h2 id="6-monitoring-and-troubleshooting">6. Monitoring and Troubleshooting &lt;a href="#6-monitoring-and-troubleshooting" class="hash">#&lt;/a>&lt;/h2>
-&lt;p>&lt;strong>View all slots:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-sql">SELECT * FROM pg_replication_slots;
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>Check WAL retention:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-sql">SELECT slot_name, restart_lsn, confirmed_flush_lsn FROM pg_replication_slots;
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>Potential issues:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>If a slot is not advancing (replica is offline or lagging), WAL files will accumulate, possibly filling up disk space.&lt;/li>
-&lt;li>Always drop unused slots to allow WAL cleanup.&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="7-example-creating-and-using-a-logical-replication-slot">7. Example: Creating and Using a Logical Replication Slot &lt;a href="#7-example-creating-and-using-a-logical-replication-slot" class="hash">#&lt;/a>&lt;/h2>
-&lt;p>&lt;strong>Step 1: Create a publication on the primary&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-sql">CREATE PUBLICATION mypub FOR TABLE mytable;
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>Step 2: Create a logical slot&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-sql">SELECT * FROM pg_create_logical_replication_slot('myslot', 'pgoutput');
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>Step 3: On the subscriber, create a subscription&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-sql">CREATE SUBSCRIPTION mysub
-CONNECTION 'host=primary ...'
-PUBLICATION mypub;
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>Step 4: Monitor slot progress&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-sql">SELECT * FROM pg_replication_slots WHERE slot_name = 'myslot';
-&lt;/code>&lt;/pre>
-&lt;hr>
-&lt;h2 id="8-key-macros-and-utilities">8. Key Macros and Utilities &lt;a href="#8-key-macros-and-utilities" class="hash">#&lt;/a>&lt;/h2>
-&lt;p>&lt;strong>Check slot type:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">#define SlotIsPhysical(slot) ((slot)-&amp;gt;data.database == InvalidOid)
-#define SlotIsLogical(slot) ((slot)-&amp;gt;data.database != InvalidOid)
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>Compute required LSN for all slots:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">XLogRecPtr ReplicationSlotsComputeRequiredLSN(void);
-&lt;/code>&lt;/pre>
-&lt;p>&lt;strong>Compute logical restart LSN:&lt;/strong>&lt;/p>
-&lt;pre>&lt;code class="language-c">XLogRecPtr ReplicationSlotsComputeLogicalRestartLSN(void);
-&lt;/code>&lt;/pre>
-&lt;hr>
-&lt;h2 id="9-summary-table">9. Summary Table &lt;a href="#9-summary-table" class="hash">#&lt;/a>&lt;/h2>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>Feature&lt;/th>
-&lt;th>Physical Replication&lt;/th>
-&lt;th>Logical Replication&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>Data sent&lt;/td>
-&lt;td>Raw WAL records&lt;/td>
-&lt;td>Decoded logical changes&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>When can send&lt;/td>
-&lt;td>As soon as WAL is received&lt;/td>
-&lt;td>Only after WAL is replayed&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Slot type&lt;/td>
-&lt;td>Physical&lt;/td>
-&lt;td>Logical&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Subscriber applies&lt;/td>
-&lt;td>At storage level&lt;/td>
-&lt;td>At SQL/table level&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Key functions&lt;/td>
-&lt;td>&lt;code>XLogSendPhysical&lt;/code>, &lt;code>GetWalRcvFlushRecPtr&lt;/code>&lt;/td>
-&lt;td>&lt;code>XLogSendLogical&lt;/code>, &lt;code>LogicalDecodingContext&lt;/code>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Slot struct&lt;/td>
-&lt;td>&lt;code>ReplicationSlot&lt;/code>&lt;/td>
-&lt;td>&lt;code>ReplicationSlot&lt;/code>&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;hr>
-&lt;h2 id="10-conclusion">10. Conclusion &lt;a href="#10-conclusion" class="hash">#&lt;/a>&lt;/h2>
-&lt;p>PostgreSQL’s WAL and replication system is both powerful and complex. WAL ensures durability and crash safety, while replication slots guarantee that no replica misses any changes. Understanding the difference between physical and logical replication, and how slots manage WAL retention, is crucial for database reliability and scaling.&lt;/p>
-&lt;p>If you want to go even deeper, explore the PostgreSQL source code in the files and functions referenced above. This will give you a true understanding of how these features are implemented.&lt;/p>
-&lt;hr>
-&lt;p>&lt;strong>Further Reading:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://www.postgresql.org/docs/current/wal-intro.html">PostgreSQL WAL Internals&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://www.postgresql.org/docs/current/warm-standby.html">Streaming Replication&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://www.postgresql.org/docs/current/logical-replication.html">Logical Replication&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://www.postgresql.org/docs/current/warm-standby.html#STREAMING-REPLICATION-SLOTS">Replication Slots&lt;/a>&lt;/li>
-&lt;/ul>
+&lt;h2 id="conclusion">Conclusion &lt;a href="#conclusion" class="hash">#&lt;/a>&lt;/h2>
+&lt;p>PostgreSQL’s WAL system is a robust, well-architected mechanism that ensures your data is safe and recoverable. By understanding both the high-level flow and the underlying source code, you gain insight into one of the most critical parts of PostgreSQL’s architecture.&lt;/p>
 &lt;hr></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2025/05/22/interview_preparation/</guid><pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate></item><item><title>Trees</title><link>https://karthikselvam.com/posts/2024/10/08/trees_part_2/</link><description>&lt;p>&lt;strong>1. Binary Tree Inorder Traversal.&lt;/strong>&lt;/p>
 &lt;pre>&lt;code class="language-java">public class BinaryTreeInorderTraversal {
 public List&amp;lt;Integer&amp;gt; inorderTraversal(TreeNode root) {
