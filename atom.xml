@@ -1,4 +1,119 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2025, Ronalds Vilcins</copyright><lastBuildDate>Thu, 22 May 2025 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Understanding PostgreSQL’s Write-Ahead Logging (WAL)</title><link>https://karthikselvam.com/posts/2025/05/22/interview_preparation/</link><description>&lt;p>PostgreSQL’s Write-Ahead Logging (WAL) is at the heart of its durability and crash recovery. If you’ve ever wondered how PostgreSQL ensures your data is safe—even in the event of a crash—this post will walk you through the architecture, flow, and the actual source code that makes it all work.&lt;/p>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karthik Selvam</title><description/><link>https://karthikselvam.com/</link><language>en</language><copyright>Copyright 2025, Ronalds Vilcins</copyright><lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://ronaldsvilcins.com/atom.xml" rel="self" type="application/atom+xml"/><item><title>Understanding Keystores, Certificates, and How Secure Communication Works in Java Apps</title><link>https://karthikselvam.com/posts/2025/05/29/secure_comm/</link><description>&lt;p>If you’re a developer or engineer starting with Java applications, you’ve probably come across terms like &lt;strong>keystore&lt;/strong>, &lt;strong>certificate&lt;/strong>, &lt;strong>private key&lt;/strong>, and &lt;strong>truststore&lt;/strong>. These are crucial when setting up secure communication between your app and others using SSL/TLS.&lt;/p>
+&lt;p>Let’s break down what these terms mean and how they fit together — no fancy jargon, just simple explanations.&lt;/p>
+&lt;hr>
+&lt;h2 id="what-is-a-keystore">What Is a Keystore? &lt;a href="#what-is-a-keystore" class="hash">#&lt;/a>&lt;/h2>
+&lt;p>A &lt;strong>keystore&lt;/strong> is a secure file that stores &lt;strong>private keys&lt;/strong> and &lt;strong>certificates&lt;/strong> your Java app needs to prove its identity and encrypt data.&lt;/p>
+&lt;ul>
+&lt;li>Private Key: A secret key only your app knows.&lt;/li>
+&lt;li>Certificate: A public file that proves your app’s identity.&lt;/li>
+&lt;/ul>
+&lt;p>Think of a keystore like a locked box where you keep your secret keys and ID cards safely.&lt;/p>
+&lt;hr>
+&lt;h2 id="common-file-types-youll-see">Common File Types You’ll See &lt;a href="#common-file-types-youll-see" class="hash">#&lt;/a>&lt;/h2>
+&lt;p>When dealing with certificates and keys, you might find files with these extensions:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>File Extension&lt;/th>
+&lt;th>What It Is&lt;/th>
+&lt;th>Purpose&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>.jks&lt;/code>&lt;/td>
+&lt;td>Java KeyStore file&lt;/td>
+&lt;td>Stores your private keys and certificates securely&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>.crt&lt;/code>&lt;/td>
+&lt;td>Certificate file&lt;/td>
+&lt;td>Your public certificate that others use to verify you&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>.key&lt;/code>&lt;/td>
+&lt;td>Private key file&lt;/td>
+&lt;td>Your secret private key&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>.req&lt;/code> (CSR)&lt;/td>
+&lt;td>Certificate Signing Request&lt;/td>
+&lt;td>A request you send to a Certificate Authority (CA) to get a certificate&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>.public&lt;/code>&lt;/td>
+&lt;td>Public key file (less common)&lt;/td>
+&lt;td>Contains just the public key part&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="how-does-this-fit-into-secure-communication">How Does This Fit Into Secure Communication? &lt;a href="#how-does-this-fit-into-secure-communication" class="hash">#&lt;/a>&lt;/h2>
+&lt;p>Imagine you want your Java app to communicate securely over HTTPS or TLS.&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>Generate a Private Key (&lt;code>.key&lt;/code>)&lt;/strong>&lt;br>
+This is your secret key that proves your identity.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Create a CSR (&lt;code>.req&lt;/code>)&lt;/strong>&lt;br>
+A request you send to a trusted Certificate Authority (CA), containing your public key and info about your app.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Get a Certificate (&lt;code>.crt&lt;/code>) from the CA&lt;/strong>&lt;br>
+The CA verifies you and issues a certificate, which is like an ID card signed by a trusted authority.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Import the Private Key and Certificate into a Keystore (&lt;code>.jks&lt;/code>)&lt;/strong>&lt;br>
+Your Java app uses this keystore to present its identity and encrypt communications.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="sharing-certificates-with-other-apps">Sharing Certificates with Other Apps &lt;a href="#sharing-certificates-with-other-apps" class="hash">#&lt;/a>&lt;/h2>
+&lt;p>Your app’s &lt;strong>private key is secret&lt;/strong> and never shared.&lt;/p>
+&lt;p>Your app’s &lt;strong>certificate (&lt;code>.crt&lt;/code>) is shared&lt;/strong> with other apps or clients that want to communicate with you.&lt;/p>
+&lt;ul>
+&lt;li>Other apps import your &lt;code>.crt&lt;/code> into their &lt;strong>truststore&lt;/strong>, which is their list of trusted certificates.&lt;/li>
+&lt;li>This lets them verify your app’s identity during the secure handshake.&lt;/li>
+&lt;li>If your certificate is &lt;strong>self-signed&lt;/strong>, clients need to manually add your &lt;code>.crt&lt;/code> to their truststore.&lt;/li>
+&lt;li>If your certificate is signed by a &lt;strong>public CA&lt;/strong>, most clients already trust it automatically.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="whats-the-difference-between-self-signed-and-ca-signed-certificates">What’s the Difference Between Self-Signed and CA-Signed Certificates? &lt;a href="#whats-the-difference-between-self-signed-and-ca-signed-certificates" class="hash">#&lt;/a>&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Self-Signed Certificate&lt;/th>
+&lt;th>CA-Signed Certificate&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>You generate and sign your own certificate&lt;/td>
+&lt;td>A trusted CA verifies your identity and signs your certificate&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Clients need to manually trust your certificate&lt;/td>
+&lt;td>Clients trust it automatically because they trust the CA&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Often used for testing or internal apps&lt;/td>
+&lt;td>Used for public websites and production systems&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="why-should-you-care">Why Should You Care? &lt;a href="#why-should-you-care" class="hash">#&lt;/a>&lt;/h2>
+&lt;p>As a Staff Engineer or anyone responsible for system security, you’ll often:&lt;/p>
+&lt;ul>
+&lt;li>Set up or troubleshoot secure communication between services.&lt;/li>
+&lt;li>Fix SSL/TLS errors caused by missing or untrusted certificates.&lt;/li>
+&lt;li>Manage certificate renewals and updates.&lt;/li>
+&lt;li>Help teams understand how certificates and keystores work together.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="final-thoughts">Final Thoughts &lt;a href="#final-thoughts" class="hash">#&lt;/a>&lt;/h2>
+&lt;p>Understanding keystores, certificates, and how they work in Java apps is essential for secure software development. The next step is practicing creating keystores, generating CSRs, importing certificates, and testing secure connections.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2025/05/29/secure_comm/</guid><pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate></item><item><title>Understanding PostgreSQL’s Write-Ahead Logging (WAL)</title><link>https://karthikselvam.com/posts/2025/05/22/postgres_wal/</link><description>&lt;p>PostgreSQL’s Write-Ahead Logging (WAL) is at the heart of its durability and crash recovery. If you’ve ever wondered how PostgreSQL ensures your data is safe—even in the event of a crash—this post will walk you through the architecture, flow, and the actual source code that makes it all work.&lt;/p>
 &lt;hr>
 &lt;h2 id="high-level-architecture--flow-of-wal">High-Level Architecture &amp;amp; Flow of WAL &lt;a href="#high-level-architecture--flow-of-wal" class="hash">#&lt;/a>&lt;/h2>
 &lt;h3 id="what-is-wal">What is WAL? &lt;a href="#what-is-wal" class="hash">#&lt;/a>&lt;/h3>
@@ -136,7 +251,7 @@ Study &lt;code>StartupXLOG()&lt;/code>. See how WAL is replayed after a crash.&l
 &lt;hr>
 &lt;h2 id="conclusion">Conclusion &lt;a href="#conclusion" class="hash">#&lt;/a>&lt;/h2>
 &lt;p>PostgreSQL’s WAL system is a robust, well-architected mechanism that ensures your data is safe and recoverable. By understanding both the high-level flow and the underlying source code, you gain insight into one of the most critical parts of PostgreSQL’s architecture.&lt;/p>
-&lt;hr></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2025/05/22/interview_preparation/</guid><pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate></item><item><title>Trees</title><link>https://karthikselvam.com/posts/2024/10/08/trees_part_2/</link><description>&lt;p>&lt;strong>1. Binary Tree Inorder Traversal.&lt;/strong>&lt;/p>
+&lt;hr></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2025/05/22/postgres_wal/</guid><pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate></item><item><title>Trees</title><link>https://karthikselvam.com/posts/2024/10/08/trees_part_2/</link><description>&lt;p>&lt;strong>1. Binary Tree Inorder Traversal.&lt;/strong>&lt;/p>
 &lt;pre>&lt;code class="language-java">public class BinaryTreeInorderTraversal {
 public List&amp;lt;Integer&amp;gt; inorderTraversal(TreeNode root) {
 List&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;&amp;gt;();
@@ -2761,69 +2876,7 @@ startsWithN.add(name);
 .collect(Collectors.toList());
 &lt;/code>&lt;/pre>
 &lt;p>The filter() method expects a lambda expression that returns a boolean result. If the lambda expression returns a true, the element in context while executing that lambda expression is added to a result collection; it’s skipped otherwise. Finally the method returns a Stream with only elements for which the lambda expression yielded a true.&lt;/p>
-&lt;p>The filter() method returns an iterator just like the map() method does, but the similarity ends there. Whereas the map() method returns a collection of the same size as the input collection, the filter() method may not. It may yield a result collection with a number of elements ranging from zero to the maximum number of elements in the input collection. However, unlike map(), the elements in the result collection that filter() returned are a subset of the elements in the input collection.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/02/23/collections/</guid><pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate></item><item><title>Note on Large Scale Deployment</title><link>https://karthikselvam.com/posts/2023/01/27/deployment/</link><description>&lt;h3 id="challenges-in-large-scale-deployment">Challenges in Large scale deployment &lt;a href="#challenges-in-large-scale-deployment" class="hash">#&lt;/a>&lt;/h3>
-&lt;ol>
-&lt;li>Application Deployment - problems at the application level&lt;/li>
-&lt;li>Infrastructure Deployment - problems faced by hosting the application on the infrastructure&lt;/li>
-&lt;li>Operations - problem that arise during the maintainence of deployment&lt;/li>
-&lt;/ol>
-&lt;h3 id="application-deployment">Application Deployment &lt;a href="#application-deployment" class="hash">#&lt;/a>&lt;/h3>
-&lt;p>Typical components of large scale systems:&lt;/p>
-&lt;ul>
-&lt;li>Web Apps and replicas&lt;/li>
-&lt;li>Microservices and replicas&lt;/li>
-&lt;li>Databases
-&lt;ul>
-&lt;li>RDBMS and NoSQL&lt;/li>
-&lt;li>Replication and Sharding&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Message Queues
-&lt;ul>
-&lt;li>Replication and partitioning&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Caches&lt;/li>
-&lt;li>Content Storage&lt;/li>
-&lt;li>Log file storage&lt;/li>
-&lt;li>Search &amp;amp; Analytics&lt;/li>
-&lt;li>Directory / LDAP servers&lt;/li>
-&lt;/ul>
-&lt;h3 id="infrastructure-deployment">Infrastructure Deployment &lt;a href="#infrastructure-deployment" class="hash">#&lt;/a>&lt;/h3>
-&lt;p>Things we need to take into considersation for deploying the application at infrastructure level&lt;/p>
-&lt;ul>
-&lt;li>Compute Infrastructure : CPU, RAM, Disks&lt;/li>
-&lt;li>Network
-&lt;ul>
-&lt;li>Secure Access : Firewalls, Certificates&lt;/li>
-&lt;li>Routing&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Load Balancers
-&lt;ul>
-&lt;li>Hard loadbalancers&lt;/li>
-&lt;li>Software loadbalancers&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>DNS and Discovery Services&lt;/li>
-&lt;li>Storage for Application : Content, VM/Container Images, Backups, Logs&lt;/li>
-&lt;li>Mail Servers&lt;/li>
-&lt;li>CDN&lt;/li>
-&lt;/ul>
-&lt;p>We must consider infrastructure support for Dev, Test, Stagging, and Prod enviroment as well.&lt;/p>
-&lt;h3 id="operations">Operations &lt;a href="#operations" class="hash">#&lt;/a>&lt;/h3>
-&lt;ul>
-&lt;li>Development Team :Develop - Build - Test - Package - Image&lt;/li>
-&lt;li>Operations Team : Deployment - Logging - Monitoring - Scale - Failover - Hotbackups / Coldbackups&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;p>Deployment Solutions&lt;/p>
-&lt;ul>
-&lt;li>Application Deploypment : Containers(Docker)&lt;/li>
-&lt;li>Infrastructure Deployment: Cloud(Aws/Azure/Gcp)&lt;/li>
-&lt;li>Operations : Kubernetes&lt;/li>
-&lt;li>Automations : Devops Tools(Vagrant/Ansible/Chef)&lt;/li>
-&lt;/ul></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/01/27/deployment/</guid><pubDate>Fri, 27 Jan 2023 00:00:00 +0000</pubDate></item><item><title>System Performance</title><link>https://karthikselvam.com/posts/2023/01/27/performance/</link><description>&lt;h3 id="performance">Performance &lt;a href="#performance" class="hash">#&lt;/a>&lt;/h3>
+&lt;p>The filter() method returns an iterator just like the map() method does, but the similarity ends there. Whereas the map() method returns a collection of the same size as the input collection, the filter() method may not. It may yield a result collection with a number of elements ranging from zero to the maximum number of elements in the input collection. However, unlike map(), the elements in the result collection that filter() returned are a subset of the elements in the input collection.&lt;/p></description><author>ronalds.vilcins@gmail.com (Ronalds Vilcins)</author><guid>https://karthikselvam.com/posts/2023/02/23/collections/</guid><pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate></item><item><title>System Performance</title><link>https://karthikselvam.com/posts/2023/01/27/performance/</link><description>&lt;h3 id="performance">Performance &lt;a href="#performance" class="hash">#&lt;/a>&lt;/h3>
 &lt;p>Measure of how fast or responsive a system is under&lt;/p>
 &lt;ul>
 &lt;li>A given workload&lt;/li>
